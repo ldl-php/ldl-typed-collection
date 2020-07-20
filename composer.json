@@ -1,0 +1,26 @@
+{
+    "name": "ldl-framework/typed-collection",
+    "type": "library",
+    "description": "Adds support for typed collections",
+    "keywords": [
+        "type",
+        "php",
+        "collection"
+    ],
+    "homepage": "https://github.com/pthreat/ldl-type",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Federico Stange",
+            "email": "jpfstange@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "LDL\\": "src/"
+        }
+    }
+}
