@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace LDL\Type\Collection;
 
@@ -45,7 +45,7 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         reset($this->items);
     }
 
-    public function key() : int
+    public function key()
     {
         return key($this->items);
     }
