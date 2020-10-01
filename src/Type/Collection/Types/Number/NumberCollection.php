@@ -1,26 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace LDL\Type\Collection\Types\String;
+namespace LDL\Type\Collection\Types\Number;
 
-use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Exception\TypeMismatchException;
+use LDL\Type\Collection\Types\Lockable\LockableCollection;
 
-class NumberCollection extends AbstractCollection
+class NumberCollection extends LockableCollection
 {
-
-    public function validateItem($item): void
+    public function __construct(iterable $items = null)
     {
-        if(is_int($item) || is_float($item)){
-            return;
-        }
-
-        $msg = sprintf(
-            'float or int type is required for %s, "%s" was given',
-            __CLASS__,
-            gettype($item)
-        );
-
-        throw new TypeMismatchException($msg);
+        parent::__construct($items);
+        $this->getValidatorChain()->append(new Validator\NumberValidator());
     }
-
 }

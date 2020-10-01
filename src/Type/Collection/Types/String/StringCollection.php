@@ -1,26 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace LDL\Type\Collection\Types\String;
 
-use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Exception\TypeMismatchException;
+use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
+use LDL\Type\Collection\Types\Lockable\LockableCollection;
 
-class StringCollection extends AbstractCollection
+class StringCollection extends LockableCollection
 {
+    use LockedCollectionTrait;
 
-    public function validateItem($item): void
+    public function __construct(iterable $items = null)
     {
-        if(is_string($item)){
-            return;
-        }
+        parent::__construct($items);
 
-        $msg = sprintf(
-            'string type is required for %s, "%s" was given',
-            __CLASS__,
-            gettype($item)
-        );
-
-        throw new TypeMismatchException($msg);
+        $this->getValidatorChain()
+            ->append(new Validator\StringValidator())
+            ->lock();
     }
-
 }

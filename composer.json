@@ -16,11 +16,12 @@
         }
     ],
     "require": {
+        "ldl-framework/framework-base": "dev-master",
         "php": ">=7.1"
     },
     "autoload": {
         "psr-4": {
-            "LDL\\": "src/"
+            "LDL\\Type\\": "src/Type/"
         }
     }
 }

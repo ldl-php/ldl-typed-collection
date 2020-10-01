@@ -1,29 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace LDL\Type\Collection\Types\Double;
 
-use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Exception\TypeMismatchException;
+use LDL\Type\Collection\Types\Lockable\LockableCollection;
 
-class DoubleCollection extends AbstractCollection
+class DoubleCollection extends LockableCollection
 {
-
-    public function validateItem($item): void
+    public function __construct(iterable $items = null)
     {
-        /**
-         * Did you know that internally
-         */
-        if(is_float($item)){
-            return;
-        }
-
-        $msg = sprintf(
-            'float type is required for %s, "%s" was given',
-            __CLASS__,
-            gettype($item)
-        );
-
-        throw new TypeMismatchException($msg);
+        parent::__construct($items);
+        $this->getValidatorChain()->append(new Validator\DoubleValidator());
     }
-
 }

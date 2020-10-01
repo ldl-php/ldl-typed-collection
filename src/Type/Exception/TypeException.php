@@ -1,8 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace LDL\Type\Exception;
 
-abstract class TypeException extends \Exception
+use LDL\Framework\Base\Exception\LDLException;
+
+abstract class TypeException extends LDLException
 {
 
 }

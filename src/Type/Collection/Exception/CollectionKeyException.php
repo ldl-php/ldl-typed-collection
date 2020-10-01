@@ -2,7 +2,7 @@
 
 namespace LDL\Type\Collection\Exception;
 
-class UndefinedOffsetException extends TypedCollectionException
+class CollectionKeyException extends TypedCollectionException
 {
 
 }

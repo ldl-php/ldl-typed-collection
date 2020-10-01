@@ -1,26 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace LDL\Type\Collection\Types\Integer;
 
-use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Exception\TypeMismatchException;
+use LDL\Type\Collection\Types\Lockable\LockableCollection;
 
-class IntegerCollection extends AbstractCollection
+class IntegerCollection extends LockableCollection
 {
-
-    public function validateItem($item): void
+    public function __construct(iterable $items = null)
     {
-        if(is_int($item)){
-            return;
-        }
-
-        $msg = sprintf(
-            'int type is required for %s, "%s" was given',
-            __CLASS__,
-            gettype($item)
-        );
-
-        throw new TypeMismatchException($msg);
+        parent::__construct($items);
+        $this->getValidatorChain()->append(new Validator\IntegerValidator());
     }
-
 }

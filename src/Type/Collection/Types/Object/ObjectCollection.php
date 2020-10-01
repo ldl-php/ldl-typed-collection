@@ -1,30 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace LDL\Type\Collection\Types\Object;
 
-use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Exception\TypeMismatchException;
+use LDL\Type\Collection\Types\Lockable\LockableCollection;
 
-class ObjectCollection extends AbstractCollection
+class ObjectCollection extends LockableCollection
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @throws TypeMismatchException
-     */
-    public function validateItem($item) : void
+    public function __construct(iterable $items = null)
     {
-        $type = gettype($item);
-
-        if($type === 'object') {
-            return;
-        }
-
-        $msg = sprintf(
-            'Argument must be an object, "%s" was given',
-            $type
-        );
-
-        throw new TypeMismatchException($msg);
+        parent::__construct($items);
+        $this->getValidatorChain()
+            ->append(new Validator\ObjectValidator());
     }
 }
