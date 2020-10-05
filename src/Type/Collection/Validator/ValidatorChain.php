@@ -16,6 +16,7 @@ use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
 use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\CollectionTrait;
+use LDL\Type\Collection\Types\Scalar\Validator\ScalarItemValidator;
 use LDL\Type\Exception\TypeMismatchException;
 use LDL\Framework\Base\Exception\LockingException;
 
@@ -39,6 +40,26 @@ final class ValidatorChain implements ValidatorChainInterface
         foreach($items as $item){
             $this->append($item);
         }
+    }
+
+    public function replace($item, $key) : CollectionInterface
+    {
+        if(!$this->offsetExists($key)){
+            return $this->append($item, $key);
+        }
+
+        $this->validateKey($key);
+        $this->validateItem($item);
+
+        $this->items[$key] = $item;
+
+        return $this;
+    }
+
+    public function remove($key): void
+    {
+        $this->offsetGet($key);
+        unset($this->items[$key]);
     }
 
     public function validate(CollectionInterface $collection, $item, $key) : void
@@ -95,14 +116,27 @@ final class ValidatorChain implements ValidatorChainInterface
 
     public function append($item, $key=null) : CollectionInterface
     {
-        if($this->isLocked()){
-            $msg  = 'Validator chain is locked, no additional items can be added';
-            throw new LockingException($msg);
+        $key = $key ?? $this->count;
+        $this->validateKey($key);
+        $this->validateItem($item);
+        $this->last = $key;
+
+        if(null === $this->first){
+            $this->first = $key;
         }
 
-        $key = $key ?? $this->count;
+        $this->items[$key] = $item;
+        $this->count++;
 
-        $this->validateKey($key);
+        return $this;
+    }
+
+    private function validateItem($item) : void
+    {
+        if($this->isLocked()){
+            $msg  = 'Validator chain is locked, no additional validators can be added';
+            throw new LockingException($msg);
+        }
 
         if(!is_object($item)){
             $msg = sprintf(
@@ -114,28 +148,23 @@ final class ValidatorChain implements ValidatorChainInterface
             throw new TypeMismatchException($msg);
         }
 
-        if(!$item instanceof ValidatorInterface){
-            $msg = sprintf(
-                '"%s" expects that item of class "%s" applies interface "%s"',
-                __CLASS__,
-                get_class($item),
-                ValidatorInterface::class
-            );
-
-            throw new TypeMismatchException($msg);
+        if($item instanceof ValidatorInterface){
+            return;
         }
 
-        $key = $key ?? $this->count();
-        $this->last = $key;
+        $msg = sprintf(
+            '"%s" expects an object which implements "%s"',
+            ValidatorInterface::class,
+            get_class($item)
+        );
 
-        if(null === $this->first){
-            $this->first = $key;
-        }
+        throw new TypeMismatchException($msg);
+    }
 
-        $this->items[$key] = $item;
-        $this->count++;
-
-        return $this;
+    private function validateKey($key) : void
+    {
+        $validator = new ScalarItemValidator(true, true);
+        $validator->validate($this, $key, null);
     }
 
 }

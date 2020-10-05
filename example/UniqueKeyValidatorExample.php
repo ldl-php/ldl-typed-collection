@@ -34,7 +34,7 @@ $collection->append('test', '213');
 try {
 
     echo "Try to add element with key 213 AGAIN, Exception must be thrown\n";
-    $collection->append('123', '213');
+    $collection['213'] = 'test';
 
 }catch(CollectionKeyException $e){
     echo "EXCEPTION: {$e->getMessage()}\n";

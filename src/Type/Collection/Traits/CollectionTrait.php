@@ -6,12 +6,8 @@
 
 namespace LDL\Type\Collection\Traits;
 
-use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\TypedCollectionException;
 use LDL\Type\Collection\Exception\UndefinedOffsetException;
-use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
-use LDL\Type\Collection\Validator\ValidatorChainInterface;
 
 trait CollectionTrait
 {
@@ -64,11 +60,40 @@ trait CollectionTrait
         return 0 === $this->count;
     }
 
+    public function hasKey($key) : bool
+    {
+        return $this->offsetExists($key);
+    }
+
+    public function removeLast() : void
+    {
+        $this->remove($this->last);
+    }
+
+    public function keys() : array
+    {
+        return array_keys($this->items);
+    }
+
+    public function hasValue($value) : bool
+    {
+        foreach($this as $val){
+            if($val === $value){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //<editor-fold desc="\Countable Methods">
     public function count() : int
     {
         return $this->count;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="\Iterator Methods">
     public function rewind() : void
     {
         reset($this->items);
@@ -94,28 +119,11 @@ trait CollectionTrait
     {
         return current($this->items);
     }
+    //<editor-fold>
 
-    public function hasKey($key) : bool
-    {
-        return $this->offsetExists($key);
-    }
-
-    public function remove($key)
-    {
-        $this->offsetUnset($key);
-    }
-
-    public function removeLast()
-    {
-        $this->offsetUnset($this->last);
-    }
-
+    //<editor-fold desc="\ArrayAccess Methods">
     public function offsetExists($offset) : bool
     {
-        if(!is_scalar($offset)){
-            throw new CollectionKeyException('Key must be of scalar type');
-        }
-
         return array_key_exists($offset, $this->items);
     }
 
@@ -131,71 +139,13 @@ trait CollectionTrait
 
     public function offsetSet($offset, $value) : void
     {
-        $this->append($offset, $value);
+        $this->replace($value, $offset);
     }
 
     public function offsetUnset($offset) : void
     {
-        $item = $this->offsetGet($offset);
-
-        if($this instanceof HasValidatorChainInterface){
-
-            /**
-             * @var ValidatorChainInterface $validators
-             */
-            $validators = $this->getValidatorChain()
-                ->filterByInterface(
-                RemoveItemValidatorInterface::class
-            );
-
-            $validators->validate($this, $item, $offset);
-        }
-
-        unset($this->items[$offset]);
-        $this->count--;
-
-        $keys = $this->keys();
-        $lastKey = count($keys) - 1;
-        $this->last = $keys[$lastKey > 0 ? $lastKey : 0];
+        $this->remove($offset);
     }
+    //</editor-fold>
 
-    public function keys() : array
-    {
-        return array_keys($this->items);
-    }
-
-    public function validateKey($key=null) : void
-    {
-        /**
-         * Scalars also include booleans, but I'm not in charge to say you shouldn't use them as keys ¯\_(ツ)_/¯
-         */
-        if(is_scalar($key)){
-            return;
-        }
-
-        if(
-            is_object($key) &&
-            in_array('__tostring', array_map('strtolower', get_class_methods($key)), true)
-        ){
-            $key = sprintf('%s', $key);
-        }
-
-        $msg = sprintf(
-            'Item key for collection must be of type scalar, "%s" was given',
-            gettype($key)
-        );
-
-        throw new CollectionKeyException($msg);
-    }
-
-    public function hasValue($value) : bool
-    {
-        foreach($this as $val){
-            if($val === $value){
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

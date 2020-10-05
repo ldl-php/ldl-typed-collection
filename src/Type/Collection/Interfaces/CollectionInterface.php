@@ -19,18 +19,22 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
     public function append($item, $key = null) : CollectionInterface;
 
     /**
+     * If the key already exists, it will be replaced, if the key does not exists
+     * it will be appended to the collection.
+     *
+     * @param $item
+     * @param $key
+     * @throws \Exception if the value does not exist
+     * @return CollectionInterface
+     */
+    public function replace($item, $key) : CollectionInterface;
+
+    /**
      * Return associated indices
      *
      * @return array
      */
     public function keys() : array;
-
-    /**
-     * Validates collection key element, it must ALWAYS validate for a scalar value
-     *
-     * @param $key
-     */
-    public function validateKey($key) : void;
 
     /**
      * Check if a key exists
@@ -44,16 +48,16 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
      *
      * @param $key
-     * @return mixed
+     * @return void
      */
-    public function remove($key);
+    public function remove($key) : void;
 
     /**
      * Remove last appended item
      *
-     * @return mixed
+     * @return void
      */
-    public function removeLast();
+    public function removeLast() : void;
 
     /**
      * Check if a value exists inside the collection, comparison should between the given value and the collection
