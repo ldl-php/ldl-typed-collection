@@ -10,7 +10,6 @@ use LDL\Framework\Base\Exception\LockingException;
 class SingleSelectionCollectionExample extends AbstractCollection implements SingleSelectionInterface
 {
     use SingleSelectionTrait;
-
 }
 
 echo "Create collection instance\n";

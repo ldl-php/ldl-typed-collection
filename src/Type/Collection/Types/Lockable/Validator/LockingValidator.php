@@ -5,12 +5,15 @@ namespace LDL\Type\Collection\Types\Lockable\Validator;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Exception\TypeMismatchException;
 
-class LockingValidator implements ValidatorInterface
+class LockingValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface
 {
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validate(
+        CollectionInterface $collection, $item, $key
+    ): void
     {
         if(!$collection instanceof LockableCollectionInterface){
             $msg = sprintf(

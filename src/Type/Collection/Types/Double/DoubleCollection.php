@@ -9,6 +9,6 @@ class DoubleCollection extends LockableCollection
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()->append(new Validator\DoubleValidator());
+        $this->getValidatorChain()->append(new Validator\DoubleItemValidator());
     }
 }

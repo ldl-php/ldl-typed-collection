@@ -3,11 +3,11 @@
 namespace LDL\Type\Collection\Types\Object\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Exception\TypeMismatchException;
 
-class InterfaceComplianceValidator implements ValidatorInterface, ValidatorModeInterface
+class InterfaceComplianceItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface
 {
     /**
      * @var string

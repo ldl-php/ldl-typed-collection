@@ -4,7 +4,9 @@ namespace LDL\Type\Collection;
 
 use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Traits\CollectionTrait;
+use LDL\Type\Collection\Validator\ValidatorChainInterface;
 
 abstract class AbstractCollection implements Interfaces\CollectionInterface
 {
@@ -28,18 +30,30 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         $this->validateKey($key);
 
         if($this instanceof HasKeyValidatorChainInterface){
-            $this->getKeyValidatorChain()->validate($this, $item, $key);
+            /**
+             * @var ValidatorChainInterface $keyChain
+             */
+            $keyChain = $this->getKeyValidatorChain()
+                ->filterByInterface(AppendItemValidatorInterface::class);
+
+            $keyChain->validate($this, $item, $key);
         }
 
         if($this instanceof HasValidatorChainInterface){
-            $this->getValidatorChain()->validate($this, $item, $key);
-        }
+            /**
+             * @var ValidatorChainInterface $valueChain
+             */
+            $valueChain = $this->getValidatorChain()
+                ->filterByInterface(AppendItemValidatorInterface::class);
 
-        $this->last = $key;
+            $valueChain->validate($this, $item, $key);
+        }
 
         if(null === $this->first){
             $this->first = $key;
         }
+
+        $this->last = $key;
 
         $this->items[$key] = $item;
         $this->count++;

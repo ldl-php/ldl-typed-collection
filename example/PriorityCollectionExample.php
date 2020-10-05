@@ -7,10 +7,18 @@ use LDL\Type\Collection\Interfaces\Sorting\PrioritySortingInterface;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
 use LDL\Type\Collection\Traits\Sorting\PrioritySortingTrait;
 use LDL\Type\Exception\TypeMismatchException;
+use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
 
 class PriorityCollectionExample extends ObjectCollection implements PrioritySortingInterface
 {
     use PrioritySortingTrait;
+    public function __construct(iterable $items = null)
+    {
+        parent::__construct($items);
+        $this->getValidatorChain()
+            ->append(new InterfaceComplianceItemValidator(PriorityInterface::class))
+            ->lock();
+    }
 }
 
 class PriorityClass1 implements PriorityInterface

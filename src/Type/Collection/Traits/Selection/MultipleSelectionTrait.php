@@ -21,6 +21,12 @@ trait MultipleSelectionTrait
      */
     private $__selected = [];
 
+    /**
+     * @param $key
+     * @return CollectionInterface
+     * @throws CollectionKeyException
+     * @throws \LDL\Framework\Base\Exception\LockingException
+     */
     public function select($key) : CollectionInterface
     {
         $this->_validateLockedSelection();
@@ -39,10 +45,14 @@ trait MultipleSelectionTrait
         return $this;
     }
 
+    /**
+     * @return CollectionInterface
+     * @throws ItemSelectionException
+     */
     public function getSelectedItems() : CollectionInterface
     {
         if(null === $this->__selected){
-            throw new ItemSelectionException('No item was selected');
+            throw new ItemSelectionException('No items were selected');
         }
 
         /**
@@ -59,8 +69,16 @@ trait MultipleSelectionTrait
         return $collection;
     }
 
+    /**
+     * @return array
+     * @throws ItemSelectionException
+     */
     public function getSelectedKeys(): array
     {
+        if(null === $this->__selected){
+            throw new ItemSelectionException('No items were selected');
+        }
+
         return array_keys($this->__selected);
     }
 

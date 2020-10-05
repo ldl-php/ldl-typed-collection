@@ -3,12 +3,12 @@
 namespace LDL\Type\Collection\Types\String\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
 use LDL\Type\Exception\TypeMismatchException;
 
-class StringValidator implements ValidatorInterface, ValidatorModeInterface
+class StringItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface
 {
     use ValidatorModeTrait;
 

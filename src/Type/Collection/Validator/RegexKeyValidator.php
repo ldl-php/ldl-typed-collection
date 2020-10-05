@@ -4,11 +4,12 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Helper\RegexValidatorHelper;
 
-class RegexKeyValidator implements ValidatorInterface, ValidatorModeInterface
+class RegexKeyValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface, ValidatorModeInterface
 {
     /**
      * @var bool
@@ -35,8 +36,8 @@ class RegexKeyValidator implements ValidatorInterface, ValidatorModeInterface
 
     /**
      * @param CollectionInterface $collection
-     * @param mixed $item
-     * @param number|string $key
+     * @param number|string $item
+     * @param $key
      * @throws CollectionKeyException
      */
     public function validate(CollectionInterface $collection, $item, $key): void

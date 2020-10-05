@@ -11,27 +11,19 @@ I just built something I can reuse among my projects. And perhaps make it a bit 
 #### Example collection for \SplFileInfo
 
 ```php
-<?php
+<?php declare(strict_types=1);
 
-use \LDL\Type\Exception\TypeMismatchException;
-use \LDL\Type\Collection\Types\Object\ObjectCollection;
+use LDL\Type\Collection\Types\Object\ObjectCollection;
+use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceValidator;
 
 class FileCollection extends ObjectCollection
 {
+    public function __construct(iterable $items = null) {
+        parent::__construct($items);
 
-    public function validateItem($item) : void
-    {       
-        parent::validateItem($item);
-
-        if($item instanceof \SplFileInfo){
-            return;
-        }
-        
-        $msg = sprintf(
-            'Expected value must be an instance of \SplFileInfo, instance of "%s" was given',
-            get_class($item)  
-        );
-        throw new TypeMismatchException($msg);
+        $this->getValidatorChain()
+        ->append(new InterfaceComplianceValidator(\SplFileInfo::class))
+        ->lock();
     }
 
 }

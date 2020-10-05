@@ -12,6 +12,8 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      * @param mixed $item
      * @param mixed $key
      *
+     * @throws \Exception
+     *
      * @return CollectionInterface
      */
     public function append($item, $key = null) : CollectionInterface;
@@ -37,6 +39,21 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      * @return bool
      */
     public function hasKey($key) : bool;
+
+    /**
+     * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
+     *
+     * @param $key
+     * @return mixed
+     */
+    public function remove($key);
+
+    /**
+     * Remove last appended item
+     *
+     * @return mixed
+     */
+    public function removeLast();
 
     /**
      * Check if a value exists inside the collection, comparison should between the given value and the collection

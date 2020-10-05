@@ -8,9 +8,9 @@ interface ValidatorInterface
 {
     /**
      * @param CollectionInterface $collection
-     * @param number|string $key
      * @param mixed $item
      *
+     * @param number|string $key
      * @return void
      *
      * @throws \Exception

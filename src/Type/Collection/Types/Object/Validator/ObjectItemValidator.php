@@ -1,26 +1,26 @@
 <?php declare(strict_types=1);
 
-namespace LDL\Type\Collection\Types\Double\Validator;
+namespace LDL\Type\Collection\Types\Object\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
 use LDL\Type\Exception\TypeMismatchException;
 
-class DoubleValidator implements ValidatorInterface
+class ObjectItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface
 {
     use ValidatorModeTrait;
 
     public function validate(CollectionInterface $collection, $item, $key): void
     {
-        if(is_float($item)){
+        if(is_object($item)){
             return;
         }
 
         $msg = sprintf(
-          'Value expected for "%s", must be of type double, "%s" given',
-            __CLASS__,
-            gettype($item)
+            'Validator "%s", only accepts objects as items being part of a collection',
+            __CLASS__
         );
 
         throw new TypeMismatchException($msg);

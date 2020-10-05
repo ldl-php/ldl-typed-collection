@@ -20,6 +20,7 @@ interface MultipleSelectionInterface extends PrivateSelectableInterface {
     /**
      * Returns an array containing keys previously selected
      *
+     * @throws ItemSelectionException if there is no item selected
      * @return array
      */
     public function getSelectedKeys() : array;

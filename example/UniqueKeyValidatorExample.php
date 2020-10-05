@@ -18,7 +18,7 @@ class UniqueKeyValidatorExample extends AbstractCollection implements HasKeyVali
         parent::__construct($items);
 
         $this->getKeyValidatorChain()
-            ->append(new RegexKeyValidator('#[0-9]#', $strict=false))
+            ->append(new RegexKeyValidator('#[0-9]#', $strict=true))
             ->append(new UniqueKeyValidator($strict=true));
     }
 }

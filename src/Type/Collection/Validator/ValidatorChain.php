@@ -1,10 +1,19 @@
 <?php declare(strict_types=1);
 
+/**
+ * This type of validation is a combined validation, basically it's a collection of different validators
+ * which are validated in a chain like fashion.
+ *
+ * This collection also implements the FilterByInterface interface, which makes it possible to filter the validators
+ * appended in this collection.
+ */
+
 namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
 use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\CollectionTrait;
 use LDL\Type\Exception\TypeMismatchException;
@@ -13,6 +22,7 @@ use LDL\Framework\Base\Exception\LockingException;
 final class ValidatorChain implements ValidatorChainInterface
 {
     use CollectionTrait;
+    use FilterByInterfaceTrait;
     use LockedCollectionTrait;
 
     /**
@@ -20,13 +30,6 @@ final class ValidatorChain implements ValidatorChainInterface
      */
     private $strict;
 
-    /**
-     * ValidatorChain constructor.
-     *
-     * @param iterable|null $items
-     * @throws LockingException
-     * @throws TypeMismatchException
-     */
     public function __construct(iterable $items=null)
     {
         if(null === $items){
@@ -40,6 +43,10 @@ final class ValidatorChain implements ValidatorChainInterface
 
     public function validate(CollectionInterface $collection, $item, $key) : void
     {
+        if(0 === $this->count){
+            return;
+        }
+
         /**
          * @var \Exception[]
          */
@@ -99,7 +106,7 @@ final class ValidatorChain implements ValidatorChainInterface
 
         if(!is_object($item)){
             $msg = sprintf(
-                '"%s" expects an object "%s" was give',
+                '"%s" expects an object "%s" was given',
                 __CLASS__,
                 gettype($item)
             );

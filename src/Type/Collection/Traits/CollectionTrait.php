@@ -10,29 +10,34 @@ use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\TypedCollectionException;
 use LDL\Type\Collection\Exception\UndefinedOffsetException;
 use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
+use LDL\Type\Collection\Validator\ValidatorChainInterface;
 
 trait CollectionTrait
 {
     /**
+     * Maintains the count of elements inside the collection
      * @var int
      */
     private $count = 0;
 
     /**
+     * Holds all items
      * @var array
      */
     private $items = [];
 
     /**
+     * Holds the key of the last appended item
      * @var number|string
      */
     private $last;
 
     /**
+     * Holds the key of the first appended item
      * @var number|string
      */
     private $first;
-
 
     public function getFirst()
     {
@@ -95,10 +100,20 @@ trait CollectionTrait
         return $this->offsetExists($key);
     }
 
+    public function remove($key)
+    {
+        $this->offsetUnset($key);
+    }
+
+    public function removeLast()
+    {
+        $this->offsetUnset($this->last);
+    }
+
     public function offsetExists($offset) : bool
     {
-        if(!is_numeric($offset) && !is_string($offset)){
-            throw new CollectionKeyException('Key must be of type numeric or a string');
+        if(!is_scalar($offset)){
+            throw new CollectionKeyException('Key must be of scalar type');
         }
 
         return array_key_exists($offset, $this->items);
@@ -124,11 +139,24 @@ trait CollectionTrait
         $item = $this->offsetGet($offset);
 
         if($this instanceof HasValidatorChainInterface){
-            $this->getValidatorChain()->validate($this, $item, $offset);
+
+            /**
+             * @var ValidatorChainInterface $validators
+             */
+            $validators = $this->getValidatorChain()
+                ->filterByInterface(
+                RemoveItemValidatorInterface::class
+            );
+
+            $validators->validate($this, $item, $offset);
         }
 
         unset($this->items[$offset]);
         $this->count--;
+
+        $keys = $this->keys();
+        $lastKey = count($keys) - 1;
+        $this->last = $keys[$lastKey > 0 ? $lastKey : 0];
     }
 
     public function keys() : array
@@ -138,6 +166,9 @@ trait CollectionTrait
 
     public function validateKey($key=null) : void
     {
+        /**
+         * Scalars also include booleans, but I'm not in charge to say you shouldn't use them as keys ¯\_(ツ)_/¯
+         */
         if(is_scalar($key)){
             return;
         }

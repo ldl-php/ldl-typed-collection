@@ -18,6 +18,7 @@ interface SingleSelectionInterface extends PrivateSelectableInterface {
     /**
      * Returns the selected key
      * @return number|string
+     * @throws ItemSelectionException If no item was selected
      */
     public function getSelectedKey();
 

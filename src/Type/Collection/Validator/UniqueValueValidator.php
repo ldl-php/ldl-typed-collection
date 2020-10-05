@@ -4,14 +4,14 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Exception\CollectionValueException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 
-class UniqueValueValidator implements ValidatorInterface
+class UniqueValueValidator implements AppendItemValidatorInterface
 {
     /**
      * @param CollectionInterface $collection
-     * @param mixed $item
-     * @param number|string $key
+     * @param number|string $item
+     * @param $key
      * @throws CollectionValueException
      */
     public function validate(CollectionInterface $collection, $item, $key): void
