@@ -6,7 +6,7 @@
  * @see \LDL\Type\Collection\Interfaces\Filter\FilterValueTypeInterface
  */
 
-namespace LDL\Type\Collection\Traits\Locking;
+namespace LDL\Type\Collection\Traits\Filter;
 
 use LDL\Type\Collection\Exception\EmptyCollectionException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;

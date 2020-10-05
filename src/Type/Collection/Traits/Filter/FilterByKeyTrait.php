@@ -6,7 +6,7 @@
  * @see \LDL\Type\Collection\Interfaces\Filter\FilterByKeyInterface
  */
 
-namespace LDL\Type\Collection\Traits\Locking;
+namespace LDL\Type\Collection\Traits\Filter;
 
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
