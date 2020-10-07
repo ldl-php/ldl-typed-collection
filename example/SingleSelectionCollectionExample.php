@@ -21,7 +21,7 @@ $collection->append('123','my_key_1');
 echo "Append item 456 using my_key_2 as key\n";
 $collection->append('456','my_key_2');
 
-echo "Select item my_key in collection\n";
+echo "Select item my_key_1 in collection\n";
 $collection->select('my_key_1');
 
 echo "Is selection locked?\n";

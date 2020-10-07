@@ -5,10 +5,9 @@ namespace LDL\Type\Collection\Types\Scalar\Validator;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
-use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
 use LDL\Type\Exception\TypeMismatchException;
 
-class ScalarItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface
+class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInterface
 {
     /**
      * @var bool
@@ -20,10 +19,20 @@ class ScalarItemValidator implements AppendItemValidatorInterface, ValidatorMode
      */
     private $acceptToStringObjects;
 
-    public function __construct(bool $strict = false, bool $acceptToStringObjects=true)
+    /**
+     * @var string
+     */
+    private $validate;
+
+    public function __construct(
+        bool $strict = false,
+        bool $acceptToStringObjects=true,
+        string $validate='item'
+    )
     {
         $this->isStrict = $strict;
         $this->acceptToStringObjects = $acceptToStringObjects;
+        $this->validate = $validate;
     }
 
     public function isStrict() : bool
@@ -33,7 +42,18 @@ class ScalarItemValidator implements AppendItemValidatorInterface, ValidatorMode
 
     public function validate(CollectionInterface $collection, $item, $key): void
     {
-        if(is_scalar($item)){
+        switch($this->validate){
+            case 'key':
+                $value = $key;
+                break;
+            case 'item':
+                $value = $item;
+                break;
+            default:
+                throw new \LogicException("Invalid validate option \"{$this->validate}\". Validate option must be one of: [key, item]");
+        }
+
+        if(is_scalar($value)){
             return;
         }
 
@@ -51,7 +71,7 @@ class ScalarItemValidator implements AppendItemValidatorInterface, ValidatorMode
         $msg = sprintf(
             'Value expected for "%s", must be scalar, "%s" was given',
             __CLASS__,
-            gettype($item)
+            gettype($value)
         );
 
         throw new TypeMismatchException($msg);
