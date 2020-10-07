@@ -16,7 +16,7 @@ use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
 use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\CollectionTrait;
-use LDL\Type\Collection\Types\Scalar\Validator\ScalarItemValidator;
+use LDL\Type\Collection\Types\Scalar\Validator\ScalarValidator;
 use LDL\Type\Exception\TypeMismatchException;
 use LDL\Framework\Base\Exception\LockingException;
 
@@ -163,8 +163,8 @@ final class ValidatorChain implements ValidatorChainInterface
 
     private function validateKey($key) : void
     {
-        $validator = new ScalarItemValidator(true, true);
-        $validator->validate($this, $key, null);
+        $validator = new ScalarValidator($strict = true, $acceptToStringObjects = true, $validate = 'key');
+        $validator->validate($this, null, $key);
     }
 
 }
