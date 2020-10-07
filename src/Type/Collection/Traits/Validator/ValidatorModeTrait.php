@@ -9,7 +9,7 @@ trait ValidatorModeTrait
      */
     private $_isStrict;
 
-    public function __construct(bool $strict=false)
+    public function __construct(bool $strict=true)
     {
         $this->_isStrict = $strict;
     }
