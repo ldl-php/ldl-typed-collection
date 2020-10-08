@@ -23,9 +23,15 @@ class StringNumberCollectionExample extends AbstractCollection implements HasVal
     }
 }
 
-echo "Create collection instance\n";
+echo "Create string/number collection instance\n";
 
 $collection  = new StringNumberCollectionExample();
+
+echo "Append string item: 'hello'\n";
+$collection->append('hello');
+
+echo "Append number item: 123\n";
+$collection->append(123);
 
 try {
 
