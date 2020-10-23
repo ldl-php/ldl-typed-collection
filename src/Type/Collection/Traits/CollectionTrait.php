@@ -74,11 +74,24 @@ trait CollectionTrait
         $self = clone($this);
         $self->items = [];
 
+        $first = true;
+
+        $k = null;
+
         foreach($this->items as $k=>$v){
-            if(in_array($k, $keys, true)) {
-                $self->items[$k] = $v;
+            if(!in_array($k, $keys, true)) {
+                continue;
             }
+
+            if($first){
+                $self->first = $k;
+                $first = false;
+            }
+
+            $self->items[$k] = $v;
         }
+
+        $self->last = $k;
 
         return $self;
     }
