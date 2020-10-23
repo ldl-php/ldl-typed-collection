@@ -8,6 +8,7 @@ namespace LDL\Type\Collection\Traits;
 
 use LDL\Type\Collection\Exception\TypedCollectionException;
 use LDL\Type\Collection\Exception\UndefinedOffsetException;
+use LDL\Type\Collection\Interfaces\CollectionInterface;
 
 trait CollectionTrait
 {
@@ -63,6 +64,51 @@ trait CollectionTrait
     public function hasKey($key) : bool
     {
         return $this->offsetExists($key);
+    }
+
+    public function filterByKeys(array $keys) : CollectionInterface
+    {
+        /**
+         * @var CollectionInterface $self
+         */
+        $self = clone($this);
+        $self->items = [];
+
+        foreach($this->items as $k=>$v){
+            if(in_array($k, $keys, true)) {
+                $self->items[$k] = $v;
+            }
+        }
+
+        return $self;
+    }
+
+    public function filterByKey(string $key)
+    {
+        return $this->filterByKeys([$key])->getFirst();
+    }
+
+    public function filterByKeyRegex(string $regex) : CollectionInterface
+    {
+        $regex = preg_quote($regex, '#');
+
+        /**
+         * @var CollectionInterface $collection
+         */
+        $collection = clone($this);
+
+        foreach($this as $key=>$value){
+            if(preg_match($key, $regex)){
+                $collection->append($value, $key);
+            }
+        }
+
+        if(count($collection) === 0){
+            $msg = "No items could be found by key matching regex: $regex";
+            throw new \LogicException($msg);
+        }
+
+        return $collection;
     }
 
     public function removeLast() : void

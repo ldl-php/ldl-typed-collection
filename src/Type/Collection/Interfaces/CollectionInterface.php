@@ -89,4 +89,22 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      * @return bool
      */
     public function isEmpty() : bool;
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function filterByKey(string $key);
+
+    /**
+     * @param array $keys
+     * @return CollectionInterface
+     */
+    public function filterByKeys(array $keys) : CollectionInterface;
+
+    /**
+     * @param string $regex
+     * @return CollectionInterface
+     */
+    public function filterByKeyRegex(string $regex) : CollectionInterface;
 }
