@@ -124,9 +124,10 @@ trait CollectionTrait
         return $collection;
     }
 
-    public function removeLast() : void
+    public function removeLast() : CollectionInterface
     {
         $this->remove($this->last);
+        return $this;
     }
 
     public function keys() : array
@@ -143,6 +144,15 @@ trait CollectionTrait
         }
 
         return false;
+    }
+
+    public function truncate() : CollectionInterface
+    {
+        while(false === $this->isEmpty()){
+            $this->removeLast();
+        }
+
+        return $this;
     }
 
     //<editor-fold desc="\Countable Methods">

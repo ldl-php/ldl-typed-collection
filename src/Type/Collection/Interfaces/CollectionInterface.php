@@ -48,16 +48,16 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      * Syntax sugar for unset($collection[$key]); or $collection->offsetUnset($key);
      *
      * @param $key
-     * @return void
+     * @return CollectionInterface
      */
-    public function remove($key) : void;
+    public function remove($key) : CollectionInterface;
 
     /**
      * Remove last appended item
      *
-     * @return void
+     * @return CollectionInterface
      */
-    public function removeLast() : void;
+    public function removeLast() : CollectionInterface;
 
     /**
      * Check if a value exists inside the collection, comparison should between the given value and the collection

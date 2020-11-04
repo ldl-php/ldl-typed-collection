@@ -56,10 +56,11 @@ final class ValidatorChain implements ValidatorChainInterface
         return $this;
     }
 
-    public function remove($key): void
+    public function remove($key): CollectionInterface
     {
         $this->offsetGet($key);
         unset($this->items[$key]);
+        return $this;
     }
 
     public function validate(CollectionInterface $collection, $item, $key) : void

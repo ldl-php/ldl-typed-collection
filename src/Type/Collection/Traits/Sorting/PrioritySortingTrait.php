@@ -14,16 +14,12 @@ trait PrioritySortingTrait
         /**
          * @var CollectionInterface $_this
          */
-        $_this = $this;
-
-        /**
-         * @var CollectionInterface $collection
-         */
-        $collection = new static();
+        $_this = clone($this);
+        $this->truncate();
 
         $items = \iterator_to_array($_this);
 
-        usort(
+        uasort(
             $items,
             /**
              * @param PriorityInterface $a
@@ -39,10 +35,10 @@ trait PrioritySortingTrait
         );
 
         foreach($items as $key=>$value){
-            $collection->append($value, $key);
+            $this->append($value, $key);
         }
 
-        return $collection;
+        return $this;
     }
 
 }

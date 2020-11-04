@@ -47,7 +47,7 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         return $this;
     }
 
-    public function remove($offset) : void
+    public function remove($offset) : Interfaces\CollectionInterface
     {
         $item = $this->offsetGet($offset);
         $this->validateKey(RemoveItemValidatorInterface::class, $item, $offset);
@@ -64,8 +64,15 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         $this->count--;
 
         $keys = $this->keys();
-        $lastKey = count($keys) - 1;
-        $this->last = $keys[$lastKey > 0 ? $lastKey : 0];
+        $lastKey = count($keys);
+
+        if(0 === $lastKey) {
+            $this->last = null;
+            return $this;
+        }
+
+        $this->last = $keys[$lastKey - 1];
+        return $this;
     }
 
     public function replace($item, $key) : Interfaces\CollectionInterface
