@@ -17,7 +17,7 @@ trait SingleSelectionTrait
     use PrivateSelectionLockingTrait;
 
     /**
-     * @var number|string
+     * @var number|string|null
      */
     private $__selectedKey;
 
