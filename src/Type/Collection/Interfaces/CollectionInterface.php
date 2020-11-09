@@ -77,12 +77,26 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
     public function getFirst();
 
     /**
+     * Returns the first appended key
+     *
+     * @return string|number
+     */
+    public function getFirstKey();
+
+    /**
      * Obtains the last element in the collection
      *
      * @throws TypedCollectionException if there are no elements inside the collection
      * @return mixed
      */
     public function getLast();
+
+    /**
+     * Returns the last appended key
+     *
+     * @return string|number
+     */
+    public function getLastKey();
 
     /**
      * Syntactic sugar to determine if the collection is empty or not (since you could use $collection->count() === 0)

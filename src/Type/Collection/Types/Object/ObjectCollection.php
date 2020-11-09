@@ -2,6 +2,7 @@
 
 namespace LDL\Type\Collection\Types\Object;
 
+use LDL\Type\Collection\Interfaces;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Filter\FilterByClassInterface;
 use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
@@ -27,7 +28,7 @@ class ObjectCollection extends LockableCollection implements FilterByInterface, 
     public function append($item, $key = null) : CollectionInterface
     {
         parent::append($item, $key);
-        $this->classData[get_class($item)][] = $this->getLast();
+        $this->classData[get_class($item)][] = $this->getLastKey();
 
         return $this;
     }
@@ -45,8 +46,8 @@ class ObjectCollection extends LockableCollection implements FilterByInterface, 
             return $collection;
         }
 
-        foreach($this->classData[$className] as $item){
-            $collection->append($item, $className);
+        foreach($this->classData[$className] as $offset){
+            $collection->append($this[$offset], $offset);
         }
 
         $collection->_validateValues = true;
@@ -68,7 +69,7 @@ class ObjectCollection extends LockableCollection implements FilterByInterface, 
             }
 
             foreach($indices as $index){
-                $collection->append($index, $className);
+                $collection->append($this[$index], $index);
             }
         }
 
@@ -77,4 +78,22 @@ class ObjectCollection extends LockableCollection implements FilterByInterface, 
 
         return $collection;
     }
+
+    public function truncate(): CollectionInterface
+    {
+        parent::truncate();
+        $this->classData = [];
+
+        return $this;
+    }
+
+    public function remove($offset): Interfaces\CollectionInterface
+    {
+        $itemClass = get_class($this->offsetGet($offset));
+        parent::remove($offset);
+        unset($this->classData[$itemClass][$offset]);
+
+        return $this;
+    }
+
 }

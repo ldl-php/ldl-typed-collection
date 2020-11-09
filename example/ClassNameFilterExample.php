@@ -75,12 +75,33 @@ foreach($collection as $item){
 
 echo "Filter collection by class Test2\n";
 
-foreach($collection->filterByClass('Test2') as $key => $item){
+foreach($collection->filterByClass(Test2::class) as $key => $item){
     echo get_class($item)."\n";
 }
 
 echo "Filter collection by classes Test1, Test3\n";
 
-foreach($collection->filterByClasses(['Test1', 'Test3']) as $key => $item){
-    echo get_class($item)."\n";
+/**
+ * @var ObjectCollection $filtered
+ */
+$filtered = $collection->filterByClasses([Test1::class, Test3::class]);
+
+foreach($filtered as $key => $item){
+    echo "$key => ".\get_class($item)."\n";
+}
+
+echo "Remove one item (0) Test 1 from the filtered collection\n";
+
+$filtered->remove(0);
+
+echo "Try to filter by class again with class Test1, result must be empty\n";
+
+foreach($filtered->filterByClass(Test1::class) as $key => $item){
+    echo "$key => ".\get_class($item)."\n";
+}
+
+echo "Try to filter by class again with class Test3, class Test3 must *show up*\n";
+
+foreach($filtered->filterByClass(Test3::class) as $key => $item){
+    echo "$key => ".\get_class($item)."\n";
 }

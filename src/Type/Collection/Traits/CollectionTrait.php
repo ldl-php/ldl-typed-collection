@@ -46,6 +46,11 @@ trait CollectionTrait
         return $this->items[$this->first];
     }
 
+    public function getFirstKey()
+    {
+        return $this->first;
+    }
+
     public function getLast()
     {
         if(null === $this->last) {
@@ -54,6 +59,11 @@ trait CollectionTrait
         }
 
         return $this->items[$this->last];
+    }
+
+    public function getLastKey()
+    {
+        return $this->last;
     }
 
     public function isEmpty() : bool

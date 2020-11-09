@@ -37,13 +37,8 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
 
         $key = $key ?? $this->count;
 
-        if(true === $this->_validateKeys){
-            $this->validateKey(AppendItemValidatorInterface::class, $item, $key);
-        }
-
-        if(true === $this->_validateValues){
-            $this->validateValue(AppendItemValidatorInterface::class, $item, $key);
-        }
+        $this->validateKey(AppendItemValidatorInterface::class, $item, $key);
+        $this->validateValue(AppendItemValidatorInterface::class, $item, $key);
 
         if(null === $this->first){
             $this->first = $key;
@@ -105,6 +100,10 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
             return;
         }
 
+        if(false === $this->_validateKeys){
+            return;
+        }
+
         /**
          * @var ValidatorChainInterface $keyChain
          */
@@ -117,6 +116,10 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
     private function validateValue(string $interface, $item, $key) : void
     {
         if(!$this instanceof HasValidatorChainInterface){
+            return;
+        }
+
+        if(false === $this->_validateValues){
             return;
         }
 
