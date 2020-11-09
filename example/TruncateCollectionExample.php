@@ -37,7 +37,7 @@ echo "Add element test with key 123\n";
 
 $collection->append('test', '123');
 
-echo "Add element test with key 456\n";
+echo "Add element test2 with key 456\n";
 
 $collection->append('test2', '456');
 
@@ -55,7 +55,7 @@ echo "Add element test with key 111\n";
 
 $collection->append('test', '111');
 
-echo "Add element test with key 333\n";
+echo "Add element test2 with key 333\n";
 
 $collection->append('test2', '333');
 
@@ -63,7 +63,7 @@ echo "Lock collection\n";
 
 $collection->lock();
 
-echo "Try to truncate collection\n";
+echo "Try to truncate collection, exception must be thrown\n";
 
 try{
     $collection->truncate();

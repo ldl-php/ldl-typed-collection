@@ -14,6 +14,10 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
 {
     use CollectionTrait;
 
+    protected $_validateValues =  true;
+
+    protected $_validateKeys = true;
+
     public function __construct(iterable $items=null)
     {
         if(null === $items){
@@ -32,8 +36,14 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         }
 
         $key = $key ?? $this->count;
-        $this->validateKey(AppendItemValidatorInterface::class, $item, $key);
-        $this->validateValue(AppendItemValidatorInterface::class, $item, $key);
+
+        if(true === $this->_validateKeys){
+            $this->validateKey(AppendItemValidatorInterface::class, $item, $key);
+        }
+
+        if(true === $this->_validateValues){
+            $this->validateValue(AppendItemValidatorInterface::class, $item, $key);
+        }
 
         if(null === $this->first){
             $this->first = $key;
@@ -84,7 +94,6 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         $this->validateKey(AppendItemValidatorInterface::class, $item, $key);
         $this->validateValue(AppendItemValidatorInterface::class, $item, $key);
 
-
         $this->items[$key] = $item;
 
         return $this;
@@ -119,6 +128,4 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
 
         $valueChain->validate($this, $item, $key);
     }
-
-
 }
