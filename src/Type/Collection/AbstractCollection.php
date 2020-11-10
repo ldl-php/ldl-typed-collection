@@ -7,7 +7,6 @@ use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Collection\Traits\CollectionTrait;
-use LDL\Type\Collection\Types\Object\Interfaces\KeyResolverInterface;
 use LDL\Type\Collection\Validator\ValidatorChainInterface;
 
 abstract class AbstractCollection implements Interfaces\CollectionInterface
@@ -31,10 +30,6 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
 
     public function append($item, $key=null) : Interfaces\CollectionInterface
     {
-        if(is_object($item) && $item instanceof KeyResolverInterface){
-            $key = $item->getItemKey();
-        }
-
         $key = $key ?? $this->count;
 
         $this->validateKey(AppendItemValidatorInterface::class, $item, $key);
