@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace LDL\Type\Collection\Types\Integer;
+namespace LDL\Type\Collection\Types\Scalar;
 
 use LDL\Type\Collection\Types\Lockable\LockableCollection;
 

@@ -3,6 +3,7 @@
 namespace LDL\Type\Collection\Interfaces\Filter;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\Types\Object\ObjectCollectionInterface;
 
 interface FilterByClassInterface
 {
@@ -11,6 +12,16 @@ interface FilterByClassInterface
      * @return CollectionInterface
      */
     public function filterByClass(string $className) : CollectionInterface;
+
+    /**
+     * @param string $className
+     * @param ObjectCollectionInterface|null $objectCollection
+     * @return CollectionInterface
+     */
+    public function filterByClassRecursive(
+        string $className,
+        ObjectCollectionInterface $objectCollection = null
+    ) : CollectionInterface;
 
     /**
      * @param array $classes

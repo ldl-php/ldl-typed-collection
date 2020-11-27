@@ -2,14 +2,13 @@
 
 namespace LDL\Type\Collection\Types\Object;
 
-use LDL\Type\Collection\Interfaces;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Filter\FilterByClassInterface;
+use LDL\Type\Collection\Item\NamedItem;
 use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
 use LDL\Type\Collection\Types\Lockable\LockableCollection;
-use LDL\Type\Collection\Types\Object\Filter\FilterByInterface;
 
-class ObjectCollection extends LockableCollection implements FilterByInterface, FilterByClassInterface
+
+class ObjectCollection extends LockableCollection implements ObjectCollectionInterface
 {
     use FilterByInterfaceTrait;
 
@@ -56,6 +55,44 @@ class ObjectCollection extends LockableCollection implements FilterByInterface, 
         return $collection;
     }
 
+    public function filterByClassRecursive(string $className, ObjectCollectionInterface $objectCollection = null) : CollectionInterface
+    {
+        if(null === $objectCollection){
+            $collection = clone($this);
+            $collection->truncate();
+        }
+
+        if(null !== $objectCollection){
+            $collection = $objectCollection;
+        }
+
+        $collection->_validateValues = false;
+        $collection->_validateKeys = false;
+
+        $filter = static function($item, $offset) use (&$filter, $collection, $className){
+            if(is_object($item) && get_class($item) === $className){
+                $collection->append(new NamedItem($offset, $item));
+            }
+
+            if($item instanceof \Traversable){
+                foreach($item as $o => $i){
+                    $filter($i, $o);
+                }
+            }
+
+            return null;
+        };
+
+        foreach($this as $offset => $item){
+            $filter($item, $offset);
+        }
+
+        $collection->_validateValues = true;
+        $collection->_validateKeys = true;
+
+        return $collection;
+    }
+
     public function filterByClasses(array $classes) : CollectionInterface
     {
         $collection = clone($this);
@@ -87,7 +124,7 @@ class ObjectCollection extends LockableCollection implements FilterByInterface, 
         return $this;
     }
 
-    public function remove($offset): Interfaces\CollectionInterface
+    public function remove($offset): CollectionInterface
     {
         $itemClass = get_class($this->offsetGet($offset));
         parent::remove($offset);
