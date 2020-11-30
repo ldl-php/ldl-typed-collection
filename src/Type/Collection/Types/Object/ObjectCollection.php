@@ -3,10 +3,8 @@
 namespace LDL\Type\Collection\Types\Object;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Item\NamedItem;
 use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
 use LDL\Type\Collection\Types\Lockable\LockableCollection;
-
 
 class ObjectCollection extends LockableCollection implements ObjectCollectionInterface
 {
@@ -55,23 +53,23 @@ class ObjectCollection extends LockableCollection implements ObjectCollectionInt
         return $collection;
     }
 
-    public function filterByClassRecursive(string $className, ObjectCollectionInterface $objectCollection = null) : CollectionInterface
+    public function filterByClassRecursive(
+        string $className,
+        ObjectCollectionInterface $collection = null
+    ) : CollectionInterface
     {
-        if(null === $objectCollection){
+        if(null === $collection){
             $collection = clone($this);
-            $collection->truncate();
         }
 
-        if(null !== $objectCollection){
-            $collection = $objectCollection;
-        }
+        $collection->truncate();
 
         $collection->_validateValues = false;
         $collection->_validateKeys = false;
 
         $filter = static function($item, $offset) use (&$filter, $collection, $className){
             if(is_object($item) && get_class($item) === $className){
-                $collection->append(new NamedItem($offset, $item));
+                $collection->append($item, $offset);
             }
 
             if($item instanceof \Traversable){

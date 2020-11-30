@@ -5,7 +5,7 @@ export PHP=$(which php);
 export SLEEP=$1;
 [ -z "$1" ] && export SLEEP=7;
 
-for x in ./*
+for x in ./*.php
 	do
 	clear;
 	echo -e "Running example \"$x\" ...\n\n";

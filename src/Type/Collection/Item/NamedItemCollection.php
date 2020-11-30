@@ -16,15 +16,11 @@ class NamedItemCollection extends ObjectCollection implements NamedItemCollectio
         $this->getValidatorChain()
             ->append(new InterfaceComplianceItemValidator(NamedItemInterface::class))
             ->lock();
-
-        $this->getKeyValidatorChain()
-            ->append(new UniqueKeyValidator())
-            ->lock();
     }
 
     public function append($item, $key = null): CollectionInterface
     {
-        return parent::append($item, null);
+        return parent::append(new NamedItem($key, $item), null);
     }
 
     public function getItemKeyCount($key) : int

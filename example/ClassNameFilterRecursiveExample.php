@@ -54,9 +54,5 @@ $collection->append($test1);
 echo "Filter collection by class Test3\n";
 
 foreach($collection->filterByClassRecursive(Test3::class) as $item){
-    echo get_class($item->getValue())."\n";
-
-    foreach($item->getValue() as $key => $value){
-        echo "Item $key: $value"."\n";
-    }
+    echo get_class($item)."\n";
 }
