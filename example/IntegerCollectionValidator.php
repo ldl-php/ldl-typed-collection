@@ -6,6 +6,7 @@ use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
 use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
 use LDL\Type\Collection\Types\Integer\Validator\IntegerItemValidator;
+use LDL\Type\Collection\Validator\NumericRangeValidator;
 
 class MyIntegerCollection extends AbstractCollection implements HasValidatorChainInterface
 {
@@ -16,7 +17,8 @@ class MyIntegerCollection extends AbstractCollection implements HasValidatorChai
         parent::__construct($items);
 
         $this->getValidatorChain()
-            ->append(new IntegerItemValidator(true, 100, 599));
+            ->append(new IntegerItemValidator(true))
+            ->append(new NumericRangeValidator(100,599));
     }
 }
 
