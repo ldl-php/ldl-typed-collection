@@ -7,7 +7,7 @@ use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
 use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\Validator\KeyValidatorChainTrait;
 use LDL\Type\Collection\Types\Lockable\Validator\LockingValidator;
-use LDL\Type\Collection\Validator\UniqueKeyValidator;
+use LDL\Type\Collection\Validator\UniqueValidator;
 use LDL\Type\Collection\Validator\RegexValidator;
 use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
 use LDL\Framework\Base\Exception\LockingException;
@@ -23,7 +23,7 @@ class TruncateCollectionExample extends AbstractCollection implements HasKeyVali
 
         $this->getKeyValidatorChain()
             ->append(new RegexValidator('#[0-9]#', $strict=true))
-            ->append(new UniqueKeyValidator($strict=true))
+            ->append(new UniqueValidator($strict=true))
             ->append(new LockingValidator())
             ->lock();
     }

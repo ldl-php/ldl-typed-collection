@@ -5,7 +5,6 @@ namespace LDL\Type\Collection\Item;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
 use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
-use LDL\Type\Collection\Validator\UniqueKeyValidator;
 
 class NamedItemCollection extends ObjectCollection implements NamedItemCollectionInterface
 {

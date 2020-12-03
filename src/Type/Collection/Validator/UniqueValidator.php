@@ -2,6 +2,7 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\CollectionValueException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
@@ -14,14 +15,30 @@ class UniqueValidator implements AppendItemValidatorInterface, ValidatorModeInte
 {
     use ValidatorModeTrait;
 
+    /**
+     * @param CollectionInterface $collection
+     * @param mixed $item
+     * @param number|string $key
+     * @throws CollectionKeyException
+     */
     public function validateKey(CollectionInterface $collection, $item, $key): void
     {
-        $this->validateValue($collection, $key, $item);
+        if(false === $collection->hasKey($key)) {
+            return;
+        }
+
+        throw new CollectionKeyException("Item with key \"$item\" already exists in this collection!");
     }
 
+    /**
+     * @param CollectionInterface $collection
+     * @param mixed $item
+     * @param number|string $key
+     * @throws CollectionValueException
+     */
     public function validateValue(CollectionInterface $collection, $item, $key): void
     {
-        if(!$collection->hasValue($item)){
+        if(false === $collection->hasValue($item)){
             return;
         }
 

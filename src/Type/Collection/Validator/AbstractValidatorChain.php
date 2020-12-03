@@ -44,6 +44,19 @@ abstract class AbstractValidatorChain implements ValidatorChainInterface
     {
         $this->class = $class;
 
+        if(
+            $this->class !== ValueValidatorInterface::class &&
+            $this->class !== KeyValidatorInterface::class
+        ){
+            $msg = sprintf(
+                'Validator class must be an instance of "%s" or an instance of "%s"',
+                ValueValidatorInterface::class,
+                KeyValidatorInterface::class
+            );
+
+            throw new \LogicException($msg);
+        }
+
         if(null === $items){
             return;
         }

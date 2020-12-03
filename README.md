@@ -21,7 +21,7 @@ class FileCollection extends ObjectCollection
     public function __construct(iterable $items = null) {
         parent::__construct($items);
 
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
         ->append(new InterfaceComplianceValidator(\SplFileInfo::class))
         ->lock();
     }
