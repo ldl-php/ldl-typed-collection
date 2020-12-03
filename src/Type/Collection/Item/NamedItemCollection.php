@@ -13,7 +13,7 @@ class NamedItemCollection extends ObjectCollection implements NamedItemCollectio
     {
         parent::__construct($items);
 
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new InterfaceComplianceItemValidator(NamedItemInterface::class))
             ->lock();
     }

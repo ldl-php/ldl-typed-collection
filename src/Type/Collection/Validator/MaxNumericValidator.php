@@ -4,11 +4,13 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
 use LDL\Type\Collection\Validator\Exception\NumericRangeValidatorException;
 
-class MaxNumericValueValidator implements AppendItemValidatorInterface, ValidatorModeInterface
+class MaxNumericValidator implements AppendItemValidatorInterface, ValidatorModeInterface, KeyValidatorInterface, ValueValidatorInterface
 {
     use ValidatorModeTrait;
 
@@ -33,13 +35,18 @@ class MaxNumericValueValidator implements AppendItemValidatorInterface, Validato
         $this->value = $value;
     }
 
+    public function validateKey(CollectionInterface $collection, $item, $key): void
+    {
+        $this->validateValue($collection, $key, $item);
+    }
+
     /**
      * @param CollectionInterface $collection
      * @param mixed $item
      * @param number|string $key
      * @throws NumericRangeValidatorException
      */
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
         if($item <= $this->value){
             return;

@@ -4,18 +4,18 @@ namespace LDL\Type\Collection\Types\Lockable;
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
-use LDL\Type\Collection\Validator\ValidatorChain;
+use LDL\Type\Collection\Validator\ValueValidatorChain;
 
-class LockableCollection extends AbstractCollection implements HasValidatorChainInterface, LockableCollectionInterface
+class LockableCollection extends AbstractCollection implements HasValueValidatorChainInterface, LockableCollectionInterface
 {
     use LockedCollectionTrait;
     use ValueValidatorChainTrait;
 
     /**
-     * @var ValidatorChain
+     * @var ValueValidatorChain
      */
     private $validatorChain;
 
@@ -23,7 +23,7 @@ class LockableCollection extends AbstractCollection implements HasValidatorChain
     {
         parent::__construct($items);
 
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new Validator\LockingValidator());
     }
 

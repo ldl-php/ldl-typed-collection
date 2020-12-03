@@ -11,7 +11,8 @@
 namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
 use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
@@ -20,7 +21,7 @@ use LDL\Type\Collection\Types\Scalar\Validator\ScalarValidator;
 use LDL\Type\Exception\TypeMismatchException;
 use LDL\Framework\Base\Exception\LockingException;
 
-final class ValidatorChain implements ValidatorChainInterface
+abstract class AbstractValidatorChain implements ValidatorChainInterface
 {
     use CollectionTrait;
     use FilterByInterfaceTrait;
@@ -31,8 +32,18 @@ final class ValidatorChain implements ValidatorChainInterface
      */
     private $strict;
 
-    public function __construct(iterable $items=null)
+    /**
+     * @var string
+     */
+    private $class;
+
+    public function __construct(
+        string $class,
+        iterable $items=null
+    )
     {
+        $this->class = $class;
+
         if(null === $items){
             return;
         }
@@ -76,24 +87,26 @@ final class ValidatorChain implements ValidatorChainInterface
         $atLeastOneValid = false;
 
         /**
-         * @var ValidatorInterface $validator
+         * @var ValueValidatorInterface $validator
          */
         foreach($this as $validator){
 
+            $method = $this->class === KeyValidatorInterface::class ? 'validateKey' : 'validateValue';
+
             if(!$validator instanceof ValidatorModeInterface){
-                $validator->validate($collection, $item, $key);
+                $validator->$method($collection, $item, $key);
                 $atLeastOneValid=true;
                 continue;
             }
 
             if($validator->isStrict()){
-                $validator->validate($collection, $item, $key);
+                $validator->$method($collection, $item, $key);
                 $atLeastOneValid=true;
                 continue;
             }
 
             try{
-                $validator->validate($collection, $item, $key);
+                $validator->$method($collection, $item, $key);
                 $atLeastOneValid = true;
             }catch(\Exception $e){
                 $exceptions[] = $e;
@@ -149,13 +162,14 @@ final class ValidatorChain implements ValidatorChainInterface
             throw new TypeMismatchException($msg);
         }
 
-        if($item instanceof ValidatorInterface){
+        if($item instanceof $this->class){
             return;
         }
 
         $msg = sprintf(
-            '"%s" expects an object which implements "%s"',
-            ValidatorInterface::class,
+            '"%s" expects an object which implements "%s", but "%s" was given',
+            get_class($this),
+            $this->class,
             get_class($item)
         );
 
@@ -165,7 +179,7 @@ final class ValidatorChain implements ValidatorChainInterface
     private function validateKey($key) : void
     {
         $validator = new ScalarValidator($strict = true, $acceptToStringObjects = true);
-        $validator->validate($this, $key,null);
+        $validator->validateValue($this, $key,null);
     }
 
 }

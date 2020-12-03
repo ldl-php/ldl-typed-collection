@@ -4,7 +4,7 @@ namespace LDL\Type\Collection\Interfaces\Validation;
 
 use LDL\Type\Collection\Validator\ValidatorChainInterface;
 
-interface HasValidatorChainInterface
+interface HasValueValidatorChainInterface
 {
-    public function getValidatorChain() : ValidatorChainInterface;
+    public function getValueValidatorChain() : ValidatorChainInterface;
 }

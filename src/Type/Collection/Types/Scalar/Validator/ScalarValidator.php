@@ -4,10 +4,12 @@ namespace LDL\Type\Collection\Types\Scalar\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Exception\TypeMismatchException;
 
-class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInterface
+class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInterface, ValueValidatorInterface, KeyValidatorInterface
 {
     /**
      * @var bool
@@ -33,7 +35,12 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
         return $this->isStrict;
     }
 
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validateKey(CollectionInterface $collection, $item, $key): void
+    {
+        $this->validateValue($collection, $key, $item);
+    }
+
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
         if(is_scalar($item)){
             return;

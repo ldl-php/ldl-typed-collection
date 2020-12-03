@@ -6,14 +6,20 @@ use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Exception\TypeMismatchException;
 
-class LockingValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface
+class LockingValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface, KeyValidatorInterface, ValueValidatorInterface
 {
-    public function validate(
-        CollectionInterface $collection, $item, $key
-    ): void
+
+    public function validateKey(CollectionInterface $collection, $item, $key) : void
+    {
+        $this->validateValue($collection, $item, $key);
+    }
+
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
         if(!$collection instanceof LockableCollectionInterface){
             $msg = sprintf(

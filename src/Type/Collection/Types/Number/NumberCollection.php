@@ -9,6 +9,6 @@ class NumberCollection extends LockableCollection
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()->append(new Validator\NumberValidator());
+        $this->getValueValidatorChain()->append(new Validator\NumberValidator());
     }
 }

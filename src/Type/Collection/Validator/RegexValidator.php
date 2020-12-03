@@ -4,11 +4,13 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Helper\RegexValidatorHelper;
 
-class RegexValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface, ValidatorModeInterface
+class RegexValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface, ValidatorModeInterface, KeyValidatorInterface, ValueValidatorInterface
 {
     /**
      * @var bool
@@ -33,6 +35,11 @@ class RegexValidator implements AppendItemValidatorInterface, RemoveItemValidato
         return $this->_isStrict;
     }
 
+    public function validateKey(CollectionInterface $collection, $item, $key): void
+    {
+        $this->validateValue($collection, $key, $item);
+    }
+
     /**
      * @param CollectionInterface $collection
      * @param mixed $item
@@ -40,7 +47,7 @@ class RegexValidator implements AppendItemValidatorInterface, RemoveItemValidato
      * @throws Exception\RegexValidatorException
      *
      */
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
         if(preg_match($this->regex, (string) $item)) {
             return;

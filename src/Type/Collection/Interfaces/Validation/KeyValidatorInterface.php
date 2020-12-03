@@ -4,7 +4,7 @@ namespace LDL\Type\Collection\Interfaces\Validation;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 
-interface ValidatorInterface
+interface KeyValidatorInterface
 {
     /**
      * @param CollectionInterface $collection
@@ -15,6 +15,6 @@ interface ValidatorInterface
      *
      * @throws \Exception
      */
-    public function validate(CollectionInterface $collection, $item, $key) : void;
+    public function validateKey(CollectionInterface $collection, $item, $key) : void;
 
 }

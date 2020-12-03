@@ -4,16 +4,18 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 
-class NumericRangeValidator implements AppendItemValidatorInterface
+class NumericRangeValidator implements AppendItemValidatorInterface, ValueValidatorInterface, KeyValidatorInterface
 {
     /**
-     * @var MinNumericValueValidator
+     * @var MinNumericValidator
      */
     private $minValidator;
 
     /**
-     * @var MaxNumericValueValidator
+     * @var MaxNumericValidator
      */
     private $maxValidator;
 
@@ -25,8 +27,14 @@ class NumericRangeValidator implements AppendItemValidatorInterface
      */
     public function __construct($min, $max)
     {
-        $this->minValidator = new MinNumericValueValidator($min);
-        $this->maxValidator = new MaxNumericValueValidator($max);
+        $this->minValidator = new MinNumericValidator($min);
+        $this->maxValidator = new MaxNumericValidator($max);
+    }
+
+    public function validateKey(CollectionInterface $collection, $item, $key): void
+    {
+        $this->minValidator->validateKey($collection, $item, $key);
+        $this->maxValidator->validateKey($collection, $item, $key);
     }
 
     /**
@@ -35,9 +43,9 @@ class NumericRangeValidator implements AppendItemValidatorInterface
      * @param number|string $key
      * @throws Exception\NumericRangeValidatorException
      */
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
-        $this->minValidator->validate($collection, $item, $key);
-        $this->maxValidator->validate($collection, $item, $key);
+        $this->minValidator->validateValue($collection, $item, $key);
+        $this->maxValidator->validateValue($collection, $item, $key);
     }
 }

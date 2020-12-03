@@ -2,7 +2,7 @@
 
 namespace LDL\Type\Collection\Traits\Validator;
 
-use LDL\Type\Collection\Validator\ValidatorChain;
+use LDL\Type\Collection\Validator\ValueValidatorChain;
 use LDL\Type\Collection\Validator\ValidatorChainInterface;
 
 trait ValueValidatorChainTrait
@@ -12,13 +12,13 @@ trait ValueValidatorChainTrait
      */
     private $_validatorChain;
 
-    public function getValidatorChain(): ValidatorChainInterface
+    public function getValueValidatorChain(): ValidatorChainInterface
     {
         if(null !== $this->_validatorChain){
             return $this->_validatorChain;
         }
 
-        $this->_validatorChain = new ValidatorChain();
+        $this->_validatorChain = new ValueValidatorChain();
         return $this->_validatorChain;
     }
 }

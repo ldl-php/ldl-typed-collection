@@ -63,12 +63,16 @@ echo "Lock collection\n";
 
 $collection->lock();
 
-echo "Try to truncate collection, exception must be thrown\n";
+echo "Try to truncate collection, (not the collection is LOCKED so an exception must be thrown)\n";
 
 try{
+
     $collection->truncate();
+
 }catch(LockingException $e){
+
     echo "EXCEPTION: {$e->getMessage()}\n";
+
 }
 
 echo "Iterate through elements:\n";

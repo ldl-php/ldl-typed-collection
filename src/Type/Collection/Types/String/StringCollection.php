@@ -13,7 +13,7 @@ class StringCollection extends LockableCollection
     {
         parent::__construct($items);
 
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new Validator\StringValidator(true))
             ->lock();
     }

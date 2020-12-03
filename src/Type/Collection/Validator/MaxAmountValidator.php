@@ -4,9 +4,10 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
 
-class MaxItemAmountValidator implements AppendItemValidatorInterface
+class MaxAmountValidator implements AppendItemValidatorInterface, ValueValidatorInterface
 {
     /**
      * @var int
@@ -23,7 +24,7 @@ class MaxItemAmountValidator implements AppendItemValidatorInterface
         $this->maxAmount = $maxAmount;
     }
 
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
         if(count($collection) < $this->maxAmount){
             return;

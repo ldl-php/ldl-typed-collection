@@ -4,9 +4,11 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
 
-class MinimumItemAmountValidator implements RemoveItemValidatorInterface
+class MinimumAmountValidator implements RemoveItemValidatorInterface, ValueValidatorInterface
+
 {
     /**
      * @var int
@@ -23,7 +25,7 @@ class MinimumItemAmountValidator implements RemoveItemValidatorInterface
         $this->minAmount = $minAmount;
     }
 
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
         if(count($collection) > $this->minAmount){
             return;

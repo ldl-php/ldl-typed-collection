@@ -9,6 +9,6 @@ class ScalarCollection extends LockableCollection
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()->append(new Validator\ScalarValidator());
+        $this->getValueValidatorChain()->append(new Validator\ScalarValidator());
     }
 }

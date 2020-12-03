@@ -3,28 +3,28 @@
 require '../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
-use LDL\Type\Collection\Validator\MaxItemAmountValidator;
+use LDL\Type\Collection\Validator\MaxAmountValidator;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
-use LDL\Type\Collection\Validator\MinimumItemAmountValidator;
+use LDL\Type\Collection\Validator\MinimumAmountValidator;
 
-class ItemAmountValidatorExample extends AbstractCollection implements HasValidatorChainInterface
+class ItemAmountValueValidatorExample extends AbstractCollection implements HasValueValidatorChainInterface
 {
     use ValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()
-            ->append(new MaxItemAmountValidator(5))
-            ->append(new MinimumItemAmountValidator(3))
+        $this->getValueValidatorChain()
+            ->append(new MaxAmountValidator(5))
+            ->append(new MinimumAmountValidator(3))
             ->lock();
     }
 }
 
 echo "Create new collection instance which implements ItemAmountValidator\n";
-$obj = new ItemAmountValidatorExample();
+$obj = new ItemAmountValueValidatorExample();
 
 try {
 

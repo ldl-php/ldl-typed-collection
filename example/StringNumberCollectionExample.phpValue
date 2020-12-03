@@ -6,10 +6,10 @@ use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
 use LDL\Type\Collection\Types\String\Validator\StringValidator;
 use LDL\Type\Collection\Types\Number\Validator\NumberValidator;
-use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
 use LDL\Type\Collection\Validator\Exception\ValidatorChainSoftValidationException;
 
-class StringNumberCollectionExample extends AbstractCollection implements HasValidatorChainInterface
+class StringNumberCollectionExample extends AbstractCollection implements HasValueValidatorChainInterface
 {
     use ValueValidatorChainTrait;
 
@@ -17,7 +17,7 @@ class StringNumberCollectionExample extends AbstractCollection implements HasVal
     {
         parent::__construct($items);
 
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new NumberValidator(false))
             ->append(new StringValidator(false));
     }

@@ -3,7 +3,7 @@
 namespace LDL\Type\Collection\Traits\Validator;
 
 use LDL\Type\Collection\Types\Scalar\Validator\ScalarValidator;
-use LDL\Type\Collection\Validator\ValidatorChain;
+use LDL\Type\Collection\Validator\KeyValidatorChain;
 use LDL\Type\Collection\Validator\ValidatorChainInterface;
 
 trait KeyValidatorChainTrait
@@ -19,7 +19,7 @@ trait KeyValidatorChainTrait
             return $this->_keyValidator;
         }
 
-        $this->_keyValidator = new ValidatorChain();
+        $this->_keyValidator = new KeyValidatorChain();
         $this->_keyValidator->append(new ScalarValidator($strict = true, $acceptToStringObjects = true));
 
         return $this->_keyValidator;

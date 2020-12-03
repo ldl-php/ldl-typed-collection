@@ -3,11 +3,11 @@
 namespace LDL\Type\Collection;
 
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
-use LDL\Type\Collection\Traits\CollectionTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
 use LDL\Type\Collection\Validator\ValidatorChainInterface;
+use LDL\Type\Collection\Traits\CollectionTrait;
 
 abstract class AbstractCollection implements Interfaces\CollectionInterface
 {
@@ -56,7 +56,7 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
          * This doesn't makes sense at first sight, but if you think about it in the lines of
          * the MinimumItemAmountValidator, then, it makes sense.
          *
-         * @see MinimumItemAmountValidator
+         * @see MinimumAmountValidator
          */
         $this->validateValue(RemoveItemValidatorInterface::class, $item, $offset);
 
@@ -108,12 +108,12 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         /**
          * Swap arguments around since key is supposed to be the value
          */
-        $keyChain->validate($this, $key, $item);
+        $keyChain->validate($this, $item, $key);
     }
 
     private function validateValue(string $interface, $item, $key) : void
     {
-        if(!$this instanceof HasValidatorChainInterface){
+        if(!$this instanceof HasValueValidatorChainInterface){
             return;
         }
 
@@ -122,9 +122,9 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         }
 
         /**
-         * @var ValidatorChainInterface $valueChain
+         * @var HasValueValidatorChainInterface $valueChain
          */
-        $valueChain = $this->getValidatorChain()
+        $valueChain = $this->getValueValidatorChain()
             ->filterByInterface($interface);
 
         $valueChain->validate($this, $item, $key);

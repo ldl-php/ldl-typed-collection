@@ -18,7 +18,7 @@ class ObjectCollection extends LockableCollection implements ObjectCollectionInt
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new Validator\ObjectValidator());
     }
 

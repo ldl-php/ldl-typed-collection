@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
 use LDL\Type\Collection\Types\String\Validator\StringValidator;
@@ -23,7 +23,7 @@ class Test2 extends ObjectCollection
 
 }
 
-class Test3 extends AbstractCollection implements HasValidatorChainInterface
+class Test3 extends AbstractCollection implements HasValueValidatorChainInterface
 {
     use ValueValidatorChainTrait;
 
@@ -31,7 +31,7 @@ class Test3 extends AbstractCollection implements HasValidatorChainInterface
     {
         parent::__construct($items);
 
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new StringValidator(false));
     }
 }

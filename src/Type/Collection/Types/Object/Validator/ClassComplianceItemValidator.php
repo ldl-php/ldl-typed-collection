@@ -5,9 +5,10 @@ namespace LDL\Type\Collection\Types\Object\Validator;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Exception\TypeMismatchException;
 
-class ClassComplianceItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface
+class ClassComplianceItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface, ValueValidatorInterface
 {
     /**
      * @var string
@@ -34,7 +35,7 @@ class ClassComplianceItemValidator implements AppendItemValidatorInterface, Vali
         return $this->isStrict;
     }
 
-    public function validate(CollectionInterface $collection, $item, $key): void
+    public function validateValue(CollectionInterface $collection, $item, $key): void
     {
         if(!is_object($item)){
             $msg = sprintf(

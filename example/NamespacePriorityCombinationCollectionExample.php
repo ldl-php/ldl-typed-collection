@@ -57,7 +57,7 @@ class NSPriorityCollectionExample extends ObjectCollection implements Namespacea
     {
         parent::__construct($items);
 
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new InterfaceComplianceItemValidator(NamespaceInterface::class))
             ->append(new InterfaceComplianceItemValidator(PriorityInterface::class))
             ->lock();
@@ -82,7 +82,7 @@ echo "Try to modify the validation chain (exception must be thrown)\n";
 
 try{
 
-    $collection->getValidatorChain()
+    $collection->getValueValidatorChain()
         ->append(new InterfaceComplianceItemValidator(NamespaceInterface::class));
 
 }catch(LockingException $e){

@@ -15,7 +15,7 @@ class PriorityCollectionExample extends ObjectCollection implements PrioritySort
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()
+        $this->getValueValidatorChain()
             ->append(new InterfaceComplianceItemValidator(PriorityInterface::class))
             ->lock();
     }

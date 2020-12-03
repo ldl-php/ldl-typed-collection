@@ -2,7 +2,7 @@
 
 namespace LDL\Type\Collection\Interfaces\Validation;
 
-interface RemoveItemValidatorInterface extends ValidatorInterface
+interface RemoveItemValidatorInterface
 {
 
 }

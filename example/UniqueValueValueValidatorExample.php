@@ -4,24 +4,24 @@ require '../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
-use LDL\Type\Collection\Validator\UniqueValueValidator;
+use LDL\Type\Collection\Validator\UniqueValidator;
 use LDL\Type\Collection\Exception\CollectionValueException;
 
-class UniqueValueValidatorExample extends AbstractCollection implements \LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface {
+class UniqueValueValueValidatorExample extends AbstractCollection implements \LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface {
 
     use ValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()
-            ->append(new UniqueValueValidator());
+        $this->getValueValidatorChain()
+            ->append(new UniqueValidator());
     }
 }
 
 echo "Create collection instance\n";
 
-$collection = new UniqueValueValidatorExample();
+$collection = new UniqueValueValueValidatorExample();
 
 echo "Add element test\n";
 
