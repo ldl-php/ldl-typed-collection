@@ -7,7 +7,6 @@ use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\KeyValidatorChainTrait;
 use LDL\Type\Collection\Validator\UniqueKeyValidator;
 use LDL\Type\Collection\Exception\CollectionKeyException;
-use LDL\Type\Collection\Validator\RegexKeyValidator;
 
 class UniqueKeyValidatorExample extends AbstractCollection implements HasKeyValidatorChainInterface
 {
@@ -18,7 +17,6 @@ class UniqueKeyValidatorExample extends AbstractCollection implements HasKeyVali
         parent::__construct($items);
 
         $this->getKeyValidatorChain()
-            ->append(new RegexKeyValidator('#[0-9]#', $strict=true))
             ->append(new UniqueKeyValidator($strict=true));
     }
 }

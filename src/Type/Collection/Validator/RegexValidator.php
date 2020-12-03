@@ -2,14 +2,13 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Helper\RegexValidatorHelper;
 
-class RegexKeyValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface, ValidatorModeInterface
+class RegexValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface, ValidatorModeInterface
 {
     /**
      * @var bool
@@ -36,17 +35,18 @@ class RegexKeyValidator implements AppendItemValidatorInterface, RemoveItemValid
 
     /**
      * @param CollectionInterface $collection
-     * @param number|string $item
-     * @param $key
-     * @throws CollectionKeyException
+     * @param mixed $item
+     * @param number|string $key
+     * @throws Exception\RegexValidatorException
+     *
      */
     public function validate(CollectionInterface $collection, $item, $key): void
     {
-        if(preg_match($this->regex, (string) $key)) {
+        if(preg_match($this->regex, (string) $item)) {
             return;
         }
 
-        $msg = "Given key: \"$key\" does not matches regex: \"{$this->regex}\"";
-        throw new CollectionKeyException($msg);
+        $msg = "Given value: \"$item\" does not matches regex: \"{$this->regex}\"";
+        throw new Exception\RegexValidatorException($msg);
     }
 }

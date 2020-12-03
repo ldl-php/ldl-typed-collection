@@ -19,20 +19,13 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
      */
     private $acceptToStringObjects;
 
-    /**
-     * @var string
-     */
-    private $validate;
-
     public function __construct(
         bool $strict = false,
-        bool $acceptToStringObjects=true,
-        string $validate='item'
+        bool $acceptToStringObjects=true
     )
     {
         $this->isStrict = $strict;
         $this->acceptToStringObjects = $acceptToStringObjects;
-        $this->validate = $validate;
     }
 
     public function isStrict() : bool
@@ -42,18 +35,7 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
 
     public function validate(CollectionInterface $collection, $item, $key): void
     {
-        switch($this->validate){
-            case 'key':
-                $value = $key;
-                break;
-            case 'item':
-                $value = $item;
-                break;
-            default:
-                throw new \LogicException("Invalid validate option \"{$this->validate}\". Validate option must be one of: [key, item]");
-        }
-
-        if(is_scalar($value)){
+        if(is_scalar($item)){
             return;
         }
 
@@ -62,8 +44,8 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
          */
         if(
             $this->acceptToStringObjects &&
-            is_object($key) &&
-            in_array('__tostring', array_map('strtolower', get_class_methods($key)), true)
+            is_object($item) &&
+            in_array('__tostring', array_map('strtolower', get_class_methods($item)), true)
         ){
             return;
         }
@@ -71,7 +53,7 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
         $msg = sprintf(
             'Value expected for "%s", must be scalar, "%s" was given',
             __CLASS__,
-            gettype($value)
+            gettype($item)
         );
 
         throw new TypeMismatchException($msg);

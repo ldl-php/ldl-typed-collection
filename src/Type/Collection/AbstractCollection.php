@@ -105,7 +105,10 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
         $keyChain = $this->getKeyValidatorChain()
             ->filterByInterface($interface);
 
-        $keyChain->validate($this, $item, $key);
+        /**
+         * Swap arguments around since key is supposed to be the value
+         */
+        $keyChain->validate($this, $key, $item);
     }
 
     private function validateValue(string $interface, $item, $key) : void

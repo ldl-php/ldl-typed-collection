@@ -14,8 +14,8 @@ class UniqueKeyValidator implements AppendItemValidatorInterface, ValidatorModeI
 
     public function validate(CollectionInterface $collection, $item, $key): void
     {
-        if($collection->hasKey($key)){
-            throw new CollectionKeyException("Item with key \"$key\" already exists in this collection!");
+        if($collection->hasKey($item)){
+            throw new CollectionKeyException("Item with key \"$item\" already exists in this collection!");
         }
     }
 }

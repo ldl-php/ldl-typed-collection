@@ -8,7 +8,7 @@ use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
 use LDL\Type\Exception\TypeMismatchException;
 
-class IntegerItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface
+class IntegerValidator implements AppendItemValidatorInterface, ValidatorModeInterface
 {
     use ValidatorModeTrait;
 
@@ -19,9 +19,10 @@ class IntegerItemValidator implements AppendItemValidatorInterface, ValidatorMod
         }
 
         $msg = sprintf(
-          'Value expected for "%s", must be of type integer, "%s" given',
+          'Value expected for "%s", must be of type integer, "%s" (%s) given',
             __CLASS__,
-            gettype($item)
+            gettype($item),
+            var_export($item, true)
         );
 
         throw new TypeMismatchException($msg);

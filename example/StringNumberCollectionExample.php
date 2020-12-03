@@ -4,7 +4,7 @@ require '../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
-use LDL\Type\Collection\Types\String\Validator\StringItemValidator;
+use LDL\Type\Collection\Types\String\Validator\StringValidator;
 use LDL\Type\Collection\Types\Number\Validator\NumberValidator;
 use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
 use LDL\Type\Collection\Validator\Exception\ValidatorChainSoftValidationException;
@@ -19,7 +19,7 @@ class StringNumberCollectionExample extends AbstractCollection implements HasVal
 
         $this->getValidatorChain()
             ->append(new NumberValidator(false))
-            ->append(new StringItemValidator(false));
+            ->append(new StringValidator(false));
     }
 }
 

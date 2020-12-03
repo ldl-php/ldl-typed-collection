@@ -14,7 +14,7 @@ class StringCollection extends LockableCollection
         parent::__construct($items);
 
         $this->getValidatorChain()
-            ->append(new Validator\StringItemValidator(true))
+            ->append(new Validator\StringValidator(true))
             ->lock();
     }
 }

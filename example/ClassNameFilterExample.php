@@ -6,7 +6,7 @@ use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
-use LDL\Type\Collection\Types\String\Validator\StringItemValidator;
+use LDL\Type\Collection\Types\String\Validator\StringValidator;
 
 class ClassNameFilterExample extends ObjectCollection
 {
@@ -22,7 +22,7 @@ class Test1 extends AbstractCollection implements HasValidatorChainInterface
         parent::__construct($items);
 
         $this->getValidatorChain()
-            ->append(new StringItemValidator(false));
+            ->append(new StringValidator(false));
     }
 }
 
@@ -35,7 +35,7 @@ class Test2 extends AbstractCollection implements HasValidatorChainInterface
         parent::__construct($items);
 
         $this->getValidatorChain()
-            ->append(new StringItemValidator(false));
+            ->append(new StringValidator(false));
     }
 }
 
@@ -48,7 +48,7 @@ class Test3 extends AbstractCollection implements HasValidatorChainInterface
         parent::__construct($items);
 
         $this->getValidatorChain()
-            ->append(new StringItemValidator(false));
+            ->append(new StringValidator(false));
     }
 }
 

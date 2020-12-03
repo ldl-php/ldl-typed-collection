@@ -9,6 +9,6 @@ class IntegerCollection extends LockableCollection
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValidatorChain()->append(new Validator\IntegerItemValidator());
+        $this->getValidatorChain()->append(new Validator\IntegerValidator());
     }
 }

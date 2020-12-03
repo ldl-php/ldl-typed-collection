@@ -164,8 +164,8 @@ final class ValidatorChain implements ValidatorChainInterface
 
     private function validateKey($key) : void
     {
-        $validator = new ScalarValidator($strict = true, $acceptToStringObjects = true, $validate = 'key');
-        $validator->validate($this, null, $key);
+        $validator = new ScalarValidator($strict = true, $acceptToStringObjects = true);
+        $validator->validate($this, $key,null);
     }
 
 }

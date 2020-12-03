@@ -20,7 +20,7 @@ trait KeyValidatorChainTrait
         }
 
         $this->_keyValidator = new ValidatorChain();
-        $this->_keyValidator->append(new ScalarValidator($strict = true, $acceptToStringObjects = true, $validate = 'key'));
+        $this->_keyValidator->append(new ScalarValidator($strict = true, $acceptToStringObjects = true));
 
         return $this->_keyValidator;
     }
