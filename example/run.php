@@ -37,6 +37,6 @@ foreach($dp as $file){
     sleep($sleep);
 }
 
-echo "****************************************************\n";
-echo "All examples run successfully!\n";
+echo "\n\n****************************************************\n";
+echo "All examples have run with no exceptions\n";
 exit(0);
