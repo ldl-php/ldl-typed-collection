@@ -48,7 +48,7 @@ echo "Append NamespaceClass2\n";
 $collection->append(new NamespaceClass2());
 
 echo "Filter by namespace regex: #.*2$#\n";
-echo "Found ".count($collection->filterByNameSpaceRegex('#.*2#'))." elements \n";
+echo "Found ".count($collection->filterByNamespaceRegex('#.*2#'))." elements \n";
 
 echo "Filter by namespace: \"Namespace 1\"\n";
 echo "Found ".count($collection->filterByNamespace('Namespace 1'))." elements \n";
@@ -58,3 +58,14 @@ echo "Found ".count($collection->filterByNamespaces(['Namespace 1', 'Namespace 2
 
 echo "Filter by namespace and name: Namespace 1, Name\n";
 echo "Found ".count($collection->filterByNamespaceAndName('Namespace 1', 'Name'))." elements \n";
+
+echo "\n\nAuto filter \n";
+
+echo "Filter by namespace: \"Namespace 1\" in Auto mode\n";
+echo "Found ".count($collection->filterByNamespaceAuto('Namespace 1'))." elements \n\n";
+
+echo "Filter by regex #.*2# in Auto mode:\n";
+echo count($collection->filterByNamespaceAuto('#.*2#'))."\n\n";
+
+echo "Filter by namespaces: [Namespace 1, Namespace 2] in Auto mode\n\n";
+echo "Found ".count($collection->filterByNamespaceAuto(['Namespace 1', 'Namespace 2']))." elements \n\n";

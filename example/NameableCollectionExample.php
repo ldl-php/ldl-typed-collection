@@ -48,3 +48,18 @@ echo "Found ".count($collection->filterByNameRegex('#Name.*$#'))." elements \n";
 
 echo "Filter by names: [Name1, Name2]\n";
 echo "Found ".count($collection->filterByNames(['Name1', 'Name2']))." elements \n";
+
+echo "Auto validate\n";
+
+
+echo "Filter by name in Auto mode: Name1\n";
+echo "Found ".count($collection->filterByNameAuto('Name1'))." elements \n";
+
+echo "Filter by namespace regex in Auto mode: #.*2$#\n";
+echo "Found ".count($collection->filterByNameAuto('#.*2$#'))." elements \n";
+
+echo "Filter by namespace regex in Auto mode: #Name.*$#\n";
+echo "Found ".count($collection->filterByNameAuto('#Name.*$#'))." elements \n";
+
+echo "Filter by names: [Name1, Name2] in Auto mode\n";
+echo "Found ".count($collection->filterByNameAuto(['Name1', 'Name2']))." elements \n";

@@ -34,4 +34,15 @@ interface NameableCollectionInterface
      */
     public function filterByNameRegex(string $regex, CollectionInterface &$collection=null) : CollectionInterface;
 
+    /**
+     * Auto determines the $mixed value and applies the appropriate filtering method to filter the collection,
+     * use this to avoid multiple if's in your code.
+     *
+     * @param $mixed
+     * @param CollectionInterface|null $collection
+     *
+     * @return CollectionInterface
+     */
+    public function filterByNameAuto($mixed, CollectionInterface &$collection=null) : CollectionInterface;
+
 }

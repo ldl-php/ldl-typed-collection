@@ -18,6 +18,19 @@ trait NamespaceableCollectionTrait
 {
     use NameableCollectionTrait;
 
+    public function filterByNamespaceAuto($mixed, CollectionInterface &$collection=null) : CollectionInterface
+    {
+        if(is_array($mixed)){
+            return $this->filterByNamespaces($mixed, $collection);
+        }
+
+        try {
+            return $this->filterByNamespaceRegex((string) $mixed, $collection);
+        }catch(\LogicException $e) {
+            return $this->filterByNamespaces([$mixed], $collection);
+        }
+    }
+
     public function filterByNamespaces(array $nameSpaces, CollectionInterface &$collection=null) : CollectionInterface
     {
 
@@ -63,48 +76,6 @@ trait NamespaceableCollectionTrait
          */
         foreach($this as $key => $value){
             if(preg_match($regex, $value->getNamespace())){
-                $collection->append($value, $key);
-            }
-        }
-
-        return $collection;
-    }
-
-    public function filterByName(string $name, CollectionInterface &$collection=null) : CollectionInterface
-    {
-        if(null === $collection) {
-            $collection = clone($this);
-            $collection->truncate();
-        }
-
-        /**
-         * @var NamespaceInterface $value
-         */
-        foreach($this as $key => $value){
-            $equals = $name === $value->getName();
-
-            if($equals){
-                $collection->append($value, $key);
-            }
-        }
-
-        return $collection;
-    }
-
-    public function filterByNameRegex(string $regex, CollectionInterface &$collection=null) : CollectionInterface
-    {
-        RegexValidatorHelper::validate($regex);
-
-        if(null === $collection) {
-            $collection = clone($this);
-            $collection->truncate();
-        }
-
-        /**
-         * @var NamespaceInterface $value
-         */
-        foreach($this as $key => $value){
-            if(preg_match($regex, $value->getName())){
                 $collection->append($value, $key);
             }
         }

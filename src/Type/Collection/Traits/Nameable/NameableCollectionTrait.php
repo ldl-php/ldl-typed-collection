@@ -9,12 +9,24 @@
 namespace LDL\Type\Collection\Traits\Nameable;
 
 use LDL\Framework\Base\Contracts\NameableInterface;
-use LDL\Framework\Base\Contracts\NamespaceInterface;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Helper\RegexValidatorHelper;
 
 trait NameableCollectionTrait
 {
+    public function filterByNameAuto($mixed, CollectionInterface &$collection=null) : CollectionInterface
+    {
+        if(is_array($mixed)){
+            return $this->filterByNames($mixed, $collection);
+        }
+
+        try {
+            return $this->filterByNameRegex($mixed, $collection);
+        }catch(\LogicException $e) {
+            return $this->filterByNames([$mixed], $collection);
+        }
+    }
+
     public function filterByName(string $name, CollectionInterface &$collection=null) : CollectionInterface
     {
         return $this->filterByNames([$name], $collection);
@@ -49,7 +61,7 @@ trait NameableCollectionTrait
         }
 
         /**
-         * @var NamespaceInterface $value
+         * @var NameableInterface $value
          */
         foreach($this as $key => $value){
             if(preg_match($regex, $value->getName())){
