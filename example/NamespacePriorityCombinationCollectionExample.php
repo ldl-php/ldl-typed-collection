@@ -8,7 +8,7 @@ use LDL\Type\Collection\Types\Object\ObjectCollection;
 use LDL\Type\Collection\Traits\Sorting\PrioritySortingTrait;
 use LDL\Type\Exception\TypeMismatchException;
 use LDL\Framework\Base\Contracts\NamespaceInterface;
-use LDL\Type\Collection\Interfaces\Namespaceable\NamespaceableInterface;
+use LDL\Type\Collection\Interfaces\Namespaceable\NamespaceableCollectionInterface;
 use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
 use LDL\Framework\Base\Exception\LockingException;
 
@@ -48,9 +48,9 @@ class NSPriority2 implements PriorityInterface, NamespaceInterface
     }
 }
 
-class NSPriorityCollectionExample extends ObjectCollection implements NamespaceableInterface, PrioritySortingInterface
+class NSPriorityCollectionExample extends ObjectCollection implements NamespaceableCollectionInterface, PrioritySortingInterface
 {
-    use \LDL\Type\Collection\Traits\Namespaceable\NamespaceableTrait;
+    use \LDL\Type\Collection\Traits\Namespaceable\NamespaceableCollectionTrait;
     use PrioritySortingTrait;
 
     public function __construct(iterable $items = null)
@@ -139,12 +139,13 @@ try{
 
 }
 
+$newCollection = new NSPriorityCollectionExample;
 
 echo "\nFilter by regex: #Name 2#\n";
 
 /**
  * @var NamespaceInterface $item
  */
-foreach($collection->filterByNameRegex('#Name 2#') as $item){
+foreach($collection->filterByNameRegex('#Name 2#', $newCollection) as $item){
     echo $item->getNamespace(). ' '. $item->getName()."\n";
 }

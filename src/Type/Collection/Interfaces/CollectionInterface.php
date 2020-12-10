@@ -121,4 +121,9 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      * @return CollectionInterface
      */
     public function filterByKeyRegex(string $regex) : CollectionInterface;
+
+    /**
+     * @return CollectionInterface
+     */
+    public function truncate() : CollectionInterface;
 }
