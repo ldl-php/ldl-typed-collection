@@ -56,8 +56,8 @@ echo "Validate VALUE:\n";
 
 try {
 
-    echo "Try to add element 111, with key \"def\" which doesn't matches regex #[0-9]#+\n";
-    $collection->append('def', '444');
+    echo "Try to add element \"def\", with key 111 which doesn't matches regex #[0-9]#+\n";
+    $collection->append('def', 111);
 
 }catch(RegexValidatorException $e){
 

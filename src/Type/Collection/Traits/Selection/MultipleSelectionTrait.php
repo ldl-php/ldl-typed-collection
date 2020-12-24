@@ -58,11 +58,12 @@ trait MultipleSelectionTrait
         /**
          * @var CollectionInterface $collection
          */
-        $collection = new static();
+        $collection = clone($this);
+        $collection->truncate();
 
         foreach($this as $key => $value){
             if(array_key_exists($key, $this->__selected)){
-                $collection->append($key, $value);
+                $collection->append($value, $key);
             }
         }
 
