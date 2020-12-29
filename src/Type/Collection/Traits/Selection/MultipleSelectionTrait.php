@@ -27,10 +27,10 @@ trait MultipleSelectionTrait
     private $__multiSelectionCountSelected=0;
 
     /**
-     * @param $key
-     * @return CollectionInterface
+     * @param  mixed
      * @throws CollectionKeyException
      * @throws \LDL\Framework\Base\Exception\LockingException
+     * @return CollectionInterface
      */
     public function select($key) : CollectionInterface
     {
@@ -38,16 +38,21 @@ trait MultipleSelectionTrait
 
         $this->_validateLockedSelection();
 
-        if(!is_scalar($key)){
-            throw new CollectionKeyException('Selection key must be of scalar type');
+        $keys = is_scalar($key) ? [$key] : $key;
+
+        if(!is_array($keys)){
+            $msg = sprintf('%s accepts only scalar or array values as key(s) to be selected', __METHOD__);
+            throw new CollectionKeyException($msg);
         }
 
-        /**
-         * If offset does not exists, it will throw an UndefinedOffsetException
-         */
-        $this->offsetGet($key);
+        foreach($keys as $k){
+            /**
+             * If offset does not exists, it will throw an UndefinedOffsetException
+             */
+            $this->offsetGet($k);
 
-        $this->__multiSelectionSelected[$key] = true;
+            $this->__multiSelectionSelected[$k] = true;
+        }
 
         return $this;
     }
