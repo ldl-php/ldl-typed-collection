@@ -40,7 +40,7 @@ try {
 
 try {
 
-    echo "Append Object that not is an Exception, (exception must be thrown)\n\n";
+    echo "Append Object that is not an Exception, (exception must be thrown)\n\n";
     $collection->append(new SimpleClass());
 
 }catch(\Exception $e){
@@ -48,3 +48,11 @@ try {
     echo "EXCEPTION: {$e->getMessage()}\n\n";
 
 }
+
+echo "Convert list of exceptions to JSON\n\n";
+
+echo json_encode($collection);
+
+echo "\n\nConvert list of exceptions to Array\n\n";
+
+var_dump($collection->toArray());
