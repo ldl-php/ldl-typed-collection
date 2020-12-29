@@ -19,7 +19,12 @@ trait MultipleSelectionTrait
     /**
      * @var array
      */
-    private $__selected = [];
+    private $__multiSelectionSelected = [];
+
+    /**
+     * @var int
+     */
+    private $__multiSelectionCountSelected=0;
 
     /**
      * @param $key
@@ -29,6 +34,8 @@ trait MultipleSelectionTrait
      */
     public function select($key) : CollectionInterface
     {
+        $this->__multiSelectionCountSelected++;
+
         $this->_validateLockedSelection();
 
         if(!is_scalar($key)){
@@ -40,7 +47,7 @@ trait MultipleSelectionTrait
          */
         $this->offsetGet($key);
 
-        $this->__selected[$key] = true;
+        $this->__multiSelectionSelected[$key] = true;
 
         return $this;
     }
@@ -51,7 +58,7 @@ trait MultipleSelectionTrait
      */
     public function getSelectedItems() : CollectionInterface
     {
-        if(null === $this->__selected){
+        if(0 === $this->__multiSelectionCountSelected){
             throw new ItemSelectionException('No items were selected');
         }
 
@@ -62,12 +69,17 @@ trait MultipleSelectionTrait
         $collection->truncate();
 
         foreach($this as $key => $value){
-            if(array_key_exists($key, $this->__selected)){
+            if(array_key_exists($key, $this->__multiSelectionSelected)){
                 $collection->append($value, $key);
             }
         }
 
         return $collection;
+    }
+
+    public function getSelectedCount() : int
+    {
+        return $this->__multiSelectionCountSelected;
     }
 
     /**
@@ -76,11 +88,11 @@ trait MultipleSelectionTrait
      */
     public function getSelectedKeys(): array
     {
-        if(null === $this->__selected){
+        if(0 === $this->__multiSelectionCountSelected){
             throw new ItemSelectionException('No items were selected');
         }
 
-        return array_keys($this->__selected);
+        return array_keys($this->__multiSelectionSelected);
     }
 
 }

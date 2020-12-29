@@ -15,6 +15,14 @@ class MultiSelectTest extends AbstractCollection implements MultipleSelectionInt
 echo "Create collection instance\n";
 $collection = new MultiSelectTest();
 
+echo "Attempt to obtain selected items without selecting anything (EXCEPTION must be thrown)\n\n";
+
+try{
+    $collection->getSelectedItems();
+}catch(\Exception $e){
+    echo "EXCEPTION: {$e->getMessage()}\n";
+}
+
 echo "Append item 123 using my_key_1 as key\n";
 $collection->append('123','my_key_1');
 
@@ -29,6 +37,9 @@ $collection->select('my_key_1', false);
 
 echo "Select item my_key_3 in collection\n";
 $collection->select('my_key_3');
+
+echo "Obtain count of selected items (must be 2)\n\n";
+echo "Count is: {$collection->getSelectedCount()}\n\n";
 
 echo "Is selection locked?\n";
 var_dump($collection->isSelectionLocked());

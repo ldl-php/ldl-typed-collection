@@ -24,4 +24,12 @@ interface MultipleSelectionInterface extends PrivateSelectableInterface {
      * @return array
      */
     public function getSelectedKeys() : array;
+
+    /**
+     * Obtains the count of selected items
+     *
+     * @return int
+     */
+    public function getSelectedCount() : int;
+
 }
