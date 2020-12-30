@@ -10,12 +10,12 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
 use LDL\Type\Collection\Traits\Filter\FilterByInterfaceTrait;
-use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\CollectionTrait;
 use LDL\Type\Collection\Types\Scalar\Validator\ScalarValidator;
 use LDL\Type\Exception\TypeMismatchException;
@@ -25,7 +25,7 @@ abstract class AbstractValidatorChain implements ValidatorChainInterface
 {
     use CollectionTrait;
     use FilterByInterfaceTrait;
-    use LockedCollectionTrait;
+    use LockableObjectInterfaceTrait;
 
     /**
      * @var bool

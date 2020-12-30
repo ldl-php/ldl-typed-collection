@@ -2,9 +2,9 @@
 
 namespace LDL\Type\Collection\Types\Lockable\Validator;
 
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
@@ -21,11 +21,11 @@ class LockingValidator implements AppendItemValidatorInterface, RemoveItemValida
 
     public function validateValue(CollectionInterface $collection, $item, $key): void
     {
-        if(!$collection instanceof LockableCollectionInterface){
+        if(!$collection instanceof LockableObjectInterface){
             $msg = sprintf(
                 'To use "%s", your collection must implement "%s"',
             __CLASS__,
-                LockableCollectionInterface::class
+                LockableObjectInterface::class
             );
 
             throw new TypeMismatchException($msg);

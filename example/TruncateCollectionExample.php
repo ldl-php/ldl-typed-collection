@@ -4,18 +4,18 @@ require '../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
-use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\Validator\KeyValidatorChainTrait;
 use LDL\Type\Collection\Types\Lockable\Validator\LockingValidator;
 use LDL\Type\Collection\Validator\UniqueValidator;
 use LDL\Type\Collection\Validator\RegexValidator;
-use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
 use LDL\Framework\Base\Exception\LockingException;
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
+use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 
-class TruncateCollectionExample extends AbstractCollection implements HasKeyValidatorChainInterface, LockableCollectionInterface
+class TruncateCollectionExample extends AbstractCollection implements HasKeyValidatorChainInterface, LockableObjectInterface
 {
     use KeyValidatorChainTrait;
-    use LockedCollectionTrait;
+    use LockableObjectInterfaceTrait;
 
     public function __construct(iterable $items = null)
     {

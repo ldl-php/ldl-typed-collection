@@ -11,17 +11,18 @@ use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\ItemSelectionException;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\Interfaces\Selection\SingleSelectionInterface;
 
 trait SingleSelectionTrait
 {
-    use PrivateSelectionLockingTrait;
+    use SelectionLockingTrait;
 
     /**
      * @var number|string|null
      */
     private $__selectedKey;
 
-    public function select($key) : CollectionInterface
+    public function select($key) : SingleSelectionInterface
     {
         $this->_validateLockedSelection();
 

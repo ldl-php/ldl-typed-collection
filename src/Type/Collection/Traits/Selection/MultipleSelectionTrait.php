@@ -11,10 +11,11 @@ namespace LDL\Type\Collection\Traits\Selection;
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\ItemSelectionException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\Interfaces\Selection\MultipleSelectionInterface;
 
 trait MultipleSelectionTrait
 {
-    use PrivateSelectionLockingTrait;
+    use SelectionLockingTrait;
 
     /**
      * @var array
@@ -26,13 +27,7 @@ trait MultipleSelectionTrait
      */
     private $__multiSelectionCountSelected=0;
 
-    /**
-     * @param  mixed
-     * @throws CollectionKeyException
-     * @throws \LDL\Framework\Base\Exception\LockingException
-     * @return CollectionInterface
-     */
-    public function select($key) : CollectionInterface
+    public function select($key) : MultipleSelectionInterface
     {
         $this->__multiSelectionCountSelected++;
 
@@ -57,11 +52,7 @@ trait MultipleSelectionTrait
         return $this;
     }
 
-    /**
-     * @return CollectionInterface
-     * @throws ItemSelectionException
-     */
-    public function getSelectedItems() : CollectionInterface
+    public function getSelectedItems() : MultipleSelectionInterface
     {
         if(0 === $this->__multiSelectionCountSelected){
             throw new ItemSelectionException('No items were selected');
@@ -87,10 +78,6 @@ trait MultipleSelectionTrait
         return $this->__multiSelectionCountSelected;
     }
 
-    /**
-     * @return array
-     * @throws ItemSelectionException
-     */
     public function getSelectedKeys(): array
     {
         if(0 === $this->__multiSelectionCountSelected){
@@ -98,6 +85,21 @@ trait MultipleSelectionTrait
         }
 
         return array_keys($this->__multiSelectionSelected);
+    }
+
+    public function truncateToSelected() : MultipleSelectionInterface
+    {
+        if(0 === $this->__multiSelectionCountSelected){
+            throw new ItemSelectionException('No items were selected');
+        }
+
+        foreach($this as $key => $value){
+            if(false === array_key_exists($key, $this->__multiSelectionSelected)){
+                $this->offsetUnset($key);
+            }
+        }
+
+        return $this;
     }
 
 }

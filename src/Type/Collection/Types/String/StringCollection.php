@@ -2,12 +2,12 @@
 
 namespace LDL\Type\Collection\Types\String;
 
-use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
+use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Type\Collection\Types\Lockable\LockableCollection;
 
 class StringCollection extends LockableCollection
 {
-    use LockedCollectionTrait;
+    use LockableObjectInterfaceTrait;
 
     public function __construct(iterable $items = null)
     {

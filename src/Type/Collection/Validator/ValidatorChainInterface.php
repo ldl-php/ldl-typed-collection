@@ -2,11 +2,11 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
 use LDL\Type\Collection\Types\Object\Filter\FilterByInterface;
 
-interface ValidatorChainInterface extends CollectionInterface, LockableCollectionInterface, FilterByInterface
+interface ValidatorChainInterface extends CollectionInterface, LockableObjectInterface, FilterByInterface
 {
     /**
      * @param CollectionInterface $collection

@@ -2,16 +2,16 @@
 
 namespace LDL\Type\Collection\Types\Lockable;
 
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
+use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Locking\LockableCollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
-use LDL\Type\Collection\Traits\Locking\LockedCollectionTrait;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
 use LDL\Type\Collection\Validator\ValueValidatorChain;
 
-class LockableCollection extends AbstractCollection implements HasValueValidatorChainInterface, LockableCollectionInterface
+class LockableCollection extends AbstractCollection implements HasValueValidatorChainInterface, LockableObjectInterface
 {
-    use LockedCollectionTrait;
+    use LockableObjectInterfaceTrait;
     use ValueValidatorChainTrait;
 
     /**

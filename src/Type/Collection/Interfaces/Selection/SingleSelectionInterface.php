@@ -5,7 +5,17 @@ namespace LDL\Type\Collection\Interfaces\Selection;
 use LDL\Type\Collection\Exception\EmptyCollectionException;
 use LDL\Type\Collection\Exception\ItemSelectionException;
 
-interface SingleSelectionInterface extends PrivateSelectableInterface {
+interface SingleSelectionInterface extends SelectionLockingInterface
+{
+
+    /**
+     * Select an item in the collection
+     *
+     * @throws ItemSelectionException if selection is locked
+     * @param string $key
+     * @return SingleSelectionInterface
+     */
+    public function select($key) : SingleSelectionInterface;
 
     /**
      * Return the selected item, previously selected by the select method

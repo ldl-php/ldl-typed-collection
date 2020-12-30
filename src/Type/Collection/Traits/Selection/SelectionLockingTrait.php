@@ -9,9 +9,9 @@
 namespace LDL\Type\Collection\Traits\Selection;
 
 use LDL\Framework\Base\Exception\LockingException;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\Interfaces\Selection\SelectionLockingInterface;
 
-trait PrivateSelectionLockingTrait
+trait SelectionLockingTrait
 {
 
     /**
@@ -19,7 +19,8 @@ trait PrivateSelectionLockingTrait
      */
     private $__selectionLocked = false;
 
-    private function _validateLockedSelection(){
+    private function _validateLockedSelection() : void
+    {
         if(false === $this->__selectionLocked) {
             return;
         }
@@ -28,7 +29,7 @@ trait PrivateSelectionLockingTrait
         throw new LockingException($msg);
     }
 
-    public function lockSelection() : CollectionInterface
+    public function lockSelection() : SelectionLockingInterface
     {
         $this->_validateLockedSelection();
         $this->__selectionLocked = true;
