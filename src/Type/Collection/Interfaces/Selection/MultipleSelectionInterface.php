@@ -4,7 +4,6 @@ namespace LDL\Type\Collection\Interfaces\Selection;
 
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Exception\EmptyCollectionException;
-use LDL\Type\Collection\Exception\ItemSelectionException;
 
 interface MultipleSelectionInterface extends SelectionLockingInterface
 {
@@ -20,7 +19,6 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
      * Return the selected items, previously selected by the select method
      *
      * @throws EmptyCollectionException if the collection is empty
-     * @throws ItemSelectionException if there is no item selected
      * @return mixed
      */
     public function getSelectedItems() : MultipleSelectionInterface;
@@ -28,7 +26,6 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
     /**
      * Returns an array containing keys previously selected
      *
-     * @throws ItemSelectionException if no items were selected
      * @return array
      */
     public function getSelectedKeys() : array;
@@ -43,7 +40,6 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
     /**
      * Truncates the instance to selected values only (does not creates a new instance)
      *
-     * @throws ItemSelectionException if there is no item selected
      * @throws LockingException If the selection is locked
      * @return MultipleSelectionInterface
      */

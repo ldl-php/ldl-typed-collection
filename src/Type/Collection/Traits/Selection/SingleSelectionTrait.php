@@ -8,7 +8,6 @@
 namespace LDL\Type\Collection\Traits\Selection;
 
 use LDL\Type\Collection\Exception\CollectionKeyException;
-use LDL\Type\Collection\Exception\ItemSelectionException;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Selection\SingleSelectionInterface;
@@ -52,10 +51,6 @@ trait SingleSelectionTrait
 
     public function getSelectedItem()
     {
-        if(null === $this->__selectedKey){
-            throw new ItemSelectionException('No item was selected');
-        }
-
         return $this->offsetGet($this->__selectedKey);
     }
 

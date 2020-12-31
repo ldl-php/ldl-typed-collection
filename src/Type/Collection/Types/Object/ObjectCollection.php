@@ -34,12 +34,14 @@ class ObjectCollection extends LockableCollection implements ObjectCollectionInt
     {
         $collection = clone($this);
         $collection->truncate();
-        $collection->_validateValues = false;
-        $collection->_validateKeys = false;
 
+        $this->disableValidations();
+
+        /**
+         * Early return
+         */
         if(false === array_key_exists($className, $this->classData)){
-            $collection->_validateValues = true;
-            $collection->_validateKeys = true;
+            $this->enableValidations();
             return $collection;
         }
 
@@ -47,8 +49,7 @@ class ObjectCollection extends LockableCollection implements ObjectCollectionInt
             $collection->append($this[$offset], $offset);
         }
 
-        $collection->_validateValues = true;
-        $collection->_validateKeys = true;
+        $this->enableValidations();
 
         return $collection;
     }

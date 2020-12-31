@@ -129,4 +129,41 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
 
         $valueChain->validate($this, $item, $key);
     }
+
+    protected function enableValueValidations() : self
+    {
+        $this->_validateValues = true;
+        return $this;
+    }
+
+    protected function disableValueValidations() : self
+    {
+        $this->_validateValues = false;
+        return $this;
+    }
+
+    protected function enableKeyValidations() : self
+    {
+        $this->_validateKeys = true;
+        return $this;
+    }
+
+    protected function disableKeyValidations() : self
+    {
+        $this->_validateKeys = false;
+        return $this;
+    }
+
+    protected function enableValidations() : self
+    {
+        $this->enableKeyValidations();
+        return $this->enableValueValidations();
+    }
+
+    protected function disableValidations() : self
+    {
+        $this->disableKeyValidations();
+        return $this->disableValueValidations();
+    }
+
 }
