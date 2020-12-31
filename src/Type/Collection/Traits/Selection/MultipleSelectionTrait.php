@@ -89,6 +89,8 @@ trait MultipleSelectionTrait
 
     public function truncateToSelected() : MultipleSelectionInterface
     {
+        $this->_validateLockedSelection();
+
         if(0 === $this->__multiSelectionCountSelected){
             throw new ItemSelectionException('No items were selected');
         }
@@ -98,6 +100,16 @@ trait MultipleSelectionTrait
                 $this->offsetUnset($key);
             }
         }
+
+        return $this;
+    }
+
+    public function removeSelection() : MultipleSelectionInterface
+    {
+        $this->_validateLockedSelection();
+
+        $this->__multiSelectionCountSelected = 0;
+        $this->__multiSelectionSelected = [];
 
         return $this;
     }
