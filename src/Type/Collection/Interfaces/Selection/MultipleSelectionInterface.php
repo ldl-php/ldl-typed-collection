@@ -10,7 +10,7 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
     /**
      * Select one or more items inside the collection
      * @throws LockingException if selection is locked
-     * @param mixed $key
+     * @param iterable $key
      * @return MultipleSelectionInterface
      */
     public function select($key) : MultipleSelectionInterface;

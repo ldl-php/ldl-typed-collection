@@ -35,7 +35,7 @@ trait MultipleSelectionTrait
 
         $keys = is_scalar($key) ? [$key] : $key;
 
-        if(!is_array($keys)){
+        if(!is_iterable($keys)){
             $msg = sprintf('%s accepts only scalar or array values as key(s) to be selected', __METHOD__);
             throw new CollectionKeyException($msg);
         }
