@@ -18,6 +18,17 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      */
     public function append($item, $key = null) : CollectionInterface;
 
+
+    /**
+     * Append many elements (same as append but for many elements)
+     *
+     * @param iterable $items
+     * @param bool $useKey (use key when appending, false by default)
+     *
+     * @return CollectionInterface
+     */
+    public function appendMany(iterable $items, bool $useKey=false) : CollectionInterface;
+
     /**
      * If the key already exists, it will be replaced, if the key does not exists
      * it will be appended to the collection.
