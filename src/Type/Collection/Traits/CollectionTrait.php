@@ -229,7 +229,6 @@ trait CollectionTrait
 
     public function offsetGet($offset)
     {
-        echo __METHOD__."\n";
         if(!is_scalar($offset)){
             throw new CollectionKeyException('Keys can be only of scalar type');
         }
