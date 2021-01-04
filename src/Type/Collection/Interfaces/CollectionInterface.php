@@ -122,10 +122,10 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
     public function filterByKey(string $key);
 
     /**
-     * @param array $keys
+     * @param iterable $keys
      * @return CollectionInterface
      */
-    public function filterByKeys(array $keys) : CollectionInterface;
+    public function filterByKeys(iterable $keys) : CollectionInterface;
 
     /**
      * @param string $regex

@@ -78,22 +78,27 @@ trait CollectionTrait
         return $this->offsetExists($key);
     }
 
-    public function filterByKeys(array $keys) : CollectionInterface
+    public function filterByKeys(iterable $keys) : CollectionInterface
     {
         /**
          * @var CollectionInterface $self
          */
         $self = clone($this);
         $self->items = [];
+        $self->count = 0;
 
         $first = true;
 
         $k = null;
 
-        foreach($this->items as $k=>$v){
-            if(!in_array($k, $keys, true)) {
+        $keys = is_array($keys) ? $keys : \iterator_to_array($keys);
+
+        foreach($this->items as $k => $v){
+            if(!in_array($k, $keys, true)){
                 continue;
             }
+
+            $self->count++;
 
             if($first){
                 $self->first = $k;
