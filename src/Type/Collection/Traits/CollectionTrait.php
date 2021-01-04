@@ -6,6 +6,7 @@
 
 namespace LDL\Type\Collection\Traits;
 
+use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\TypedCollectionException;
 use LDL\Type\Collection\Exception\UndefinedOffsetException;
@@ -84,14 +85,12 @@ trait CollectionTrait
          * @var CollectionInterface $self
          */
         $self = clone($this);
-        $self->items = [];
-        $self->count = 0;
-        $self->first = null;
-        $self->last = null;
+        $self->truncate();
+        $isAbstractCollection = $self instanceof AbstractCollection;
 
-        $first = true;
-
-        $k = null;
+        if($isAbstractCollection){
+            $self->disableValidations();
+        }
 
         $keys = is_array($keys) ? $keys : \iterator_to_array($keys);
 
@@ -99,18 +98,12 @@ trait CollectionTrait
             if(!in_array($k, $keys, true)){
                 continue;
             }
-
-            $self->count++;
-
-            if($first){
-                $self->first = $k;
-                $first = false;
-            }
-
-            $self->items[$k] = $v;
+            $self->append($v, $k);
         }
 
-        $self->last = $k;
+        if($isAbstractCollection){
+            $self->enableValidations();
+        }
 
         return $self;
     }

@@ -3,6 +3,7 @@
 namespace LDL\Type\Collection\Traits\Sorting;
 
 use LDL\Framework\Base\Contracts\PriorityInterface;
+use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Sorting\CollectionSortInterface;
 
@@ -14,7 +15,9 @@ trait PrioritySortingTrait
         /**
          * @var CollectionInterface $this
          */
+
         $items = \iterator_to_array($this);
+        $isAbstractCollection = $this instanceof AbstractCollection;
         $this->truncate();
 
         uasort(
@@ -32,8 +35,16 @@ trait PrioritySortingTrait
             }
         );
 
-        foreach($items as $key=>$value){
+        if($isAbstractCollection){
+            $this->disableValidations();
+        }
+
+        foreach($items as $key => $value){
             $this->append($value, $key);
+        }
+
+        if($isAbstractCollection){
+            $this->enableValidations();
         }
 
         return $this;
