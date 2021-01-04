@@ -16,6 +16,13 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
     public function select($key) : MultipleSelectionInterface;
 
     /**
+     * Selects all items
+     *
+     * @return MultipleSelectionInterface
+     */
+    public function selectAll() : MultipleSelectionInterface;
+
+    /**
      * Return the selected items, previously selected by the select method
      *
      * @throws EmptyCollectionException if the collection is empty

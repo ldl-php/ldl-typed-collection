@@ -52,18 +52,25 @@ trait MultipleSelectionTrait
         return $this;
     }
 
+    public function selectAll() : MultipleSelectionInterface
+    {
+        $this->__multiSelectionSelected = $this->keys();
+        return $this;
+    }
+
     public function getSelectedItems() : MultipleSelectionInterface
     {
         /**
          * @var CollectionInterface $collection
          */
         $collection = clone($this);
-        $collection->truncate();
-        $isAbstractCollection = $this instanceof AbstractCollection;
+        $isAbstractCollection = $collection instanceof AbstractCollection;
 
         if($isAbstractCollection){
-            $this->disableValidations();
+            $collection->disableValidations();
         }
+
+        $collection->truncate();
 
         foreach($this as $key => $value){
             if(array_key_exists($key, $this->__multiSelectionSelected)){
@@ -72,7 +79,7 @@ trait MultipleSelectionTrait
         }
 
         if($isAbstractCollection){
-            $this->enableValidations();
+            $collection->enableValidations();
         }
 
         return $collection;

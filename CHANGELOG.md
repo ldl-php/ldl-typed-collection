@@ -8,6 +8,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1199718460902669 - MultipleSelectionInterface (and trait) / Improve getSelectedItems method
+
 ### Changed
 
 ---
