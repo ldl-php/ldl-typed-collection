@@ -12,12 +12,10 @@ trait PrioritySortingTrait
     public function sortByPriority(string $sort=CollectionSortInterface::SORT_ASCENDING): CollectionInterface
     {
         /**
-         * @var CollectionInterface $_this
+         * @var CollectionInterface $this
          */
-        $_this = clone($this);
+        $items = \iterator_to_array($this);
         $this->truncate();
-
-        $items = \iterator_to_array($_this);
 
         uasort(
             $items,

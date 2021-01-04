@@ -86,6 +86,8 @@ trait CollectionTrait
         $self = clone($this);
         $self->items = [];
         $self->count = 0;
+        $self->first = null;
+        $self->last = null;
 
         $first = true;
 
@@ -122,23 +124,16 @@ trait CollectionTrait
     {
         $regex = preg_quote($regex, '#');
 
-        /**
-         * @var CollectionInterface $collection
-         */
-        $collection = clone($this);
+        $self = clone($this);
+        $self->truncate();
 
         foreach($this as $key=>$value){
             if(preg_match($key, $regex)){
-                $collection->append($value, $key);
+                $self->append($value, $key);
             }
         }
 
-        if(count($collection) === 0){
-            $msg = "No items could be found by key matching regex: $regex";
-            throw new \LogicException($msg);
-        }
-
-        return $collection;
+        return $self;
     }
 
     public function removeLast() : CollectionInterface
