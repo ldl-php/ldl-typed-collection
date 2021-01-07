@@ -137,4 +137,14 @@ interface CollectionInterface extends \Countable, \Iterator, \ArrayAccess
      * @return CollectionInterface
      */
     public function truncate() : CollectionInterface;
+
+    /**
+     * Removes elements from a collection by value comparison
+     *
+     * @param $value
+     * @param bool $strict
+     * @return int Amount of removed elements
+     */
+    public function removeByValue($value, bool $strict = true) : int;
+
 }

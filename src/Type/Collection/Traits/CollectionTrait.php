@@ -135,6 +135,26 @@ trait CollectionTrait
         return $this;
     }
 
+    public function removeByValue($value, bool $strict = true) : int
+    {
+        $removed = 0;
+
+        foreach($this as $key => $val){
+            if(true === $strict && $val === $value){
+                $this->remove($key);
+                $removed++;
+                continue;
+            }
+
+            if($val == $value){
+                $this->remove($key);
+                $removed++;
+            }
+        }
+
+        return $removed;
+    }
+
     public function keys() : array
     {
         return array_keys($this->items);

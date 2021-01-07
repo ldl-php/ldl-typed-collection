@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require '../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\Types\String\StringCollection;
 use LDL\Type\Exception\TypeMismatchException;
@@ -30,3 +30,18 @@ echo "Iterate through elements:\n";
 foreach($str as $string){
     echo "String: $string"."\n";
 }
+
+echo "Call Implode:\n\n";
+
+echo $str->implode(',');
+
+echo "\nAdd new element \"000\" and call implode again\n\n";
+
+$str->append('000');
+echo $str->implode(',');
+
+echo "\nRemove element and call implode again\n\n";
+
+$str->removeByValue('000');
+
+echo $str->implode(',');
