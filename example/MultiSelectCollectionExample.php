@@ -32,8 +32,16 @@ $collection->append('456','my_key_2');
 echo "Append item 789 using my_key_3 as key\n";
 $collection->append('789','my_key_3');
 
+echo "Check if collection has a selection (must return false)\n";
+
+var_dump($collection->hasSelection());
+
 echo "Select item my_key_1 in collection\n";
 $collection->select('my_key_1', false);
+
+echo "Check if collection has a selection (must return true)\n";
+
+var_dump($collection->hasSelection());
 
 echo "Select item my_key_3 in collection\n";
 $collection->select('my_key_3');

@@ -30,4 +30,10 @@ interface SingleSelectionInterface extends SelectionLockingInterface
      */
     public function getSelectedKey();
 
+    /**
+     * Informs if an item was selected
+     *
+     * @return bool
+     */
+    public function hasSelection() : bool;
 }

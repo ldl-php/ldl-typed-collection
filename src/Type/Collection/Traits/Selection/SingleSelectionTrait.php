@@ -59,4 +59,9 @@ trait SingleSelectionTrait
         return $this->__selectedKey;
     }
 
+    public function hasSelection() : bool
+    {
+        return $this->__selectedKey !== null;
+    }
+
 }

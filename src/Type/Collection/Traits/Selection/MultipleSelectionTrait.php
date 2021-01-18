@@ -118,4 +118,9 @@ trait MultipleSelectionTrait
         return $this;
     }
 
+    public function hasSelection() : bool
+    {
+        return $this->getSelectedCount() > 0;
+    }
+
 }

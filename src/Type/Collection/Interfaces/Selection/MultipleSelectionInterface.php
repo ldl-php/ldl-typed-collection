@@ -59,4 +59,10 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
      * @return MultipleSelectionInterface
      */
     public function removeSelection() : MultipleSelectionInterface;
+
+    /**
+     * Informs if items where selected
+     * @return bool
+     */
+    public function hasSelection() : bool;
 }
