@@ -27,7 +27,7 @@ class UniqueValidator implements AppendItemValidatorInterface, ValidatorModeInte
             return;
         }
 
-        throw new CollectionKeyException("Item with key \"$item\" already exists in this collection!");
+        throw new CollectionKeyException("Item with key \"$key\" already exists in this collection!");
     }
 
     /**

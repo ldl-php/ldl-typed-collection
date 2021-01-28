@@ -15,6 +15,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- fixes/1199694738432549 - Unique validator shows incorrect message during validatorKey exception
+
 ---
 
 ## [v0.0.1] - 2020-07-19
