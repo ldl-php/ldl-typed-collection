@@ -25,8 +25,7 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
     /**
      * Return the selected items, previously selected by the select method
      *
-     * @throws EmptyCollectionException if the collection is empty
-     * @return mixed
+     * @return MultipleSelectionInterface
      */
     public function getSelectedItems() : MultipleSelectionInterface;
 
