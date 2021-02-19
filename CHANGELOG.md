@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1199958900628846 - Add unshift method
 - feature/1199516440696130 - Add implode method to string collection / Add removeByValue method (with optional strict comparison)
 - feature/1199718460902669 - MultipleSelectionInterface (and trait) / Improve getSelectedItems method
 - feature/1199601516820605 - Add hasSelection to MultipleSelection and SingleSelection (interfaces and traits)

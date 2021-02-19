@@ -2,6 +2,7 @@
 
 namespace LDL\Type\Collection;
 
+use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
@@ -43,6 +44,39 @@ abstract class AbstractCollection implements Interfaces\CollectionInterface
 
         $this->items[$key] = $item;
         $this->count++;
+
+        return $this;
+    }
+
+    public function unshift($item, $key = null): CollectionInterface
+    {
+        $key = $key ?? 0;
+
+        $this->validateKey(AppendItemValidatorInterface::class, $item, $key);
+        $this->validateValue(AppendItemValidatorInterface::class, $item, $key);
+
+        $this->first = $key;
+
+        if(null === $this->last) {
+            $this->last = $key;
+        }
+
+        if(is_string($key)){
+            $this->items = [$key => $item] + $this->items;
+            return $this;
+        }
+
+        $result = [$key => $item];
+
+        array_walk($this->items, static function($v, $k) use($result){
+            if(is_int($k)){
+                ++$k;
+            }
+
+            $result[$k] = $v;
+        });
+
+        $this->items = $result;
 
         return $this;
     }

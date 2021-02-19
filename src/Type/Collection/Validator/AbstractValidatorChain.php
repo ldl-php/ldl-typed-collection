@@ -158,6 +158,39 @@ abstract class AbstractValidatorChain implements ValidatorChainInterface
         return $this;
     }
 
+    public function unshift($item, $key = null): CollectionInterface
+    {
+        $key = $key ?? 0;
+
+        $this->validateKey($key);
+        $this->validateItem($item);
+
+        $this->first = $key;
+
+        if(null === $this->last) {
+            $this->last = $key;
+        }
+
+        if(is_string($key)){
+            $this->items = [$key => $item] + $this->items;
+            return $this;
+        }
+
+        $result = [$key=>$item];
+
+        array_walk($this->items, static function($v, $k) use($result){
+            if(is_int($k)){
+                ++$k;
+            }
+
+            $result[$k] = $v;
+        });
+
+        $this->items = $result;
+
+        return $this;
+    }
+
     private function validateItem($item) : void
     {
         if($this->isLocked()){
