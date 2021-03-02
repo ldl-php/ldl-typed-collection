@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require '../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
@@ -63,7 +63,7 @@ echo "Lock collection\n";
 
 $collection->lock();
 
-echo "Try to truncate collection, (not the collection is LOCKED so an exception must be thrown)\n";
+echo "Try to truncate collection, (now the collection is LOCKED so an exception must be thrown)\n";
 
 try{
 

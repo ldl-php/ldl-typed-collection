@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require '../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
@@ -8,8 +8,6 @@ use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\KeyValidatorChainTrait;
 use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
 use LDL\Type\Collection\Validator\UniqueValidator;
-
-use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\CollectionValueException;
 
 class UniqueValidatorExample extends AbstractCollection implements HasKeyValidatorChainInterface, HasValueValidatorChainInterface
