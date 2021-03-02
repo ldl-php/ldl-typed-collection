@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require '../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\Interfaces\Selection\MultipleSelectionInterface;
 use LDL\Type\Collection\Traits\Selection\MultipleSelectionTrait;

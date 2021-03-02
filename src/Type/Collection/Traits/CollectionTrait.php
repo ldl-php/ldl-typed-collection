@@ -6,6 +6,7 @@
 
 namespace LDL\Type\Collection\Traits;
 
+use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\TypedCollectionException;
@@ -187,6 +188,23 @@ trait CollectionTrait
         }
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        if(false === $this instanceof LockableObjectInterface){
+            return $this->items;
+        }
+
+        $items = [];
+
+        $locked = $this->isLocked();
+
+        foreach($this as $key => $item){
+            $items[$key] = is_object($item) && $locked ? clone($item) : $item;
+        }
+
+        return $items;
     }
     //</editor-fold>
 

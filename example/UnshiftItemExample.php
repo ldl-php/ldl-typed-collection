@@ -3,7 +3,6 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\Types\String\StringCollection;
-use LDL\Type\Exception\TypeMismatchException;
 
 $str = new StringCollection();
 
