@@ -10,6 +10,9 @@ $str = new StringCollection();
 echo "Append item with value: '123'\n";
 $str->append('123');
 
+echo "Append item with value: '123'\n";
+$str->append('123');
+
 echo "Append item with value: '456'\n";
 $str->append('456');
 
@@ -29,6 +32,15 @@ echo "Iterate through elements:\n";
 
 foreach($str as $string){
     echo "String: $string"."\n";
+}
+
+echo "Get unique values from collection:\n";
+$uniques = $str->toUnique();
+
+echo "Iterate through uniques values:\n";
+
+foreach($uniques as $unique){
+    echo "String: $unique"."\n";
 }
 
 echo "Call Implode:\n\n";

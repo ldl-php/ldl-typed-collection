@@ -44,4 +44,9 @@ class StringCollection extends LockableCollection
         $this->imploded = null;
         return parent::remove($offset);
     }
+
+    public function toUnique(): UniqueStringCollection
+    {
+        return new UniqueStringCollection(array_keys(array_flip(\iterator_to_array($this))));
+    }
 }
