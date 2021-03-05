@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- feature/1200023995006116 - Add ArrayFactoryInterface and ToArrayInterface to validators
 - feature/1200017228719580 - Add UniqueStringCollection
 - feature/1200005557469693 - Add toArray method to CollectionTrait
 - feature/1199958900628846 - Add unshift method

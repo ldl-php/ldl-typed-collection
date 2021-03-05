@@ -2,6 +2,7 @@
 
 namespace LDL\Type\Collection\Types\Scalar\Validator;
 
+use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
@@ -66,4 +67,27 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
         throw new TypeMismatchException($msg);
     }
 
+    public function jsonSerialize() : array
+    {
+        return $this->toArray();
+    }
+
+    public static function fromArray(array $data = []): ArrayFactoryInterface
+    {
+        $value = array_key_exists('acceptToStringObjects', $data) ? (bool) $data['acceptToStringObjects'] : true;
+        $strict = array_key_exists('strict', $data) ? (bool) $data['strict'] : false;
+
+        return new self($strict, $value);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'class' => __CLASS__,
+            'options' => [
+                'strict' => $this->isStrict,
+                'acceptToStringObjects' => $this->acceptToStringObjects
+            ]
+        ];
+    }
 }

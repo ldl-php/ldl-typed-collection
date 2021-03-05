@@ -2,6 +2,8 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
+use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
@@ -55,5 +57,47 @@ class RegexValidator implements AppendItemValidatorInterface, RemoveItemValidato
 
         $msg = "Given value: \"$item\" does not matches regex: \"{$this->regex}\"";
         throw new Exception\RegexValidatorException($msg);
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize() : array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param array $data
+     * @return ArrayFactoryInterface
+     * @throws ArrayFactoryException
+     */
+    public static function fromArray(array $data = []): ArrayFactoryInterface
+    {
+        if(false === array_key_exists('regex', $data)){
+            $msg = sprintf("Missing property 'regex' in %s", __CLASS__);
+            throw new ArrayFactoryException($msg);
+        }
+
+        try{
+            return new self((string) $data['regex'], array_key_exists('strict', $data) ? (bool)$data['strict'] : false);
+        }catch(\Exception $e){
+            throw new ArrayFactoryException($e->getMessage());
+        }
+
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'class' => __CLASS__,
+            'options' => [
+                'regex' => $this->regex,
+                'strict' => $this->_isStrict
+            ]
+        ];
     }
 }

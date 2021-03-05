@@ -16,6 +16,6 @@ final class ValueValidatorChain extends AbstractValidatorChain
 {
     public function __construct(iterable $items = null)
     {
-        parent::__construct(ValueValidatorInterface::class, $items);
+        parent::__construct($items, ValueValidatorInterface::class);
     }
 }

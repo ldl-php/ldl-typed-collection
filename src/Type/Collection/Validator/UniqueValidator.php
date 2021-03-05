@@ -2,6 +2,7 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\CollectionValueException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
@@ -48,5 +49,35 @@ class UniqueValidator implements AppendItemValidatorInterface, ValidatorModeInte
                 var_export($item, true)
             )
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize() : array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param array $data
+     * @return ArrayFactoryInterface
+     */
+    public static function fromArray(array $data = []): ArrayFactoryInterface
+    {
+        return new self(array_key_exists('strict', $data) ? (bool)$data['strict'] : true);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'class' => __CLASS__,
+            'options' => [
+                'strict' => $this->_isStrict
+            ]
+        ];
     }
 }

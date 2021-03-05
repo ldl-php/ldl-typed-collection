@@ -18,4 +18,15 @@ interface ValidatorChainInterface extends CollectionInterface, LockableObjectInt
      * @return void
      */
     public function validate(CollectionInterface $collection, $item, $key) : void;
+
+    /**
+     * @param array $config
+     * @return ValidatorChainInterface
+     */
+    public static function fromConfig(array $config): ValidatorChainInterface;
+
+    /**
+     * @return array
+     */
+    public function getConfig(): array;
 }

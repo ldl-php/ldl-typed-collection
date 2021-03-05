@@ -2,6 +2,8 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
+use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
@@ -34,5 +36,46 @@ class MinimumAmountValidator implements RemoveItemValidatorInterface, ValueValid
         $msg = "Items in this collection must be at least: {$this->minAmount}";
 
         throw new AmountValidatorException($msg);
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize() : array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param array $data
+     * @return ArrayFactoryInterface
+     * @throws ArrayFactoryException
+     */
+    public static function fromArray(array $data = []): ArrayFactoryInterface
+    {
+        if(false === array_key_exists('minAmount', $data)){
+            $msg = sprintf("Missing property 'minAmount' in %s", __CLASS__);
+            throw new ArrayFactoryException($msg);
+        }
+
+        try{
+            return new self((int) $data['minAmount']);
+        }catch(\Exception $e){
+            throw new ArrayFactoryException($e->getMessage());
+        }
+
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'class' => __CLASS__,
+            'options' => [
+                'minAmount' => $this->minAmount
+            ]
+        ];
     }
 }

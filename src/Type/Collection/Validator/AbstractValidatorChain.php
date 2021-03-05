@@ -10,6 +10,7 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
@@ -38,8 +39,8 @@ abstract class AbstractValidatorChain implements ValidatorChainInterface
     private $class;
 
     public function __construct(
-        string $class,
-        iterable $items=null
+        iterable $items=null,
+        string $class=null
     )
     {
         $this->class = $class;
@@ -189,6 +190,34 @@ abstract class AbstractValidatorChain implements ValidatorChainInterface
         $this->items = $result;
 
         return $this;
+    }
+
+    public static function fromConfig(array $config): ValidatorChainInterface
+    {
+        $validators = [];
+
+        foreach($config as $validator){
+            if(false === array_key_exists('class', $validator)){
+                throw new ArrayFactoryException("Config needs 'class' definition");
+            }
+
+            $options = array_key_exists('options', $validator) && is_array($validator['options']) ? $validator['options'] : [];
+
+            $validators[] = $validator['class']::fromArray($options);
+        }
+
+        return new static($validators);
+    }
+
+    public function getConfig(): array
+    {
+        $return = [];
+
+        foreach($this as $validator){
+            $return[] = $validator->toArray();
+        }
+
+        return $return;
     }
 
     private function validateItem($item) : void

@@ -2,6 +2,8 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
+use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
@@ -47,5 +49,47 @@ class NumericRangeValidator implements AppendItemValidatorInterface, ValueValida
     {
         $this->minValidator->validateValue($collection, $item, $key);
         $this->maxValidator->validateValue($collection, $item, $key);
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize() : array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param array $data
+     * @return ArrayFactoryInterface
+     * @throws ArrayFactoryException
+     */
+    public static function fromArray(array $data = []): ArrayFactoryInterface
+    {
+        if(false === array_key_exists('min', $data)){
+            $msg = sprintf("Missing property 'min' in %s", __CLASS__);
+            throw new ArrayFactoryException($msg);
+        }
+
+        if(false === array_key_exists('max', $data)){
+            $msg = sprintf("Missing property 'max' in %s", __CLASS__);
+            throw new ArrayFactoryException($msg);
+        }
+
+        return new self($data['min'], $data['max']);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'class' => __CLASS__,
+            'options' => [
+                'min' => $this->minValidator->toArray()['options']['value'],
+                'max' => $this->maxValidator->toArray()['options']['value']
+            ]
+        ];
     }
 }

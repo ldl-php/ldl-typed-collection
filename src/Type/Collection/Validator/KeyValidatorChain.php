@@ -16,6 +16,6 @@ final class KeyValidatorChain extends AbstractValidatorChain
 {
     public function __construct(iterable $items = null)
     {
-        parent::__construct(KeyValidatorInterface::class, $items);
+        parent::__construct($items, KeyValidatorInterface::class);
     }
 }
