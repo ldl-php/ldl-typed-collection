@@ -2,19 +2,30 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\CollectionValueException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
-use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Validator\Config\UniqueValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
 
-class UniqueValidator implements AppendItemValidatorInterface, ValidatorModeInterface, KeyValidatorInterface, ValueValidatorInterface
+class UniqueValidator implements AppendItemValidatorInterface, KeyValidatorInterface, ValueValidatorInterface
 {
-    use ValidatorModeTrait;
+    use ValidatorInterfaceTrait;
+
+    /**
+     * @var UniqueValidatorConfig
+     */
+    private $config;
+
+    public function __construct(bool $strict = true)
+    {
+        $this->config = new UniqueValidatorConfig($strict);
+    }
 
     /**
      * @param CollectionInterface $collection
@@ -52,32 +63,32 @@ class UniqueValidator implements AppendItemValidatorInterface, ValidatorModeInte
     }
 
     /**
-     * @return array
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws Exception\InvalidConfigException
      */
-    public function jsonSerialize() : array
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
+        if(false === $config instanceof UniqueValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new Exception\InvalidConfigException($msg);
+        }
+
+        /**
+         * @var UniqueValidatorConfig $config
+         */
+        return new self($config->isStrict());
     }
 
     /**
-     * @param array $data
-     * @return ArrayFactoryInterface
+     * @return UniqueValidatorConfig
      */
-    public static function fromArray(array $data = []): ArrayFactoryInterface
+    public function getConfig(): UniqueValidatorConfig
     {
-        return new self(array_key_exists('strict', $data) ? (bool)$data['strict'] : true);
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'strict' => $this->_isStrict
-            ]
-        ];
+        return $this->config;
     }
 }

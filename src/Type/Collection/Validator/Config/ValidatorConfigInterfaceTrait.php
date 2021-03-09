@@ -1,18 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace LDL\Type\Collection\Traits\Validator;
+namespace LDL\Type\Collection\Validator\Config;
 
-trait ValidatorModeTrait
+trait ValidatorConfigInterfaceTrait
 {
     /**
      * @var bool
      */
     private $_isStrict;
-
-    public function __construct(bool $strict=true)
-    {
-        $this->_isStrict = $strict;
-    }
 
     public function isStrict() : bool
     {

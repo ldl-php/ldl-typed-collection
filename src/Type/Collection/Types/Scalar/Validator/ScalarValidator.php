@@ -2,38 +2,29 @@
 
 namespace LDL\Type\Collection\Types\Scalar\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Types\Scalar\Validator\Config\ScalarValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
+use LDL\Type\Collection\Validator\Exception\InvalidConfigException;
 use LDL\Type\Exception\TypeMismatchException;
 
-class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInterface, ValueValidatorInterface, KeyValidatorInterface
+class ScalarValidator implements AppendItemValidatorInterface, ValueValidatorInterface, KeyValidatorInterface
 {
-    /**
-     * @var bool
-     */
-    private $isStrict;
+    use ValidatorInterfaceTrait;
 
     /**
-     * @var bool
+     * @var ScalarValidatorConfig
      */
-    private $acceptToStringObjects;
+    private $config;
 
-    public function __construct(
-        bool $strict = false,
-        bool $acceptToStringObjects=true
-    )
+    public function __construct(bool $acceptToStringObjects=true, bool $strict = false)
     {
-        $this->isStrict = $strict;
-        $this->acceptToStringObjects = $acceptToStringObjects;
-    }
-
-    public function isStrict() : bool
-    {
-        return $this->isStrict;
+        $this->config = new ScalarValidatorConfig($acceptToStringObjects, $strict);
     }
 
     public function validateKey(CollectionInterface $collection, $item, $key): void
@@ -51,7 +42,7 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
          * Object with __toString method
          */
         if(
-            $this->acceptToStringObjects &&
+            $this->config->isAcceptToStringObjects() &&
             is_object($item) &&
             in_array('__tostring', array_map('strtolower', get_class_methods($item)), true)
         ){
@@ -67,27 +58,33 @@ class ScalarValidator implements AppendItemValidatorInterface, ValidatorModeInte
         throw new TypeMismatchException($msg);
     }
 
-    public function jsonSerialize() : array
+    /**
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws InvalidConfigException
+     */
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
+        if(false === $config instanceof ScalarValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new InvalidConfigException($msg);
+        }
+
+        /**
+         * @var ScalarValidatorConfig $config
+         */
+        return new self($config->isAcceptToStringObjects(), $config->isStrict());
     }
 
-    public static function fromArray(array $data = []): ArrayFactoryInterface
+    /**
+     * @return ScalarValidatorConfig
+     */
+    public function getConfig(): ScalarValidatorConfig
     {
-        $value = array_key_exists('acceptToStringObjects', $data) ? (bool) $data['acceptToStringObjects'] : true;
-        $strict = array_key_exists('strict', $data) ? (bool) $data['strict'] : false;
-
-        return new self($strict, $value);
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'strict' => $this->isStrict,
-                'acceptToStringObjects' => $this->acceptToStringObjects
-            ]
-        ];
+        return $this->config;
     }
 }

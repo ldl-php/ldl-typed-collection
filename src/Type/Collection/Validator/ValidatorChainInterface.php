@@ -5,6 +5,7 @@ namespace LDL\Type\Collection\Validator;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Types\Object\Filter\FilterByInterface;
+use LDL\Type\Collection\Validator\Chain\Config\ValidatorChainConfigInterface;
 
 interface ValidatorChainInterface extends CollectionInterface, LockableObjectInterface, FilterByInterface
 {
@@ -20,13 +21,9 @@ interface ValidatorChainInterface extends CollectionInterface, LockableObjectInt
     public function validate(CollectionInterface $collection, $item, $key) : void;
 
     /**
-     * @param array $config
-     * @return ValidatorChainInterface
+     * @return ValidatorChainConfigInterface
      */
-    public static function fromConfig(array $config): ValidatorChainInterface;
+    public function getConfig(): ValidatorChainConfigInterface;
 
-    /**
-     * @return array
-     */
-    public function getConfig(): array;
+    public function append($item, $key = null, bool $addToConfig = true): CollectionInterface;
 }

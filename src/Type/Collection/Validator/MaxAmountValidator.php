@@ -2,66 +2,66 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
-use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Validator\Config\MaxAmountValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
 
 class MaxAmountValidator implements AppendItemValidatorInterface, ValueValidatorInterface
 {
+    use ValidatorInterfaceTrait;
+
     /**
-     * @var int
+     * @var MaxAmountValidatorConfig
      */
-    private $maxAmount;
+    private $config;
 
-    public function __construct(int $maxAmount)
+    public function __construct(int $maxAmount, bool $strict=true)
     {
-        if($maxAmount <= 0){
-            $msg = 'Amount of items for validator "%s" must be a positive integer';
-            throw new \InvalidArgumentException($msg);
-        }
-
-        $this->maxAmount = $maxAmount;
+        $this->config = new MaxAmountValidatorConfig($maxAmount, $strict);
     }
 
     public function validateValue(CollectionInterface $collection, $item, $key): void
     {
-        if(count($collection) < $this->maxAmount){
+        if(count($collection) < $this->config->getMaxAmount()){
             return;
         }
 
-        $msg = "Items in this collection can not be more than: {$this->maxAmount}";
+        $msg = "Items in this collection can not be more than: {$this->config->getMaxAmount()}";
         throw new AmountValidatorException($msg);
     }
 
-    public function jsonSerialize() : array
+    /**
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws Exception\InvalidConfigException
+     */
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
-    }
-
-    public static function fromArray(array $data = []): ArrayFactoryInterface
-    {
-        if(false === array_key_exists('maxAmount', $data)){
-            $msg = sprintf("Missing property 'maxAmount' in %s", __CLASS__);
-            throw new ArrayFactoryException($msg);
+        if(false === $config instanceof MaxAmountValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new Exception\InvalidConfigException($msg);
         }
 
-        try{
-            return new self((int) $data['maxAmount']);
-        }catch(\Exception $e){
-            throw new ArrayFactoryException($e->getMessage());
-        }
+        /**
+         * @var MaxAmountValidatorConfig $config
+         */
+        return new self($config->getMaxAmount(), $config->isStrict());
     }
 
-    public function toArray(): array
+    /**
+     * @return MaxAmountValidatorConfig
+     */
+    public function getConfig(): MaxAmountValidatorConfig
     {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'maxAmount' => $this->maxAmount
-            ]
-        ];
+        return $this->config;
     }
 }

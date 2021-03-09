@@ -2,18 +2,30 @@
 
 namespace LDL\Type\Collection\Types\Number\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
-use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Types\Number\Validator\Config\NumberValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
+use LDL\Type\Collection\Validator\Exception\InvalidConfigException;
 use LDL\Type\Exception\TypeMismatchException;
 
-class NumberValidator implements AppendItemValidatorInterface, ValidatorModeInterface, KeyValidatorInterface, ValueValidatorInterface
+class NumberValidator implements AppendItemValidatorInterface, KeyValidatorInterface, ValueValidatorInterface
 {
-    use ValidatorModeTrait;
+    use ValidatorInterfaceTrait;
+
+    /**
+     * @var NumberValidatorConfig
+     */
+    private $config;
+
+    public function __construct(bool $strict=true)
+    {
+        $this->config = new NumberValidatorConfig($strict);
+    }
 
     public function validateKey(CollectionInterface $collection, $item, $key): void
     {
@@ -35,23 +47,33 @@ class NumberValidator implements AppendItemValidatorInterface, ValidatorModeInte
         throw new TypeMismatchException($msg);
     }
 
-    public function jsonSerialize() : array
+    /**
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws InvalidConfigException
+     */
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
+        if(false === $config instanceof NumberValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new InvalidConfigException($msg);
+        }
+
+        /**
+         * @var NumberValidatorConfig $config
+         */
+        return new self($config->isStrict());
     }
 
-    public static function fromArray(array $data = []): ArrayFactoryInterface
+    /**
+     * @return NumberValidatorConfig
+     */
+    public function getConfig(): NumberValidatorConfig
     {
-        return new self(array_key_exists('strict', $data) ? (bool)$data['strict'] : true);
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'strict' => $this->_isStrict
-            ]
-        ];
+        return $this->config;
     }
 }

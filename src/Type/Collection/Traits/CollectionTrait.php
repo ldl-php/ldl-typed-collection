@@ -198,10 +198,8 @@ trait CollectionTrait
 
         $items = [];
 
-        $locked = $this->isLocked();
-
         foreach($this as $key => $item){
-            $items[$key] = is_object($item) && $locked ? clone($item) : $item;
+            $items[$key] = is_object($item) ? clone($item) : $item;
         }
 
         return $items;

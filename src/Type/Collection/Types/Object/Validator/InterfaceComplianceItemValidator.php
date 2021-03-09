@@ -2,39 +2,28 @@
 
 namespace LDL\Type\Collection\Types\Object\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
-use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Types\Object\Validator\Config\InterfaceComplianceItemValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
+use LDL\Type\Collection\Validator\Exception\InvalidConfigException;
 use LDL\Type\Exception\TypeMismatchException;
 
-class InterfaceComplianceItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface, ValueValidatorInterface
+class InterfaceComplianceItemValidator implements AppendItemValidatorInterface, ValueValidatorInterface
 {
-    /**
-     * @var string
-     */
-    private $interface;
+    use ValidatorInterfaceTrait;
 
     /**
-     * @var bool
+     * @var InterfaceComplianceItemValidatorConfig
      */
-    private $isStrict;
+    private $config;
 
     public function __construct(string $interface, bool $strict=true)
     {
-        if(!interface_exists($interface)){
-            throw new \LogicException("$interface interface does not exists");
-        }
-
-        $this->isStrict = $strict;
-        $this->interface = $interface;
-    }
-
-    public function isStrict(): bool
-    {
-        return $this->isStrict;
+        $this->config = new InterfaceComplianceItemValidatorConfig($interface, $strict);
     }
 
     public function validateValue(CollectionInterface $collection, $item, $key): void
@@ -47,46 +36,48 @@ class InterfaceComplianceItemValidator implements AppendItemValidatorInterface, 
             throw new TypeMismatchException($msg);
         }
 
-        if($item instanceof $this->interface) {
+        $interface = $this->config->getInterface();
+
+        if($item instanceof $interface) {
             return;
         }
 
         $msg = sprintf(
             'Item to be added of class "%s", does not complies to interface: "%s"',
             get_class($item),
-            $this->interface
+            $interface
         );
 
         throw new TypeMismatchException($msg);
     }
 
-    public function jsonSerialize() : array
+    /**
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws InvalidConfigException
+     */
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
-    }
-
-    public static function fromArray(array $data = []): ArrayFactoryInterface
-    {
-        if(false === array_key_exists('interfaceName', $data)){
-            $msg = sprintf("Missing property 'interfaceName' in %s", __CLASS__);
-            throw new ArrayFactoryException($msg);
+        if(false === $config instanceof InterfaceComplianceItemValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new InvalidConfigException($msg);
         }
 
-        try{
-            return new self((string) $data['interfaceName'], array_key_exists('strict', $data) ? (bool)$data['strict'] : true);
-        }catch(\Exception $e){
-            throw new ArrayFactoryException($e->getMessage());
-        }
+        /**
+         * @var InterfaceComplianceItemValidatorConfig $config
+         */
+        return new self($config->getInterface(), $config->isStrict());
     }
 
-    public function toArray(): array
+    /**
+     * @return InterfaceComplianceItemValidatorConfig
+     */
+    public function getConfig(): InterfaceComplianceItemValidatorConfig
     {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'interfaceName' => $this->interface,
-                'strict' => $this->isStrict
-            ]
-        ];
+        return $this->config;
     }
 }

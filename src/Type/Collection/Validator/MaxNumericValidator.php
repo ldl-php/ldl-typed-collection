@@ -2,39 +2,28 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
-use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
-use LDL\Type\Collection\Traits\Validator\ValidatorModeTrait;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Validator\Config\MaxNumericValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
 use LDL\Type\Collection\Validator\Exception\NumericRangeValidatorException;
 
-class MaxNumericValidator implements AppendItemValidatorInterface, ValidatorModeInterface, KeyValidatorInterface, ValueValidatorInterface
+class MaxNumericValidator implements AppendItemValidatorInterface, KeyValidatorInterface, ValueValidatorInterface
 {
-    use ValidatorModeTrait;
+    use ValidatorInterfaceTrait;
 
     /**
-     * @var number
+     * @var MaxNumericValidatorConfig
      */
-    private $value;
+    private $config;
 
-    /**
-     * MaxNumericValueValidator constructor.
-     * @param $value
-     * @param bool $isStrict
-     */
-    public function __construct($value, bool $isStrict=true)
+    public function __construct($value, bool $strict=true)
     {
-        $this->_isStrict = $isStrict;
-
-        if(null !== $value && false === filter_var($value, \FILTER_VALIDATE_INT | \FILTER_VALIDATE_FLOAT)){
-            throw new \InvalidArgumentException("Given maximum value must be a number, \"$value\" was given");
-        }
-
-        $this->value = $value;
+        $this->config = new MaxNumericValidatorConfig($value, $strict);
     }
 
     public function validateKey(CollectionInterface $collection, $item, $key): void
@@ -50,52 +39,41 @@ class MaxNumericValidator implements AppendItemValidatorInterface, ValidatorMode
      */
     public function validateValue(CollectionInterface $collection, $item, $key): void
     {
-        if($item <= $this->value){
+        if($item <= $this->config->getValue()){
             return;
         }
 
-        $msg = "Items in this collection can not be greater than: {$this->value}";
+        $msg = "Items in this collection can not be greater than: {$this->config->getValue()}";
         throw new NumericRangeValidatorException($msg);
     }
 
     /**
-     * @return array
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws Exception\InvalidConfigException
      */
-    public function jsonSerialize() : array
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
+        if(false === $config instanceof MaxNumericValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new Exception\InvalidConfigException($msg);
+        }
+
+        /**
+         * @var MaxNumericValidatorConfig $config
+         */
+        return new self($config->getValue(), $config->isStrict());
     }
 
     /**
-     * @param array $data
-     * @return ArrayFactoryInterface
-     * @throws ArrayFactoryException
+     * @return MaxNumericValidatorConfig
      */
-    public static function fromArray(array $data = []): ArrayFactoryInterface
+    public function getConfig(): MaxNumericValidatorConfig
     {
-        if(false === array_key_exists('value', $data)){
-            $msg = sprintf("Missing property 'value' in %s", __CLASS__);
-            throw new ArrayFactoryException($msg);
-        }
-
-        try{
-            return new self($data['value'], array_key_exists('strict', $data) ? (bool)$data['strict'] : true);
-        }catch(\Exception $e){
-            throw new ArrayFactoryException($e->getMessage());
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'value' => $this->value,
-                'strict' => $this->_isStrict
-            ]
-        ];
+        return $this->config;
     }
 }

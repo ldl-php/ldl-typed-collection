@@ -11,11 +11,15 @@
 namespace LDL\Type\Collection\Validator;
 
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
+use LDL\Type\Collection\Validator\Chain\Traits\ValidatorChainTrait;
 
-final class KeyValidatorChain extends AbstractValidatorChain
+final class KeyValidatorChain implements ValidatorChainInterface
 {
-    public function __construct(iterable $items = null)
+    use ValidatorChainTrait;
+
+    public function __construct(iterable $items=null)
     {
-        parent::__construct($items, KeyValidatorInterface::class);
+        $this->init($items, KeyValidatorInterface::class);
     }
+
 }

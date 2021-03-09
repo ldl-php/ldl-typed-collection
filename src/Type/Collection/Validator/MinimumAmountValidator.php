@@ -2,80 +2,67 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
-use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Validator\Config\MinimumAmountValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
 
 class MinimumAmountValidator implements RemoveItemValidatorInterface, ValueValidatorInterface
-
 {
+    use ValidatorInterfaceTrait;
+
     /**
-     * @var int
+     * @var MinimumAmountValidatorConfig
      */
-    private $minAmount;
+    private $config;
 
-    public function __construct(int $minAmount)
+    public function __construct(int $minAmount, bool $strict=true)
     {
-        if($minAmount <= 0){
-            $msg = 'Amount of items for validator "%s" must be a positive integer';
-            throw new \InvalidArgumentException($msg);
-        }
-
-        $this->minAmount = $minAmount;
+        $this->config = new MinimumAmountValidatorConfig($minAmount, $strict);
     }
 
     public function validateValue(CollectionInterface $collection, $item, $key): void
     {
-        if(count($collection) > $this->minAmount){
+        if(count($collection) > $this->config->getMinAmount()){
             return;
         }
 
-        $msg = "Items in this collection must be at least: {$this->minAmount}";
+        $msg = "Items in this collection must be at least: {$this->config->getMinAmount()}";
 
         throw new AmountValidatorException($msg);
     }
 
     /**
-     * @return array
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws Exception\InvalidConfigException
      */
-    public function jsonSerialize() : array
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
+        if(false === $config instanceof MinimumAmountValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new Exception\InvalidConfigException($msg);
+        }
+
+        /**
+         * @var MinimumAmountValidatorConfig $config
+         */
+        return new self($config->getMinAmount(), $config->isStrict());
     }
 
     /**
-     * @param array $data
-     * @return ArrayFactoryInterface
-     * @throws ArrayFactoryException
+     * @return MinimumAmountValidatorConfig
      */
-    public static function fromArray(array $data = []): ArrayFactoryInterface
+    public function getConfig(): MinimumAmountValidatorConfig
     {
-        if(false === array_key_exists('minAmount', $data)){
-            $msg = sprintf("Missing property 'minAmount' in %s", __CLASS__);
-            throw new ArrayFactoryException($msg);
-        }
-
-        try{
-            return new self((int) $data['minAmount']);
-        }catch(\Exception $e){
-            throw new ArrayFactoryException($e->getMessage());
-        }
-
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'minAmount' => $this->minAmount
-            ]
-        ];
+        return $this->config;
     }
 }

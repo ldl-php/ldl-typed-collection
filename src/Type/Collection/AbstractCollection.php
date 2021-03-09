@@ -3,16 +3,19 @@
 namespace LDL\Type\Collection;
 
 use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\Interfaces\Unshift\UnshiftInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Unshift\UnshiftTrait;
 use LDL\Type\Collection\Validator\ValidatorChainInterface;
 use LDL\Type\Collection\Traits\CollectionTrait;
 
-abstract class AbstractCollection implements Interfaces\CollectionInterface
+abstract class AbstractCollection implements Interfaces\CollectionInterface, UnshiftInterface
 {
     use CollectionTrait;
+    use UnshiftTrait;
 
     protected $_validateValues =  true;
 

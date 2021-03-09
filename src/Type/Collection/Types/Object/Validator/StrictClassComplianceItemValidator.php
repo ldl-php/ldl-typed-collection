@@ -2,39 +2,28 @@
 
 namespace LDL\Type\Collection\Types\Object\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
-use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorModeInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Types\Object\Validator\Config\StrictClassComplianceItemValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
+use LDL\Type\Collection\Validator\Exception\InvalidConfigException;
 use LDL\Type\Exception\TypeMismatchException;
 
-class StrictClassComplianceItemValidator implements AppendItemValidatorInterface, ValidatorModeInterface, ValueValidatorInterface
+class StrictClassComplianceItemValidator implements AppendItemValidatorInterface, ValueValidatorInterface
 {
-    /**
-     * @var string
-     */
-    private $class;
+    use ValidatorInterfaceTrait;
 
     /**
-     * @var bool
+     * @var StrictClassComplianceItemValidatorConfig
      */
-    private $isStrict;
+    private $config;
 
     public function __construct(string $class, bool $strict=true)
     {
-        if(!class_exists($class)){
-            throw new \LogicException("Class \"$class\" does not exists");
-        }
-
-        $this->isStrict = $strict;
-        $this->class = $class;
-    }
-
-    public function isStrict(): bool
-    {
-        return $this->isStrict;
+        $this->config = new StrictClassComplianceItemValidatorConfig($class, $strict);
     }
 
     public function validateValue(CollectionInterface $collection, $item, $key): void
@@ -49,46 +38,46 @@ class StrictClassComplianceItemValidator implements AppendItemValidatorInterface
 
         $itemClass = get_class($item);
 
-        if($itemClass === $this->class) {
+        if($itemClass === $this->config->getClass()) {
             return;
         }
 
         $msg = sprintf(
             'Item to be added of class "%s", must be *exactly* an object of class: "%s"',
             get_class($item),
-            $this->class
+            $this->config->getClass()
         );
 
         throw new TypeMismatchException($msg);
     }
 
-    public function jsonSerialize() : array
+    /**
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws InvalidConfigException
+     */
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
-    }
-
-    public static function fromArray(array $data = []): ArrayFactoryInterface
-    {
-        if(false === array_key_exists('className', $data)){
-            $msg = sprintf("Missing property 'className' in %s", __CLASS__);
-            throw new ArrayFactoryException($msg);
+        if(false === $config instanceof StrictClassComplianceItemValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new InvalidConfigException($msg);
         }
 
-        try{
-            return new self((string) $data['className'], array_key_exists('strict', $data) ? (bool)$data['strict'] : true);
-        }catch(\Exception $e){
-            throw new ArrayFactoryException($e->getMessage());
-        }
+        /**
+         * @var StrictClassComplianceItemValidatorConfig $config
+         */
+        return new self($config->getClass(), $config->isStrict());
     }
 
-    public function toArray(): array
+    /**
+     * @return StrictClassComplianceItemValidatorConfig
+     */
+    public function getConfig(): StrictClassComplianceItemValidatorConfig
     {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'className' => $this->class,
-                'strict' => $this->isStrict
-            ]
-        ];
+        return $this->config;
     }
 }

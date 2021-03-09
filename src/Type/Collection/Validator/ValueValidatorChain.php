@@ -10,12 +10,16 @@
 
 namespace LDL\Type\Collection\Validator;
 
+use LDL\Type\Collection\Validator\Chain\Traits\ValidatorChainTrait;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
 
-final class ValueValidatorChain extends AbstractValidatorChain
+final class ValueValidatorChain implements ValidatorChainInterface
 {
+    use ValidatorChainTrait;
+
     public function __construct(iterable $items = null)
     {
-        parent::__construct($items, ValueValidatorInterface::class);
+        $this->init($items, ValueValidatorInterface::class);
     }
+
 }

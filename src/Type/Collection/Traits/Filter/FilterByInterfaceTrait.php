@@ -15,6 +15,9 @@ trait FilterByInterfaceTrait
 
     public function filterByInterface(string $interface) : CollectionInterface
     {
+        /**
+         * @var CollectionInterface $collection
+         */
         $collection = new static();
 
         foreach($this as $item){

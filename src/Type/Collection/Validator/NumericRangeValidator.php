@@ -2,41 +2,33 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
-use LDL\Framework\Base\Exception\ArrayFactoryException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Validator\Config\NumericRangeValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
 
 class NumericRangeValidator implements AppendItemValidatorInterface, ValueValidatorInterface, KeyValidatorInterface
 {
-    /**
-     * @var MinNumericValidator
-     */
-    private $minValidator;
+    use ValidatorInterfaceTrait;
 
     /**
-     * @var MaxNumericValidator
+     * @var NumericRangeValidatorConfig
      */
-    private $maxValidator;
+    private $config;
 
-    /**
-     * NumericRangeValidator constructor.
-     * @param $min
-     * @param $max
-     *
-     */
-    public function __construct($min, $max)
+    public function __construct($min, $max, bool $strict = true)
     {
-        $this->minValidator = new MinNumericValidator($min);
-        $this->maxValidator = new MaxNumericValidator($max);
+        $this->config = new NumericRangeValidatorConfig($min, $max, $strict);
     }
 
     public function validateKey(CollectionInterface $collection, $item, $key): void
     {
-        $this->minValidator->validateKey($collection, $item, $key);
-        $this->maxValidator->validateKey($collection, $item, $key);
+        $this->config->getMin()->validateKey($collection, $item, $key);
+        $this->config->getMax()->validateKey($collection, $item, $key);
     }
 
     /**
@@ -47,49 +39,37 @@ class NumericRangeValidator implements AppendItemValidatorInterface, ValueValida
      */
     public function validateValue(CollectionInterface $collection, $item, $key): void
     {
-        $this->minValidator->validateValue($collection, $item, $key);
-        $this->maxValidator->validateValue($collection, $item, $key);
+        $this->config->getMin()->validateValue($collection, $item, $key);
+        $this->config->getMax()->validateValue($collection, $item, $key);
     }
 
     /**
-     * @return array
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws Exception\InvalidConfigException
      */
-    public function jsonSerialize() : array
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
-    }
-
-    /**
-     * @param array $data
-     * @return ArrayFactoryInterface
-     * @throws ArrayFactoryException
-     */
-    public static function fromArray(array $data = []): ArrayFactoryInterface
-    {
-        if(false === array_key_exists('min', $data)){
-            $msg = sprintf("Missing property 'min' in %s", __CLASS__);
-            throw new ArrayFactoryException($msg);
+        if(false === $config instanceof NumericRangeValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new Exception\InvalidConfigException($msg);
         }
 
-        if(false === array_key_exists('max', $data)){
-            $msg = sprintf("Missing property 'max' in %s", __CLASS__);
-            throw new ArrayFactoryException($msg);
-        }
-
-        return new self($data['min'], $data['max']);
+        /**
+         * @var NumericRangeValidatorConfig $config
+         */
+        return new self($config->getMin(), $config->getMax(), $config->isStrict());
     }
 
     /**
-     * @return array
+     * @return NumericRangeValidatorConfig
      */
-    public function toArray(): array
+    public function getConfig(): NumericRangeValidatorConfig
     {
-        return [
-            'class' => __CLASS__,
-            'options' => [
-                'min' => $this->minValidator->toArray()['options']['value'],
-                'max' => $this->maxValidator->toArray()['options']['value']
-            ]
-        ];
+        return $this->config;
     }
 }

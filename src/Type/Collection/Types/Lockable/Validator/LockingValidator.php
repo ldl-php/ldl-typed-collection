@@ -2,18 +2,34 @@
 
 namespace LDL\Type\Collection\Types\Lockable\Validator;
 
-use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Interfaces\CollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
+use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
 use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
+use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Type\Collection\Types\Lockable\Validator\Config\LockingValidatorConfig;
+use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
+use LDL\Type\Collection\Validator\Exception\InvalidConfigException;
 use LDL\Type\Exception\TypeMismatchException;
 
 class LockingValidator implements AppendItemValidatorInterface, RemoveItemValidatorInterface, KeyValidatorInterface, ValueValidatorInterface
 {
+    use ValidatorInterfaceTrait;
+
+    /**
+     * @var LockingValidatorConfig
+     */
+    private $config;
+
+    public function __construct()
+    {
+        $this->config = new LockingValidatorConfig();
+    }
+
     public function validateKey(CollectionInterface $collection, $item, $key) : void
     {
         $this->validateValue($collection, $item, $key);
@@ -37,21 +53,33 @@ class LockingValidator implements AppendItemValidatorInterface, RemoveItemValida
         }
     }
 
-    public function jsonSerialize() : array
+    /**
+     * @param ValidatorConfigInterface $config
+     * @return ValidatorInterface
+     * @throws InvalidConfigException
+     */
+    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        return $this->toArray();
-    }
+        if(false === $config instanceof LockingValidatorConfig){
+            $msg = sprintf(
+                'Config expected to be %s, config of class %s was given',
+                __CLASS__,
+                get_class($config)
+            );
+            throw new InvalidConfigException($msg);
+        }
 
-    public static function fromArray(array $data = []): ArrayFactoryInterface
-    {
+        /**
+         * @var LockingValidatorConfig $config
+         */
         return new self();
     }
 
-    public function toArray(): array
+    /**
+     * @return LockingValidatorConfig
+     */
+    public function getConfig(): LockingValidatorConfig
     {
-        return [
-            'class' => __CLASS__,
-            'options' => []
-        ];
+        return $this->config;
     }
 }
