@@ -12,10 +12,10 @@ $classCollection->append(SplFileInfo::class);
 
 try {
 
-    echo "Add NonExistentClass (EXCEPTION must be thrown)\n\n";
+    echo "Append NonExistentClass (EXCEPTION must be thrown)\n\n";
     $classCollection->append('NonExistentClass');
 
-}catch(TypeMismatchException $e){
+}catch(\Exception $e){
 
     echo "EXCEPTION: {$e->getMessage()}\n";
 

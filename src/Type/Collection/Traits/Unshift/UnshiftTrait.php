@@ -4,13 +4,13 @@ namespace LDL\Type\Collection\Traits\Unshift;
 
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Exception\LockingException;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
 
 trait UnshiftTrait
 {
-    public function unshift($item, $key = null): CollectionInterface
+    public function unshift($item, $key = null): TypedCollectionInterface
     {
         if($this instanceof LockableObjectInterface && $this->isLocked()){
             throw new LockingException(sprintf('Can not call %s on a locked collection', __METHOD__));
@@ -18,12 +18,12 @@ trait UnshiftTrait
 
         $key = $key ?? 0;
 
-        if($this instanceof HasKeyValidatorChainInterface){
-            $this->getKeyValidatorChain()->validate($this, $item, $key);
+        if($this instanceof HasAppendKeyValidatorChainInterface){
+            $this->getAppendKeyValidatorChain()->validate($this, $item, $key);
         }
 
-        if($this instanceof HasValueValidatorChainInterface){
-            $this->getValueValidatorChain()->validate($this, $item, $key);
+        if($this instanceof HasAppendValidatorChainInterface){
+            $this->getAppendValidatorChain()->validate($this, $item, $key);
         }
 
         $this->first = $key;

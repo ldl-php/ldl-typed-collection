@@ -2,19 +2,15 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
-use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\Validator\Config\MaxAmountValidatorConfig;
-use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
+use LDL\Validators\Config\ValidatorConfigInterface;
+use LDL\Validators\HasValidatorConfigInterface;
+use LDL\Validators\ValidatorInterface;
 
-class MaxAmountValidator implements AppendItemValidatorInterface, ValueValidatorInterface
+class MaxAmountValidator implements ValidatorInterface, HasValidatorConfigInterface
 {
-    use ValidatorInterfaceTrait;
-
     /**
      * @var MaxAmountValidatorConfig
      */
@@ -25,9 +21,15 @@ class MaxAmountValidator implements AppendItemValidatorInterface, ValueValidator
         $this->config = new MaxAmountValidatorConfig($maxAmount, $strict);
     }
 
-    public function validateValue(CollectionInterface $collection, $item, $key): void
+    /**
+     * @param mixed $item
+     * @param null $key
+     * @param CollectionInterface|null $collection
+     * @throws AmountValidatorException
+     */
+    public function validate($item, $key = null, CollectionInterface $collection = null): void
     {
-        if(count($collection) < $this->config->getMaxAmount()){
+        if((count($collection) + 1) <= $this->config->getMaxAmount()){
             return;
         }
 

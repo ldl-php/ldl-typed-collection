@@ -3,7 +3,7 @@
 namespace LDL\Type\Collection\Interfaces\Sorting;
 
 use LDL\Framework\Contracts\PriorityInterface;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
 interface PrioritySortingInterface extends CollectionSortInterface
 {
@@ -22,7 +22,7 @@ interface PrioritySortingInterface extends CollectionSortInterface
      *
      * @throws \InvalidArgumentException If an element of the collection does not implements PriorityInterface
      *
-     * @return CollectionInterface
+     * @return TypedCollectionInterface
      */
-    public function sortByPriority(string $order=self::SORT_ASCENDING) : CollectionInterface;
+    public function sortByPriority(string $order=self::SORT_ASCENDING) : TypedCollectionInterface;
 }

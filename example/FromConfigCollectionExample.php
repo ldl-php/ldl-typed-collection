@@ -3,42 +3,41 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\KeyValidatorChainTrait;
-use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendKeyValidatorChainTrait;
+use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
 use LDL\Type\Collection\Validator\UniqueValidator;
-use LDL\Type\Collection\Validator\ValueValidatorChain;
-use LDL\Type\Collection\Validator\KeyValidatorChain;
-use LDL\Type\Collection\Validator\Chain\Dumper\ValidatorChainDumper;
-use LDL\Type\Collection\Validator\Chain\Loader\ValidatorChainLoader;
-use LDL\Type\Collection\Types\String\Validator\StringValidator;
+use LDL\Validators\Chain\Dumper\ValidatorChainDumper;
+use LDL\Validators\Chain\Loader\ValidatorChainLoader;
+use LDL\Validators\Chain\ValidatorChain;
+use LDL\Validators\StringValidator;
 
-class FromConfigCollectionExample extends AbstractCollection implements HasKeyValidatorChainInterface, HasValueValidatorChainInterface
+class FromConfigCollectionExample extends AbstractCollection implements HasAppendKeyValidatorChainInterface, HasAppendValidatorChainInterface
 {
-    use KeyValidatorChainTrait;
-    use ValueValidatorChainTrait;
+    use AppendKeyValidatorChainTrait;
+    use AppendValidatorChainTrait;
 
     public function __construct(
         iterable $items = null,
-        ValueValidatorChain $values=null,
-        KeyValidatorChain $keys = null
+        ValidatorChain $values=null,
+        ValidatorChain $keys = null
     )
     {
         parent::__construct($items);
 
-        $this->getKeyValidatorChain()
+        $this->getAppendKeyValidatorChain()
             ->append(new UniqueValidator(),null);
 
         if(null !== $keys) {
-            $this->getKeyValidatorChain()->appendMany($keys);
+            $this->getAppendKeyValidatorChain()->appendMany($keys);
         }
 
-        $this->getValueValidatorChain()
+        $this->getAppendValidatorChain()
             ->append(new UniqueValidator(), null, false);
 
         if(null !== $values) {
-            $this->getValueValidatorChain()->appendMany($values);
+            $this->getAppendValidatorChain()->appendMany($values);
         }
     }
 }
@@ -46,23 +45,22 @@ class FromConfigCollectionExample extends AbstractCollection implements HasKeyVa
 echo "Create collection instance\n";
 
 $collection = new FromConfigCollectionExample();
-$collection->getValueValidatorChain()->append(new StringValidator(true));
+$collection->getAppendValidatorChain()->append(new StringValidator(true));
 
-//dump($collection->getValueValidatorChain());
 $file = tempnam(sys_get_temp_dir(),'ldl_config_collection_example');
 
-ValidatorChainDumper::dumpValueChain($collection, $file);
+ValidatorChainDumper::dump($collection->getAppendValidatorChain(), $file);
 
 $collection = new FromConfigCollectionExample();
 echo "--------------------------------------\n";
 
-$collection->getValueValidatorChain()
+$collection->getAppendValidatorChain()
 ->appendMany(
-    ValidatorChainLoader::loadValueChain(json_decode(file_get_contents($file), true)),
+    ValidatorChainLoader::load(json_decode(file_get_contents($file), true)),
 );
 
 
-foreach($collection->getValueValidatorChain() as $validator){
+foreach($collection->getAppendValidatorChain() as $validator){
     echo get_class($validator)."\n";
 }
 

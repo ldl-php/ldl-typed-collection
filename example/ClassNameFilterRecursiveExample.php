@@ -3,10 +3,10 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
-use LDL\Type\Collection\Types\String\Validator\StringValidator;
+use LDL\Validators\StringValidator;
 
 class ClassNameFilterExample extends ObjectCollection
 {
@@ -23,16 +23,16 @@ class Test2 extends ObjectCollection
 
 }
 
-class Test3 extends AbstractCollection implements HasValueValidatorChainInterface
+class Test3 extends AbstractCollection implements HasAppendValidatorChainInterface
 {
-    use ValueValidatorChainTrait;
+    use AppendValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getValueValidatorChain()
-            ->append(new StringValidator(false));
+        $this->getAppendValidatorChain()
+            ->append(new StringValidator());
     }
 }
 

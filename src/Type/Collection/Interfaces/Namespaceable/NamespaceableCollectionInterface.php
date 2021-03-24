@@ -2,7 +2,7 @@
 
 namespace LDL\Type\Collection\Interfaces\Namespaceable;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Interfaces\Nameable\NameableCollectionInterface;
 
 interface NamespaceableCollectionInterface extends NameableCollectionInterface
@@ -11,52 +11,52 @@ interface NamespaceableCollectionInterface extends NameableCollectionInterface
      * Filter a collection by namespace
      *
      * @param string $namespace
-     * @param CollectionInterface|null $collection
+     * @param TypedCollectionInterface|null $collection
      *
-     * @return CollectionInterface
+     * @return TypedCollectionInterface
      */
-    public function filterByNamespace(string $namespace, CollectionInterface &$collection=null) : CollectionInterface;
+    public function filterByNamespace(string $namespace, TypedCollectionInterface &$collection=null) : TypedCollectionInterface;
 
     /**
      * Filter a collection by multiple namespaces
      *
      * @param string[] $namespaces
-     * @param CollectionInterface|null $collection
-     * @return CollectionInterface
+     * @param TypedCollectionInterface|null $collection
+     * @return TypedCollectionInterface
      */
-    public function filterByNamespaces(array $namespaces, CollectionInterface &$collection=null) : CollectionInterface;
+    public function filterByNamespaces(array $namespaces, TypedCollectionInterface &$collection=null) : TypedCollectionInterface;
 
     /**
      * Filter the collection with a namespace regex
      *
      * @param string $regex
-     * @param CollectionInterface|null $collection
-     * @return CollectionInterface
+     * @param TypedCollectionInterface|null $collection
+     * @return TypedCollectionInterface
      */
-    public function filterByNamespaceRegex(string $regex, CollectionInterface &$collection=null) : CollectionInterface;
+    public function filterByNamespaceRegex(string $regex, TypedCollectionInterface &$collection=null) : TypedCollectionInterface;
 
     /**
      * Filter a collection with elements that match a given namespace and name combination
      *
      * @param string $namespace
      * @param string $name
-     * @param CollectionInterface $collection
-     * @return CollectionInterface
+     * @param TypedCollectionInterface $collection
+     * @return TypedCollectionInterface
      */
     public function filterByNamespaceAndName(
         string $namespace,
         string $name,
-        CollectionInterface &$collection=null
-    ) : CollectionInterface;
+        TypedCollectionInterface &$collection=null
+    ) : TypedCollectionInterface;
 
     /**
      * Auto determines the $mixed value and applies the appropriate filtering method to filter the collection,
      * use this to avoid multiple if's in your code.
      *
      * @param $mixed
-     * @param CollectionInterface|null $collection
+     * @param TypedCollectionInterface|null $collection
      *
-     * @return CollectionInterface
+     * @return TypedCollectionInterface
      */
-    public function filterByNamespaceAuto($mixed, CollectionInterface &$collection=null) : CollectionInterface;
+    public function filterByNamespaceAuto($mixed, TypedCollectionInterface &$collection=null) : TypedCollectionInterface;
 }

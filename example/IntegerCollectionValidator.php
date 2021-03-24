@@ -3,20 +3,20 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
-use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
-use LDL\Type\Collection\Types\Integer\Validator\IntegerValidator;
-use LDL\Type\Collection\Validator\NumericRangeValidator;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Validators\IntegerValidator;
+use LDL\Validators\NumericRangeValidator;
 
-class MyIntegerCollection extends AbstractCollection implements HasValueValidatorChainInterface
+class MyIntegerCollection extends AbstractCollection implements HasAppendValidatorChainInterface
 {
-    use ValueValidatorChainTrait;
+    use AppendValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getValueValidatorChain()
+        $this->getAppendValidatorChain()
             ->append(new IntegerValidator(true))
             ->append(new NumericRangeValidator(100,599));
     }

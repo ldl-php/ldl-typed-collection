@@ -27,5 +27,5 @@ foreach($str as $string){
 }
 
 if($str->count() > 2){
-    throw new \Exception("INVALID COUNT \"{$str->count()}\" Count must be 2 as 2 items were selected");
+    echo "INVALID COUNT \"{$str->count()}\" Count must be 2 as 2 items were selected\n";
 }

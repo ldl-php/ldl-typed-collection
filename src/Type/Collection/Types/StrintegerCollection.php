@@ -1,13 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace LDL\Type\Collection\Types\Double;
+namespace LDL\Type\Collection\Types;
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
-use LDL\Validators\DoubleValidator;
+use LDL\Validators\IntegerValidator;
+use LDL\Validators\StringValidator;
 
-class DoubleCollection extends AbstractCollection implements HasAppendValidatorChainInterface
+class StrintegerCollection extends AbstractCollection implements HasAppendValidatorChainInterface
 {
     use AppendValidatorChainTrait;
 
@@ -16,7 +17,8 @@ class DoubleCollection extends AbstractCollection implements HasAppendValidatorC
         parent::__construct($items);
 
         $this->getAppendValidatorChain()
-            ->append(new DoubleValidator())
+            ->append(new StringValidator(false))
+            ->append(new IntegerValidator(false))
             ->lock();
     }
 }

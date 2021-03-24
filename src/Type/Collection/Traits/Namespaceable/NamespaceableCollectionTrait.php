@@ -10,15 +10,15 @@
 namespace LDL\Type\Collection\Traits\Namespaceable;
 
 use LDL\Framework\Base\Contracts\NamespaceInterface;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Framework\Helper\RegexHelper;
+use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Traits\Nameable\NameableCollectionTrait;
-use LDL\Type\Helper\RegexValidatorHelper;
 
 trait NamespaceableCollectionTrait
 {
     use NameableCollectionTrait;
 
-    public function filterByNamespaceAuto($mixed, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNamespaceAuto($mixed, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
         if(is_array($mixed)){
             return $this->filterByNamespaces($mixed, $collection);
@@ -31,7 +31,7 @@ trait NamespaceableCollectionTrait
         }
     }
 
-    public function filterByNamespaces(array $nameSpaces, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNamespaces(array $nameSpaces, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
 
         if(null === $collection) {
@@ -51,14 +51,14 @@ trait NamespaceableCollectionTrait
         return $collection;
     }
 
-    public function filterByNamespace(string $namespace, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNamespace(string $namespace, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
         return $this->filterByNamespaces([$namespace], $collection);
     }
 
-    public function filterByNamespaceRegex(string $regex, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNamespaceRegex(string $regex, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
-        RegexValidatorHelper::validate($regex);
+        RegexHelper::validate($regex);
 
         if(null === $collection) {
             $collection = clone($this);
@@ -66,7 +66,7 @@ trait NamespaceableCollectionTrait
         }
 
         /**
-         * @var CollectionInterface $collection
+         * @var TypedCollectionInterface $collection
          */
         $collection = clone($this);
         $collection->truncate();
@@ -83,7 +83,7 @@ trait NamespaceableCollectionTrait
         return $collection;
     }
 
-    public function filterByNamespaceAndName(string $namespace, string $name, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNamespaceAndName(string $namespace, string $name, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
         if(null === $collection) {
             $collection = clone($this);

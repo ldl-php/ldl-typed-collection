@@ -3,74 +3,89 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\Interfaces\Selection\MultipleSelectionInterface;
-use LDL\Type\Collection\Traits\Selection\MultipleSelectionTrait;
+use LDL\Type\Collection\Traits\Selection\MultipleSelectionInterfaceTrait;
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Framework\Base\Exception\LockingException;
 
-class MultiSelectTest extends AbstractCollection implements MultipleSelectionInterface
+class MultiSelectCollectionExample extends AbstractCollection implements MultipleSelectionInterface
 {
-    use MultipleSelectionTrait;
+    use MultipleSelectionInterfaceTrait;
 }
+
+$data = [
+  'my_key_1' => 123,
+  'my_key_2' => 456,
+  'my_key_3' => 789
+];
 
 echo "Create collection instance\n";
-$collection = new MultiSelectTest();
+$collection = new MultiSelectCollectionExample();
 
-echo "Attempt to obtain selected items without selecting anything (EXCEPTION must be thrown)\n\n";
+echo "Append the following data to the created collection:\n\n";
 
-try{
-    $collection->getSelectedItems();
-}catch(\Exception $e){
-    echo "EXCEPTION: {$e->getMessage()}\n";
-}
+echo var_export($data,true)."\n\n";
 
-echo "Append item 123 using my_key_1 as key\n";
-$collection->append('123','my_key_1');
+$collection->appendMany($data, true);
 
-echo "Append item 456 using my_key_2 as key\n";
-$collection->append('456','my_key_2');
-
-echo "Append item 789 using my_key_3 as key\n";
-$collection->append('789','my_key_3');
-
-echo "Check if collection has a selection (must return false)\n";
-
+echo "Check if collection has a selection (must return false)\n\n";
 var_dump($collection->hasSelection());
 
-echo "Select item my_key_1 in collection\n";
-$collection->select('my_key_1', false);
+echo "\nSelect item my_key_1 in collection\n";
+$collection->select('my_key_1');
 
-echo "Check if collection has a selection (must return true)\n";
-
+echo "\nCheck if collection has a selection (must return true)\n\n";
 var_dump($collection->hasSelection());
 
-echo "Select item my_key_3 in collection\n";
+echo "\nSelect item my_key_3 in collection\n";
 $collection->select('my_key_3');
 
-echo "Obtain count of selected items (must be 2)\n\n";
-echo "Count is: {$collection->getSelectedCount()}\n\n";
+echo "\nObtain count of selected items (must be 2)\n";
+echo "\nCount of selected items is: {$collection->getSelectionCount()}\n\n";
 
-echo "Is selection locked?\n";
-var_dump($collection->isSelectionLocked());
-
-echo "Get selected item key\n";
-var_dump($collection->getSelectedKeys());
-
-echo "Lock selection\n";
+echo "Lock selection\n\n";
 $collection->lockSelection();
+
+echo "Remove item with key: my_key_3\n\n";
+$collection->removeLast();
+
+echo "Print selected keys, the removed key (my_key_3) must not SHOW up in the selected values\n\n";
+
+foreach($collection->getSelection() as $key=>$value){
+    var_dump("$key => $value");
+}
+
+
+echo "\nPrint collection keys and values:\n\n";
+foreach($collection as $key=>$value){
+    var_dump($key, $value);
+}
+
+echo "\nCheck if selection is locked (true must be returned):\n\n";
+var_dump($collection->isSelectionLocked());
 
 try {
 
-    echo "Try to select item my_key_3, exception must be thrown\n";
+    echo "\nTry to select item my_key_2, exception must be thrown (due to the selection being locked)\n\n";
     $collection->select('my_key_2');
 
 }catch(LockingException $e) {
 
-    echo "EXCEPTION: {$e->getMessage()}\n";
+    echo "EXCEPTION: {$e->getMessage()}\n\n";
 
 }
 
-echo "Selected item value\n";
+echo "Print selected keys:\n\n";
 
-foreach($collection->getSelectedItems() as $key => $value){
-    echo "Selected: $key\n";
+foreach($collection->getSelection() as $key => $value){
+    echo "SELECTED | key: $key , value: $value\n";
+}
+
+echo "\nTruncate to selected\n\n";
+
+$collection->truncateToSelected();
+
+echo "Print items in collection, only my_key_1 must show up\n\n";
+
+foreach($collection as $key => $value){
+    echo "Item in collection | key: $key , value: $value\n";
 }

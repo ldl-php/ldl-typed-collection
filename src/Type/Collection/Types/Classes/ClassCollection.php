@@ -7,16 +7,21 @@
 
 namespace LDL\Type\Collection\Types\Classes;
 
-use LDL\Type\Collection\Types\Lockable\LockableCollection;
+use LDL\Type\Collection\AbstractCollection;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Validators\ClassExistenceValidator;
 
-class ClassCollection extends LockableCollection
+class ClassCollection extends AbstractCollection implements HasAppendValidatorChainInterface
 {
+    use AppendValidatorChainTrait;
+
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getValueValidatorChain()
-            ->append(new Validator\ClassExistenceValidator())
+        $this->getAppendValidatorChain()
+            ->append(new ClassExistenceValidator())
             ->lock();
     }
 }

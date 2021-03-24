@@ -3,7 +3,6 @@
 namespace LDL\Type\Collection\Interfaces\Selection;
 
 use LDL\Framework\Base\Exception\LockingException;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
 
 interface SelectionLockingInterface
 {

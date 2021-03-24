@@ -3,6 +3,8 @@
 namespace LDL\Type\Collection\Validator\Config;
 
 use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
+use LDL\Validators\Config\ValidatorConfigInterface;
+use LDL\Validators\Config\ValidatorConfigInterfaceTrait;
 
 class UniqueValidatorConfig implements ValidatorConfigInterface
 {

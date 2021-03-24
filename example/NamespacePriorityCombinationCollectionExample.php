@@ -9,8 +9,8 @@ use LDL\Type\Collection\Traits\Sorting\PrioritySortingTrait;
 use LDL\Type\Exception\TypeMismatchException;
 use LDL\Framework\Base\Contracts\NamespaceInterface;
 use LDL\Type\Collection\Interfaces\Namespaceable\NamespaceableCollectionInterface;
-use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
 use LDL\Framework\Base\Exception\LockingException;
+use LDL\Validators\InterfaceComplianceValidator;
 
 class NSPriority1 implements PriorityInterface, NamespaceInterface
 {
@@ -57,9 +57,9 @@ class NSPriorityCollectionExample extends ObjectCollection implements Namespacea
     {
         parent::__construct($items);
 
-        $this->getValueValidatorChain()
-            ->append(new InterfaceComplianceItemValidator(NamespaceInterface::class))
-            ->append(new InterfaceComplianceItemValidator(PriorityInterface::class))
+        $this->getAppendValidatorChain()
+            ->append(new InterfaceComplianceValidator(NamespaceInterface::class))
+            ->append(new InterfaceComplianceValidator(PriorityInterface::class))
             ->lock();
     }
 
@@ -82,8 +82,8 @@ echo "Try to modify the validation chain (exception must be thrown)\n";
 
 try{
 
-    $collection->getValueValidatorChain()
-        ->append(new InterfaceComplianceItemValidator(NamespaceInterface::class));
+    $collection->getAppendValidatorChain()
+        ->append(new InterfaceComplianceValidator(NamespaceInterface::class));
 
 }catch(LockingException $e){
 
@@ -96,7 +96,7 @@ try {
     echo "Append \stdClass (Must throw exception!)\n";
     $collection->append(new \stdClass());
 
-}catch(TypeMismatchException $e){
+}catch(\Exception $e){
 
     echo "EXCEPTION: {$e->getMessage()}\n";
 

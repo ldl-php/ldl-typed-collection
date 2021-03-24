@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 /**
- * There are two interfaces which for validators, one which validates values (this one) and another which validates keys
+ * There are two interfaces for validators, one which validates values and another which validates keys (this one)
  * at simple sight, one may think that just having ONE single interface with a validate method would be enough,
  * however there are a few problems with this approach, for example, what happens when you want to validate
  * that a collection has a key named "foo" and not a value "foo", in this case a validate method alone doesn't cut it
@@ -14,12 +14,12 @@
  */
 namespace LDL\Type\Collection\Interfaces\Validation;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
-interface KeyValidatorInterface extends ValidatorInterface
+interface KeyValidatorInterface
 {
     /**
-     * @param CollectionInterface $collection
+     * @param TypedCollectionInterface $collection
      * @param mixed $item
      *
      * @param number|string $key
@@ -27,6 +27,6 @@ interface KeyValidatorInterface extends ValidatorInterface
      *
      * @throws \Exception
      */
-    public function validateKey(CollectionInterface $collection, $item, $key) : void;
+    public function validateKey(TypedCollectionInterface $collection, $item, $key) : void;
 
 }
