@@ -9,17 +9,17 @@
 namespace LDL\Type\Collection\Traits\Filter;
 
 use LDL\Type\Collection\Exception\EmptyCollectionException;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Types\String\StringCollection;
 
 trait FilterByValueTypeTrait
 {
-    public function filterByValueType(string $filter): CollectionInterface
+    public function filterByValueType(string $filter): TypedCollectionInterface
     {
         return $this->filterByValueTypes(new StringCollection([$filter]));
     }
 
-    public function filterByValueTypes(StringCollection $types): CollectionInterface
+    public function filterByValueTypes(StringCollection $types): TypedCollectionInterface
     {
         $collection = new static();
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use LDL\Type\Exception\TypeMismatchException;
+use LDL\Validators\Exception\TypeMismatchException;
 use LDL\Type\Collection\Types\String\UniqueStringCollection;
 
 require __DIR__.'/../vendor/autoload.php';

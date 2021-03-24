@@ -2,17 +2,17 @@
 
 namespace LDL\Type\Collection\Exception;
 
-use LDL\Type\Collection\Types\Lockable\LockableCollection;
-use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
+use LDL\Type\Collection\Types\Object\ObjectCollection;
+use LDL\Validators\InterfaceComplianceValidator;
 
-class ExceptionCollection extends LockableCollection implements \JsonSerializable
+class ExceptionCollection extends ObjectCollection implements \JsonSerializable
 {
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getValueValidatorChain()
-            ->append(new InterfaceComplianceItemValidator(\Throwable::class))
+        $this->getAppendValidatorChain()
+            ->append(new InterfaceComplianceValidator(\Throwable::class))
             ->lock();
     }
 

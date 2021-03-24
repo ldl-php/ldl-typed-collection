@@ -2,19 +2,15 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
-use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\Validator\Config\MinimumAmountValidatorConfig;
-use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
+use LDL\Validators\Config\ValidatorConfigInterface;
+use LDL\Validators\HasValidatorConfigInterface;
+use LDL\Validators\ValidatorInterface;
 
-class MinimumAmountValidator implements RemoveItemValidatorInterface, ValueValidatorInterface
+class MinimumAmountValidator implements ValidatorInterface, HasValidatorConfigInterface
 {
-    use ValidatorInterfaceTrait;
-
     /**
      * @var MinimumAmountValidatorConfig
      */
@@ -25,9 +21,9 @@ class MinimumAmountValidator implements RemoveItemValidatorInterface, ValueValid
         $this->config = new MinimumAmountValidatorConfig($minAmount, $strict);
     }
 
-    public function validateValue(CollectionInterface $collection, $item, $key): void
+    public function validate($item, $key = null, CollectionInterface $collection = null): void
     {
-        if(count($collection) > $this->config->getMinAmount()){
+        if((count($collection) - 1) >= $this->config->getMinAmount()){
             return;
         }
 

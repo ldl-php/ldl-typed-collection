@@ -2,13 +2,21 @@
 
 namespace LDL\Type\Collection\Types\Integer;
 
-use LDL\Type\Collection\Types\Lockable\LockableCollection;
+use LDL\Type\Collection\AbstractCollection;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Validators\IntegerValidator;
 
-class IntegerCollection extends LockableCollection
+class IntegerCollection extends AbstractCollection implements HasAppendValidatorChainInterface
 {
+    use AppendValidatorChainTrait;
+
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValueValidatorChain()->append(new Validator\IntegerValidator());
+
+        $this->getAppendValidatorChain()
+            ->append(new IntegerValidator())
+            ->lock();
     }
 }

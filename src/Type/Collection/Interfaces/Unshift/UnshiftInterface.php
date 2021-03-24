@@ -2,7 +2,7 @@
 
 namespace LDL\Type\Collection\Interfaces\Unshift;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
 interface UnshiftInterface
 {
@@ -16,8 +16,8 @@ interface UnshiftInterface
      *
      * @param mixed $item
      * @param string|int $key
-     * @return CollectionInterface
+     * @return TypedCollectionInterface
      * @throws \Exception
      */
-    public function unshift($item, $key = null): CollectionInterface;
+    public function unshift($item, $key = null): TypedCollectionInterface;
 }

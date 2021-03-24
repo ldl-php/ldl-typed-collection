@@ -7,7 +7,7 @@ use LDL\Type\Collection\Interfaces\Sorting\PrioritySortingInterface;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
 use LDL\Type\Collection\Traits\Sorting\PrioritySortingTrait;
 use LDL\Type\Exception\TypeMismatchException;
-use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
+use LDL\Validators\InterfaceComplianceValidator;
 
 class PriorityCollectionExample extends ObjectCollection implements PrioritySortingInterface
 {
@@ -15,8 +15,8 @@ class PriorityCollectionExample extends ObjectCollection implements PrioritySort
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValueValidatorChain()
-            ->append(new InterfaceComplianceItemValidator(PriorityInterface::class))
+        $this->getAppendValidatorChain()
+            ->append(new InterfaceComplianceValidator(PriorityInterface::class))
             ->lock();
     }
 }
@@ -51,7 +51,7 @@ try {
     echo "Append \stdClass (Must throw exception!)\n";
     $collection->append(new \stdClass());
 
-}catch(TypeMismatchException $e){
+}catch(\Exception $e){
 
     echo "EXCEPTION: {$e->getMessage()}\n";
 

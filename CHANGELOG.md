@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1199718460902669 - MultipleSelectionInterface (and trait) / Improve getSelectedItems method
 - feature/1199601516820605 - Add hasSelection to MultipleSelection and SingleSelection (interfaces and traits)
 - feature/1199692948932206 - Add ClassStringCollection (Collection of classes as a string with existence validation)
+- feature/1200171590526502 - Refactor typed collection to use ldl-validators library
 
 ### Changed
 

@@ -2,9 +2,9 @@
 
 namespace LDL\Type\Collection\Interfaces\Sorting;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
 interface SortableScalarCollectionInterface extends CollectionSortInterface
 {
-    public function sort(string $sort=self::SORT_ASCENDING) : CollectionInterface;
+    public function sort(string $sort=self::SORT_ASCENDING) : TypedCollectionInterface;
 }

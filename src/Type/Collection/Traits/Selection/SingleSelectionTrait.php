@@ -9,28 +9,32 @@ namespace LDL\Type\Collection\Traits\Selection;
 
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Framework\Base\Exception\LockingException;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\Interfaces\Selection\SelectionLockingInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Interfaces\Selection\SingleSelectionInterface;
 
 trait SingleSelectionTrait
 {
-    use SelectionLockingTrait;
-
     /**
      * @var number|string|null
      */
-    private $__selectedKey;
+    private $_tSelectedKey;
+
+    /**
+     * @var bool
+     */
+    private $_tSelectionLocked = false;
 
     public function select($key) : SingleSelectionInterface
     {
         $this->_validateLockedSelection();
 
         /**
-         * @var CollectionInterface $_this
+         * @var TypedCollectionInterface $_this
          */
         $_this = $this;
 
-        if($this->__selectionLocked){
+        if($this->_tSelectionLocked){
             $msg = 'Selection of items has been locked, can not select more items in this collection';
             throw new LockingException($msg);
         }
@@ -44,24 +48,46 @@ trait SingleSelectionTrait
          */
         $this->offsetGet($key);
 
-        $this->__selectedKey = $key;
+        $this->_tSelectedKey = $key;
 
         return $_this;
     }
 
     public function getSelectedItem()
     {
-        return $this->offsetGet($this->__selectedKey);
+        return $this->offsetGet($this->_tSelectedKey);
     }
 
     public function getSelectedKey()
     {
-        return $this->__selectedKey;
+        return $this->_tSelectedKey;
     }
 
     public function hasSelection() : bool
     {
-        return $this->__selectedKey !== null;
+        return $this->_tSelectedKey !== null;
     }
 
+    private function _validateLockedSelection() : void
+    {
+        if(false === $this->_tSelectionLocked) {
+            return;
+        }
+
+        $msg = 'Selection of items has been locked, can not select more items in this collection';
+        throw new LockingException($msg);
+    }
+
+    public function lockSelection() : SelectionLockingInterface
+    {
+        $this->_validateLockedSelection();
+        $this->_tSelectionLocked = true;
+
+        return $this;
+    }
+
+    public function isSelectionLocked() : bool
+    {
+        return $this->_tSelectionLocked;
+    }
 }

@@ -11,11 +11,11 @@
 namespace LDL\Type\Collection\Traits\Filter;
 
 use LDL\Framework\Base\Contracts\IsActiveInterface;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
 trait FilterByActiveStateTrait
 {
-    public function filterByActiveState(): CollectionInterface
+    public function filterByActiveState(): TypedCollectionInterface
     {
         $collection = new static();
 

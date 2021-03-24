@@ -3,23 +3,23 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
-use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
 use LDL\Type\Collection\Interfaces\Filter\FilterByActiveStateInterface;
 use LDL\Type\Collection\Traits\Filter\FilterByActiveStateTrait;
-use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
 use LDL\Framework\Base\Contracts\IsActiveInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Validators\InterfaceComplianceValidator;
 
-class ActiveStateFilterExample extends AbstractCollection implements HasValueValidatorChainInterface, FilterByActiveStateInterface
+class ActiveStateFilterExample extends AbstractCollection implements HasAppendValidatorChainInterface, FilterByActiveStateInterface
 {
-    use ValueValidatorChainTrait;
+    use AppendValidatorChainTrait;
     use FilterByActiveStateTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getValueValidatorChain()
-            ->append(new InterfaceComplianceItemValidator(IsActiveInterface::class));
+        $this->getAppendValidatorChain()
+            ->append(new InterfaceComplianceValidator(IsActiveInterface::class));
     }
 
 }

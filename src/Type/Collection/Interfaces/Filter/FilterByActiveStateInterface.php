@@ -3,7 +3,7 @@
 namespace LDL\Type\Collection\Interfaces\Filter;
 
 use LDL\Framework\Base\Contracts\IsActiveInterface;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
 interface FilterByActiveStateInterface
 {
@@ -12,7 +12,7 @@ interface FilterByActiveStateInterface
      *
      * @see IsActiveInterface
      *
-     * @return CollectionInterface
+     * @return TypedCollectionInterface
      */
-    public function filterByActiveState() : CollectionInterface;
+    public function filterByActiveState() : TypedCollectionInterface;
 }

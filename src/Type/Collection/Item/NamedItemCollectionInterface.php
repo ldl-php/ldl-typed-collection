@@ -2,9 +2,9 @@
 
 namespace LDL\Type\Collection\Item;
 
-use LDL\Type\Collection\Types\Object\ObjectCollectionInterface;
+use LDL\Type\Collection\Types\Object\ObjectTypedCollectionInterface;
 
-interface NamedItemCollectionInterface extends ObjectCollectionInterface
+interface NamedItemCollectionInterface extends ObjectTypedCollectionInterface
 {
     /**
      * @param $key

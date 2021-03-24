@@ -2,21 +2,15 @@
 
 namespace LDL\Type\Collection\Validator;
 
-use LDL\Type\Collection\Exception\CollectionKeyException;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\Exception\CollectionValueException;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Interfaces\Validation\AppendItemValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\KeyValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValidatorInterface;
-use LDL\Type\Collection\Interfaces\Validation\ValueValidatorInterface;
-use LDL\Type\Collection\Traits\Validator\ValidatorInterfaceTrait;
 use LDL\Type\Collection\Validator\Config\UniqueValidatorConfig;
-use LDL\Type\Collection\Validator\Config\ValidatorConfigInterface;
+use LDL\Validators\Config\ValidatorConfigInterface;
+use LDL\Validators\HasValidatorConfigInterface;
+use LDL\Validators\ValidatorInterface;
 
-class UniqueValidator implements AppendItemValidatorInterface, KeyValidatorInterface, ValueValidatorInterface
+class UniqueValidator implements ValidatorInterface, HasValidatorConfigInterface
 {
-    use ValidatorInterfaceTrait;
-
     /**
      * @var UniqueValidatorConfig
      */
@@ -28,27 +22,12 @@ class UniqueValidator implements AppendItemValidatorInterface, KeyValidatorInter
     }
 
     /**
-     * @param CollectionInterface $collection
      * @param mixed $item
-     * @param number|string $key
-     * @throws CollectionKeyException
-     */
-    public function validateKey(CollectionInterface $collection, $item, $key): void
-    {
-        if(false === $collection->hasKey($key)) {
-            return;
-        }
-
-        throw new CollectionKeyException("Item with key \"$key\" already exists in this collection!");
-    }
-
-    /**
-     * @param CollectionInterface $collection
-     * @param mixed $item
-     * @param number|string $key
+     * @param null $key
+     * @param CollectionInterface|null $collection
      * @throws CollectionValueException
      */
-    public function validateValue(CollectionInterface $collection, $item, $key): void
+    public function validate($item, $key = null, CollectionInterface $collection = null): void
     {
         if(false === $collection->hasValue($item)){
             return;

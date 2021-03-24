@@ -4,20 +4,19 @@ namespace LDL\Type\Collection\Traits\Sorting;
 
 use LDL\Framework\Base\Contracts\PriorityInterface;
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Interfaces\Sorting\CollectionSortInterface;
 
 trait PrioritySortingTrait
 {
 
-    public function sortByPriority(string $sort=CollectionSortInterface::SORT_ASCENDING): CollectionInterface
+    public function sortByPriority(string $sort=CollectionSortInterface::SORT_ASCENDING): TypedCollectionInterface
     {
         /**
-         * @var CollectionInterface $this
+         * @var TypedCollectionInterface $this
          */
 
         $items = \iterator_to_array($this);
-        $isAbstractCollection = $this instanceof AbstractCollection;
         $this->truncate();
 
         uasort(
@@ -35,16 +34,8 @@ trait PrioritySortingTrait
             }
         );
 
-        if($isAbstractCollection){
-            $this->disableValidations();
-        }
-
         foreach($items as $key => $value){
             $this->append($value, $key);
-        }
-
-        if($isAbstractCollection){
-            $this->enableValidations();
         }
 
         return $this;

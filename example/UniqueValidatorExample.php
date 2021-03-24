@@ -3,26 +3,26 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasKeyValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasValueValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\KeyValidatorChainTrait;
-use LDL\Type\Collection\Traits\Validator\ValueValidatorChainTrait;
-use LDL\Type\Collection\Validator\UniqueValidator;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendKeyValidatorChainTrait;
+use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
 use LDL\Type\Collection\Exception\CollectionValueException;
+use LDL\Type\Collection\Validator\UniqueValidator;
 
-class UniqueValidatorExample extends AbstractCollection implements HasKeyValidatorChainInterface, HasValueValidatorChainInterface
+class UniqueValidatorExample extends AbstractCollection implements HasAppendKeyValidatorChainInterface, HasAppendValidatorChainInterface
 {
-    use KeyValidatorChainTrait;
-    use ValueValidatorChainTrait;
+    use AppendKeyValidatorChainTrait;
+    use AppendValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getKeyValidatorChain()
+        $this->getAppendKeyValidatorChain()
             ->append(new UniqueValidator());
 
-        $this->getValueValidatorChain()
+        $this->getAppendValidatorChain()
             ->append(new UniqueValidator());
     }
 }

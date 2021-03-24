@@ -2,7 +2,7 @@
 
 namespace LDL\Type\Collection\Item;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
 use LDL\Type\Collection\Types\Object\Validator\InterfaceComplianceItemValidator;
 
@@ -12,12 +12,12 @@ class NamedItemCollection extends ObjectCollection implements NamedItemCollectio
     {
         parent::__construct($items);
 
-        $this->getValueValidatorChain()
+        $this->getValidatorChain()
             ->append(new InterfaceComplianceItemValidator(NamedItemInterface::class))
             ->lock();
     }
 
-    public function append($item, $key = null): CollectionInterface
+    public function append($item, $key = null): TypedCollectionInterface
     {
         return parent::append(new NamedItem($key, $item), null);
     }

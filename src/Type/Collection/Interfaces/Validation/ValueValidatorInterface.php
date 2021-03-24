@@ -14,12 +14,12 @@
  */
 namespace LDL\Type\Collection\Interfaces\Validation;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
-interface ValueValidatorInterface extends ValidatorInterface
+interface ValueValidatorInterface
 {
     /**
-     * @param CollectionInterface $collection
+     * @param TypedCollectionInterface $collection
      * @param mixed $item
      *
      * @param number|string $key
@@ -27,6 +27,6 @@ interface ValueValidatorInterface extends ValidatorInterface
      *
      * @throws \Exception
      */
-    public function validateValue(CollectionInterface $collection, $item, $key) : void;
+    public function validateValue(TypedCollectionInterface $collection, $item, $key) : void;
 
 }

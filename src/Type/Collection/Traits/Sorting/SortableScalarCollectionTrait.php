@@ -3,22 +3,22 @@
 namespace LDL\Type\Collection\Traits\Sorting;
 
 use LDL\Framework\Base\Contracts\PriorityInterface;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Interfaces\Sorting\CollectionSortInterface;
 use LDL\Type\Collection\Interfaces\Sorting\SortableScalarCollectionInterface;
 
 trait SortableScalarCollectionTrait
 {
 
-    public function sort(string $sort = CollectionSortInterface::SORT_ASCENDING): CollectionInterface
+    public function sort(string $sort = CollectionSortInterface::SORT_ASCENDING): TypedCollectionInterface
     {
         /**
-         * @var CollectionInterface $_this
+         * @var TypedCollectionInterface $_this
          */
         $_this = $this;
 
         /**
-         * @var CollectionInterface $collection
+         * @var TypedCollectionInterface $collection
          */
         $collection = new static();
 

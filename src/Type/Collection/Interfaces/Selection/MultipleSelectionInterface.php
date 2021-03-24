@@ -2,18 +2,28 @@
 
 namespace LDL\Type\Collection\Interfaces\Selection;
 
+use LDL\Framework\Base\Collection\Exception\UndefinedOffsetException;
 use LDL\Framework\Base\Exception\LockingException;
-use LDL\Type\Collection\Exception\EmptyCollectionException;
+use LDL\Type\Collection\Types\String\StringCollection;
 
 interface MultipleSelectionInterface extends SelectionLockingInterface
 {
+    public const SELECT_DIRTY = 'dirty';
+    public const SELECT_CLEAN = 'clean';
+
     /**
      * Select one or more items inside the collection
-     * @throws LockingException if selection is locked
+     *
      * @param iterable $key
+     * @param bool $keyCheck
+     *
      * @return MultipleSelectionInterface
+     *
+     * @throws LockingException if selection is locked
+     * @throws UndefinedOffsetException in case $keyCheck was set to true, and the key given key(s) do not exist
+     * in the collection.
      */
-    public function select($key) : MultipleSelectionInterface;
+    public function select($key, bool $keyCheck = true) : MultipleSelectionInterface;
 
     /**
      * Selects all items
@@ -23,25 +33,23 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
     public function selectAll() : MultipleSelectionInterface;
 
     /**
-     * Return the selected items, previously selected by the select method
+     * Return an instance of the collection which is filtered by the selected items
      *
      * @return MultipleSelectionInterface
      */
-    public function getSelectedItems() : MultipleSelectionInterface;
+    public function filterBySelectedItems() : MultipleSelectionInterface;
 
     /**
-     * Returns an array containing keys previously selected
+     * Returns a StringCollection containing keys previously selected
      *
-     * @return array
+     * @return StringCollection|null
      */
-    public function getSelectedKeys() : array;
+    public function getSelection() : StringCollection;
 
     /**
-     * Obtains the count of selected items
-     *
      * @return int
      */
-    public function getSelectedCount() : int;
+    public function getSelectionCount() : int;
 
     /**
      * Truncates the instance to selected values only (does not creates a new instance)

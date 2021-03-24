@@ -9,12 +9,12 @@
 namespace LDL\Type\Collection\Traits\Nameable;
 
 use LDL\Framework\Base\Contracts\NameableInterface;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Helper\RegexValidatorHelper;
+use LDL\Framework\Helper\RegexHelper;
+use LDL\Type\Collection\TypedCollectionInterface;
 
 trait NameableCollectionTrait
 {
-    public function filterByNameAuto($mixed, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNameAuto($mixed, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
         if(is_array($mixed)){
             return $this->filterByNames($mixed, $collection);
@@ -27,12 +27,12 @@ trait NameableCollectionTrait
         }
     }
 
-    public function filterByName(string $name, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByName(string $name, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
         return $this->filterByNames([$name], $collection);
     }
 
-    public function filterByNames(array $names, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNames(array $names, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
         if(null === $collection) {
             $collection = clone($this);
@@ -51,9 +51,9 @@ trait NameableCollectionTrait
         return $collection;
     }
 
-    public function filterByNameRegex(string $regex, CollectionInterface &$collection=null) : CollectionInterface
+    public function filterByNameRegex(string $regex, TypedCollectionInterface &$collection=null) : TypedCollectionInterface
     {
-        RegexValidatorHelper::validate($regex);
+        RegexHelper::validate($regex);
 
         if(null === $collection) {
             $collection = clone($this);

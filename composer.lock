@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3eac84f1bb25a55ba23109afe699c887",
+    "content-hash": "dfeb9ed3997094123302a4d893e65ee1",
     "packages": [
         {
             "name": "ldl-framework/framework-base",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pthreat/ldl-framework-base.git",
-                "reference": "7213c5962baa22fede6a8bc34bb1164d6dcf0113"
+                "reference": "b7a52010a5d8c75b90d40b556e3a2b94d54b3ce9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pthreat/ldl-framework-base/zipball/7213c5962baa22fede6a8bc34bb1164d6dcf0113",
-                "reference": "7213c5962baa22fede6a8bc34bb1164d6dcf0113",
+                "url": "https://api.github.com/repos/pthreat/ldl-framework-base/zipball/b7a52010a5d8c75b90d40b556e3a2b94d54b3ce9",
+                "reference": "b7a52010a5d8c75b90d40b556e3a2b94d54b3ce9",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "LDL\\Framework\\Base\\": "src/LDL/Framework/Base/"
+                    "LDL\\Framework\\Base\\": "src/LDL/Framework/Base/",
+                    "LDL\\Framework\\Helper\\": "src/LDL/Framework/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -43,9 +44,57 @@
             "description": "LDL Framework base contracts and exceptions",
             "support": {
                 "issues": "https://github.com/pthreat/ldl-framework-base/issues",
-                "source": "https://github.com/pthreat/ldl-framework-base/tree/master"
+                "source": "https://github.com/pthreat/ldl-framework-base/tree/fix/1200161406794549"
             },
-            "time": "2021-03-08T11:59:29+00:00"
+            "time": "2021-04-07T00:41:23+00:00"
+        },
+        {
+            "name": "ldl-framework/validators",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pthreat/ldl-validators.git",
+                "reference": "b7ff5e1093942f75193ae493cb21f73a738b419b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pthreat/ldl-validators/zipball/b7ff5e1093942f75193ae493cb21f73a738b419b",
+                "reference": "b7ff5e1093942f75193ae493cb21f73a738b419b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ldl-framework/framework-base": "dev-master",
+                "php": ">=7.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LDL\\Validators\\": "src/LDL/Validators"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Federico",
+                    "email": "jpfstange@gmail.com"
+                },
+                {
+                    "name": "Gonzalo Coda",
+                    "email": "gonzalocoda@gmail.com"
+                }
+            ],
+            "description": "LDL Framework validators",
+            "homepage": "https://github.com/pthreat/ldl-validators",
+            "support": {
+                "issues": "https://github.com/pthreat/ldl-validators/issues",
+                "source": "https://github.com/pthreat/ldl-validators/tree/master"
+            },
+            "time": "2021-04-08T15:54:30+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -212,16 +261,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.2.4",
+            "version": "v5.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "6a81fec0628c468cf6d5c87a4d003725e040e223"
+                "reference": "89412a68ea2e675b4e44f260a5666729f77f668e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/6a81fec0628c468cf6d5c87a4d003725e040e223",
-                "reference": "6a81fec0628c468cf6d5c87a4d003725e040e223",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/89412a68ea2e675b4e44f260a5666729f77f668e",
+                "reference": "89412a68ea2e675b4e44f260a5666729f77f668e",
                 "shasum": ""
             },
             "require": {
@@ -280,7 +329,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.2.4"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.2.6"
             },
             "funding": [
                 {
@@ -296,16 +345,17 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-18T23:11:19+00:00"
+            "time": "2021-03-28T09:42:18+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "ldl-framework/framework-base": 20
+        "ldl-framework/framework-base": 20,
+        "ldl-framework/validators": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.3",

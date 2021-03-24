@@ -2,11 +2,12 @@
 
 namespace LDL\Type\Collection\Types\Object;
 
-use LDL\Type\Collection\Interfaces\CollectionInterface;
-use LDL\Type\Collection\Types\Object\Filter\FilterByInterface;
-use LDL\Type\Collection\Interfaces\Filter\FilterByClassInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByClassInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\TypedCollectionInterface;
 
-interface ObjectCollectionInterface extends CollectionInterface, FilterByInterface, FilterByClassInterface
+interface ObjectCollectionInterface extends TypedCollectionInterface, FilterByInterface, FilterByClassInterface, HasAppendValidatorChainInterface
 {
 
 }

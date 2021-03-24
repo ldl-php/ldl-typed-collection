@@ -22,7 +22,7 @@ echo "Call unshift, append \"I am first\" string\n";
 $str->unshift('I am first','c');
 
 
-echo "Iterate through elements (I am first must appear FIRST and have the key: 0):\n";
+echo "Iterate through elements (I am first must appear FIRST and have the key: c):\n";
 
 foreach($str as $k=>$string){
     echo "Key: $k, String: $string"."\n";

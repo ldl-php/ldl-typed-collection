@@ -11,7 +11,6 @@ use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Exception\CollectionKeyException;
 use LDL\Type\Collection\Exception\TypedCollectionException;
 use LDL\Type\Collection\Exception\UndefinedOffsetException;
-use LDL\Type\Collection\Interfaces\CollectionInterface;
 
 trait CollectionTrait
 {
@@ -80,10 +79,10 @@ trait CollectionTrait
         return $this->offsetExists($key);
     }
 
-    public function filterByKeys(iterable $keys) : CollectionInterface
+    public function filterByKeys(iterable $keys) : TypedCollectionInterface
     {
         /**
-         * @var CollectionInterface $self
+         * @var TypedCollectionInterface $self
          */
         $self = clone($this);
         $self->truncate();
@@ -114,7 +113,7 @@ trait CollectionTrait
         return $this->filterByKeys([$key])->getFirst();
     }
 
-    public function filterByKeyRegex(string $regex) : CollectionInterface
+    public function filterByKeyRegex(string $regex) : TypedCollectionInterface
     {
         $regex = preg_quote($regex, '#');
 
@@ -130,7 +129,7 @@ trait CollectionTrait
         return $self;
     }
 
-    public function removeLast() : CollectionInterface
+    public function removeLast() : TypedCollectionInterface
     {
         $this->remove($this->last);
         return $this;
@@ -172,7 +171,7 @@ trait CollectionTrait
         return false;
     }
 
-    public function truncate() : CollectionInterface
+    public function truncate() : TypedCollectionInterface
     {
         while(false === $this->isEmpty()){
             $this->removeLast();
@@ -181,7 +180,7 @@ trait CollectionTrait
         return $this;
     }
 
-    public function appendMany(iterable $items, bool $useKey=false) : CollectionInterface
+    public function appendMany(iterable $items, bool $useKey=false) : TypedCollectionInterface
     {
         foreach ($items as $key => $value) {
             $this->append($value, $useKey ? $key : null);
