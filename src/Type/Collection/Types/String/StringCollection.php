@@ -4,13 +4,13 @@ namespace LDL\Type\Collection\Types\String;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\StringValidator;
 
-class StringCollection extends AbstractCollection implements HasAppendValidatorChainInterface
+class StringCollection extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
-    use AppendValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
 
     /**
      * @var ?string
@@ -21,7 +21,7 @@ class StringCollection extends AbstractCollection implements HasAppendValidatorC
     {
         parent::__construct($items);
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new StringValidator())
             ->lock();
     }

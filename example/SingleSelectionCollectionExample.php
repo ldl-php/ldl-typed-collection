@@ -44,7 +44,7 @@ var_dump($collection->getSelectedItem());
 echo "Lock selection\n";
 $collection->lockSelection();
 
-echo "Try to add a select another item, exception must be thrown\n";
+echo "Try to select another item, exception must be thrown (due to the selection being locked)\n";
 
 try {
     $collection->select('my_key_2');

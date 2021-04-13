@@ -4,10 +4,10 @@ namespace LDL\Type\Collection\Interfaces\Validation;
 
 use LDL\Validators\Chain\ValidatorChainInterface;
 
-interface HasAppendValidatorChainInterface
+interface HasRemoveValueValidatorChainInterface
 {
     /**
      * @return ValidatorChainInterface
      */
-    public function getAppendValidatorChain(): ValidatorChainInterface;
+    public function getRemoveValueValidatorChain(): ValidatorChainInterface;
 }

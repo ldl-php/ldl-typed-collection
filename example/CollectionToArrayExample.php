@@ -2,8 +2,8 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Types\String\StringCollection;
 use LDL\Validators\ClassComplianceValidator;
@@ -23,15 +23,15 @@ echo "\nConvert String Collection to Array\n";
 
 var_dump($str->toArray());
 
-class StdStringCollectionExample extends AbstractCollection implements HasAppendValidatorChainInterface
+class StdStringCollectionExample extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
-    use AppendValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new ClassComplianceValidator(\stdClass::class, false))
             ->append(new StringValidator(false));
     }

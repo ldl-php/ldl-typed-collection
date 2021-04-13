@@ -13,9 +13,8 @@ use LDL\Framework\Base\Collection\Contracts\LockReplaceInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceableInterface;
 use LDL\Framework\Base\Collection\Contracts\UnshiftInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
-use LDL\Type\Collection\Interfaces\Validation\RemoveItemValidatorInterface;
 
-interface TypedCollectionInterface extends CollectionInterface, LockableObjectInterface, AppendableInterface, BeforeAppendInterface, LockAppendInterface, RemoveItemValidatorInterface, BeforeRemoveInterface, LockRemoveInterface, ReplaceableInterface, LockReplaceInterface, UnshiftInterface, KeyFilterInterface
+interface TypedCollectionInterface extends CollectionInterface, LockableObjectInterface, AppendableInterface, BeforeAppendInterface, LockAppendInterface, BeforeRemoveInterface, LockRemoveInterface, ReplaceableInterface, LockReplaceInterface, UnshiftInterface, KeyFilterInterface
 {
 
 }

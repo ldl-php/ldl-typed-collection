@@ -3,34 +3,34 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Validator\MaxAmountValidator;
 use LDL\Type\Collection\Validator\MinimumAmountValidator;
-use LDL\Type\Collection\Interfaces\Validation\HasRemoveValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\RemoveValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasRemoveValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\RemoveValueValidatorChainTrait;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
 
-class ItemAmountValidatorExample extends AbstractCollection implements HasAppendValidatorChainInterface, HasRemoveValidatorChainInterface
+class ItemAmountValueValueValidatorExample extends AbstractCollection implements HasAppendValueValidatorChainInterface, HasRemoveValueValidatorChainInterface
 {
-    use AppendValidatorChainTrait;
-    use RemoveValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
+    use RemoveValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new MaxAmountValidator(5))
             ->lock();
 
-        $this->getRemoveValidatorChain()
+        $this->getRemoveValueValidatorChain()
             ->append(new MinimumAmountValidator(3))
             ->lock();
     }
 }
 
 echo "Create new collection instance which implements ItemAmountValidator\n";
-$obj = new ItemAmountValidatorExample();
+$obj = new ItemAmountValueValueValidatorExample();
 
 try {
 

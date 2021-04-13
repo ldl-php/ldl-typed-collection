@@ -6,7 +6,7 @@ use LDL\Framework\Base\Contracts\LockableObjectInterface;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 
 trait UnshiftTrait
 {
@@ -22,8 +22,8 @@ trait UnshiftTrait
             $this->getAppendKeyValidatorChain()->validate($this, $item, $key);
         }
 
-        if($this instanceof HasAppendValidatorChainInterface){
-            $this->getAppendValidatorChain()->validate($this, $item, $key);
+        if($this instanceof HasAppendValueValidatorChainInterface){
+            $this->getAppendValueValidatorChain()->validate($this, $item, $key);
         }
 
         $this->first = $key;

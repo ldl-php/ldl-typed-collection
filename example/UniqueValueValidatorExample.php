@@ -4,16 +4,16 @@ require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendKeyValidatorChainTrait;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Exception\CollectionValueException;
 use LDL\Type\Collection\Validator\UniqueValidator;
 
-class UniqueValidatorExample extends AbstractCollection implements HasAppendKeyValidatorChainInterface, HasAppendValidatorChainInterface
+class UniqueValueValidatorExample extends AbstractCollection implements HasAppendKeyValidatorChainInterface, HasAppendValueValidatorChainInterface
 {
     use AppendKeyValidatorChainTrait;
-    use AppendValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
@@ -22,14 +22,14 @@ class UniqueValidatorExample extends AbstractCollection implements HasAppendKeyV
         $this->getAppendKeyValidatorChain()
             ->append(new UniqueValidator());
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new UniqueValidator());
     }
 }
 
 echo "Create collection instance\n";
 
-$collection = new UniqueValidatorExample();
+$collection = new UniqueValueValidatorExample();
 
 echo "Add element test with key 213\n";
 

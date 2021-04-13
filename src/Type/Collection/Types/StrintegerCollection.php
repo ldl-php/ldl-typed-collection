@@ -3,20 +3,20 @@
 namespace LDL\Type\Collection\Types;
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\IntegerValidator;
 use LDL\Validators\StringValidator;
 
-class StrintegerCollection extends AbstractCollection implements HasAppendValidatorChainInterface
+class StrintegerCollection extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
-    use AppendValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new StringValidator(false))
             ->append(new IntegerValidator(false))
             ->lock();

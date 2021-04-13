@@ -3,21 +3,21 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Validators\NumberValidator;
 use LDL\Validators\StringValidator;
 use LDL\Validators\Chain\Exception\CombinedException;
 
-class StringNumberCollectionExample extends AbstractCollection implements HasAppendValidatorChainInterface
+class StringNumberCollectionExample extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
-    use AppendValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new NumberValidator(false))
             ->append(new StringValidator(false));
     }

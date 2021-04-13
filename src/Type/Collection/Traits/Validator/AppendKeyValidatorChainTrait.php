@@ -3,7 +3,7 @@
 namespace LDL\Type\Collection\Traits\Validator;
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Types\String\StringCollection;
 use LDL\Validators\Chain\ValidatorChain;
 use LDL\Validators\Chain\ValidatorChainInterface;
@@ -15,18 +15,19 @@ trait AppendKeyValidatorChainTrait
      */
     private $_tAppendKeyCollection;
 
+    //<editor-fold desc="HasAppendKeyValidatorChainInterface methods">
     public function getAppendKeyValidatorChain(): ValidatorChainInterface
     {
         if(null !== $this->_tAppendKeyCollection){
-            return $this->_tAppendKeyCollection->getAppendValidatorChain();
+            return $this->_tAppendKeyCollection->getAppendValueValidatorChain();
         }
 
         /**
          * Use an anonymous class here, a proper class is not needed
          */
-        $this->_tAppendKeyCollection = new class extends AbstractCollection implements HasAppendValidatorChainInterface
+        $this->_tAppendKeyCollection = new class extends AbstractCollection implements HasAppendValueValidatorChainInterface
         {
-            use AppendValidatorChainTrait;
+            use AppendValueValidatorChainTrait;
 
             /**
              * @var ValidatorChainInterface
@@ -56,4 +57,5 @@ trait AppendKeyValidatorChainTrait
 
         return $this->_tAppendKeyCollection->getValidatorChain();
     }
+    //</editor-fold>
 }

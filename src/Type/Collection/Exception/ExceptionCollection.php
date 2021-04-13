@@ -11,7 +11,7 @@ class ExceptionCollection extends ObjectCollection implements \JsonSerializable
     {
         parent::__construct($items);
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new InterfaceComplianceValidator(\Throwable::class))
             ->lock();
     }

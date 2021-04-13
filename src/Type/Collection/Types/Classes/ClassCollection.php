@@ -8,19 +8,19 @@
 namespace LDL\Type\Collection\Types\Classes;
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\ClassExistenceValidator;
 
-class ClassCollection extends AbstractCollection implements HasAppendValidatorChainInterface
+class ClassCollection extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
-    use AppendValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new ClassExistenceValidator())
             ->lock();
     }

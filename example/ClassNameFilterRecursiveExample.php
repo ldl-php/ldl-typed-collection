@@ -3,8 +3,8 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValidatorChainInterface;
-use LDL\Type\Collection\Traits\Validator\AppendValidatorChainTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
 use LDL\Validators\StringValidator;
 
@@ -23,15 +23,15 @@ class Test2 extends ObjectCollection
 
 }
 
-class Test3 extends AbstractCollection implements HasAppendValidatorChainInterface
+class Test3 extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
-    use AppendValidatorChainTrait;
+    use AppendValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
 
-        $this->getAppendValidatorChain()
+        $this->getAppendValueValidatorChain()
             ->append(new StringValidator());
     }
 }

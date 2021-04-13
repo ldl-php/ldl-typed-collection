@@ -5,14 +5,15 @@ namespace LDL\Type\Collection\Traits\Validator;
 use LDL\Validators\Chain\ValidatorChain;
 use LDL\Validators\Chain\ValidatorChainInterface;
 
-trait RemoveValidatorChainTrait
+trait RemoveValueValidatorChainTrait
 {
     /**
      * @var ValidatorChainInterface
      */
     private $_tRemoveValidatorChain;
 
-    public function getRemoveValidatorChain(): ValidatorChainInterface
+    //<editor-fold desc="HasRemoveValueValidatorChainInterface methods">
+    public function getRemoveValueValidatorChain(): ValidatorChainInterface
     {
         if(null !== $this->_tRemoveValidatorChain){
             return $this->_tRemoveValidatorChain;
@@ -26,4 +27,5 @@ trait RemoveValidatorChainTrait
 
         return $this->_tRemoveValidatorChain;
     }
+    //</editor-fold>
 }
