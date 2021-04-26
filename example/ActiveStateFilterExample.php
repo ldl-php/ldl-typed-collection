@@ -4,16 +4,16 @@ require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
-use LDL\Type\Collection\Interfaces\Filter\FilterByActiveStateInterface;
-use LDL\Type\Collection\Traits\Filter\FilterByActiveStateTrait;
 use LDL\Framework\Base\Contracts\IsActiveInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\InterfaceComplianceValidator;
+use LDL\Framework\Base\Collection\Traits\FilterByActiveStateInterfaceTrait;
+use LDL\Framework\Base\Collection\Contracts\FilterByActiveStateInterface;
 
 class ActiveStateFilterExample extends AbstractCollection implements HasAppendValueValidatorChainInterface, FilterByActiveStateInterface
 {
     use AppendValueValidatorChainTrait;
-    use FilterByActiveStateTrait;
+    use FilterByActiveStateInterfaceTrait;
 
     public function __construct(iterable $items = null)
     {

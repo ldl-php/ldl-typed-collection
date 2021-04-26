@@ -7,6 +7,8 @@ use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Validator\UniqueValidator;
+use LDL\Validators\Chain\AndValidatorChain;
+use LDL\Validators\Chain\OrValidatorChain;
 use LDL\Validators\IntegerValidator;
 use LDL\Validators\StringValidator;
 
@@ -19,10 +21,10 @@ class UniqueStrintegerCollection extends AbstractCollection implements HasAppend
     {
         parent::__construct($items);
 
-        $this->getAppendValueValidatorChain()
-            ->append(new StringValidator(false))
-            ->append(new IntegerValidator(false))
-            ->append(new UniqueValidator(true))
+        $this->getAppendValueValidatorChain(OrValidatorChain::class)
+            ->append(new StringValidator())
+            ->append(new IntegerValidator())
+            ->append(new AndValidatorChain([new UniqueValidator()]))
             ->lock();
     }
 }

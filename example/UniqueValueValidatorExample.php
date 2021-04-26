@@ -7,7 +7,6 @@ use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterfac
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendKeyValidatorChainTrait;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
-use LDL\Type\Collection\Exception\CollectionValueException;
 use LDL\Type\Collection\Validator\UniqueValidator;
 
 class UniqueValueValidatorExample extends AbstractCollection implements HasAppendKeyValidatorChainInterface, HasAppendValueValidatorChainInterface
@@ -38,7 +37,7 @@ $collection->append('test', '213');
 try {
 
     echo "Try to add element with value 'some value' and key '213' AGAIN, Exception must be thrown\n";
-    $collection['213'] = 'some value';
+    $collection->append('some value', '213');
 
 }catch(\Exception $e){
 
@@ -51,7 +50,7 @@ try{
     echo "Try to add element test, AGAIN, exception must be thrown\n";
     $collection->append('test');
 
-}catch(CollectionValueException $e){
+}catch(\Exception $e){
 
     echo "EXCEPTION: {$e->getMessage()}\n";
 

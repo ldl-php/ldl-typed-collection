@@ -3,9 +3,9 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Framework\Base\Contracts\NamespaceInterface;
-use LDL\Type\Collection\Interfaces\Namespaceable\NamespaceableCollectionInterface;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
-use LDL\Type\Collection\Traits\Namespaceable\NamespaceableCollectionTrait;
+use LDL\Framework\Base\Collection\Contracts\FilterByNamespaceInterface;
+use LDL\Framework\Base\Collection\Traits\FilterByNamespaceInterfaceTrait;
 
 class NamespaceClass1 implements NamespaceInterface
 {
@@ -33,9 +33,9 @@ class NamespaceClass2 implements NamespaceInterface
     }
 }
 
-class NamespaceableCollectionCollectionExample extends ObjectCollection implements NamespaceableCollectionInterface
+class NamespaceableCollectionCollectionExample extends ObjectCollection implements FilterByNamespaceInterface
 {
-    use NamespaceableCollectionTrait;
+    use FilterByNamespaceInterfaceTrait;
 }
 
 echo "Create new Namespaceable collection class instance\n";
@@ -62,10 +62,10 @@ echo "Found ".count($collection->filterByNamespaceAndName('Namespace 1', 'Name')
 echo "\n\nAuto filter \n";
 
 echo "Filter by namespace: \"Namespace 1\" in Auto mode\n";
-echo "Found ".count($collection->filterByNamespaceAuto('Namespace 1'))." elements \n\n";
+echo "Found ".count($collection->filterByNamespaceAuto('Namespace 1'))." elements \n";
 
 echo "Filter by regex #.*2# in Auto mode:\n";
-echo count($collection->filterByNamespaceAuto('#.*2#'))."\n\n";
+echo "Found ".count($collection->filterByNamespaceAuto('#.*2#'))." elements\n";
 
-echo "Filter by namespaces: [Namespace 1, Namespace 2] in Auto mode\n\n";
-echo "Found ".count($collection->filterByNamespaceAuto(['Namespace 1', 'Namespace 2']))." elements \n\n";
+echo "Filter by namespaces: [Namespace 1, Namespace 2] in Auto mode\n";
+echo "Found ".count($collection->filterByNamespaceAuto(['Namespace 1', 'Namespace 2']))." elements \n";

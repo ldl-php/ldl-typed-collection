@@ -2,7 +2,6 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use LDL\Type\Exception\TypeMismatchException;
 use LDL\Type\Collection\Types\Classes\ClassCollection;
 
 $classCollection = new ClassCollection();

@@ -18,7 +18,7 @@ class UniqueKeyCollectionExample extends AbstractCollection implements HasAppend
         parent::__construct($items);
 
         $this->getAppendKeyValidatorChain()
-            ->append(new UniqueValidator($strict=true))
+            ->append(new UniqueValidator())
             ->lock();
     }
 }
@@ -31,7 +31,7 @@ $collection->append('test', '123');
 
 echo "Add element test2 with key 123 (again) Exception must be thrown\n";
 try{
-    $collection->replace('test2', '123');
+    $collection->append('test2', '123');
 }catch(\Exception $e){
     echo "EXCEPTION: {$e->getMessage()}\n";
 }

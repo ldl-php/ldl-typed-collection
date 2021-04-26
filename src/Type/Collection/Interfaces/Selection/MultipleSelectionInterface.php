@@ -2,6 +2,7 @@
 
 namespace LDL\Type\Collection\Interfaces\Selection;
 
+use LDL\Framework\Base\Collection\Contracts\SelectionLockingInterface;
 use LDL\Framework\Base\Collection\Exception\UndefinedOffsetException;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Types\String\StringCollection;
@@ -20,7 +21,7 @@ interface MultipleSelectionInterface extends SelectionLockingInterface
      * @return MultipleSelectionInterface
      *
      * @throws LockingException if selection is locked
-     * @throws UndefinedOffsetException in case $keyCheck was set to true, and the key given key(s) do not exist
+     * @throws UndefinedOffsetException in case $keyCheck was set to true, and the given key(s) do not exist
      * in the collection.
      */
     public function select($key, bool $keyCheck = true) : MultipleSelectionInterface;

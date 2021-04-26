@@ -4,37 +4,50 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\Validator\Config\MaxAmountValidatorConfig;
-use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
 use LDL\Validators\Config\ValidatorConfigInterface;
-use LDL\Validators\HasValidatorConfigInterface;
 use LDL\Validators\ValidatorInterface;
 
-class MaxAmountValidator implements ValidatorInterface, HasValidatorConfigInterface
+class MaxAmountValidator implements ValidatorInterface
 {
     /**
      * @var MaxAmountValidatorConfig
      */
     private $config;
 
-    public function __construct(int $maxAmount, bool $strict=true)
+    public function __construct(int $maxAmount, bool $negated=false, bool $dumpable=true)
     {
-        $this->config = new MaxAmountValidatorConfig($maxAmount, $strict);
+        $this->config = new MaxAmountValidatorConfig($maxAmount, $negated, $dumpable);
     }
 
     /**
-     * @param mixed $item
+     * @param mixed $value
      * @param null $key
      * @param CollectionInterface|null $collection
-     * @throws AmountValidatorException
+     * @throws Exception\AmountValidatorException
      */
-    public function validate($item, $key = null, CollectionInterface $collection = null): void
+    public function validate($value, $key = null, CollectionInterface $collection = null): void
+    {
+        $this->config->isNegated() ? $this->assertFalse($value, $key, $collection) : $this->assertTrue($value, $key, $collection);
+    }
+
+    public function assertTrue($value, $key = null, CollectionInterface $collection = null): void
     {
         if((count($collection) + 1) <= $this->config->getMaxAmount()){
             return;
         }
 
-        $msg = "Items in this collection can not be more than: {$this->config->getMaxAmount()}";
-        throw new AmountValidatorException($msg);
+        $msg = "Items in this collection can NOT be more than: {$this->config->getMaxAmount()}";
+        throw new Exception\AmountValidatorException($msg);
+    }
+
+    public function assertFalse($value, $key = null, CollectionInterface $collection = null): void
+    {
+        if((count($collection) + 1) > $this->config->getMaxAmount()){
+            return;
+        }
+
+        $msg = "Items in this collection can be more than: {$this->config->getMaxAmount()}";
+        throw new Exception\AmountValidatorException($msg);
     }
 
     /**
@@ -56,7 +69,7 @@ class MaxAmountValidator implements ValidatorInterface, HasValidatorConfigInterf
         /**
          * @var MaxAmountValidatorConfig $config
          */
-        return new self($config->getMaxAmount(), $config->isStrict());
+        return new self($config->getMaxAmount(), $config->isNegated(), $config->isDumpable());
     }
 
     /**

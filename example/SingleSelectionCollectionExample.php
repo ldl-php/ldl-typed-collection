@@ -2,14 +2,14 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use LDL\Type\Collection\Interfaces\Selection\SingleSelectionInterface;
-use LDL\Type\Collection\Traits\Selection\SingleSelectionTrait;
+use LDL\Framework\Base\Collection\Contracts\SingleSelectionInterface;
+use LDL\Framework\Base\Collection\Traits\SingleSelectionInterfaceTrait;
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Framework\Base\Exception\LockingException;
 
 class SingleSelectionCollectionExample extends AbstractCollection implements SingleSelectionInterface
 {
-    use SingleSelectionTrait;
+    use SingleSelectionInterfaceTrait;
 }
 
 echo "Create collection instance\n";

@@ -5,7 +5,7 @@ namespace LDL\Type\Collection\Types\Number;
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
-use LDL\Validators\NumberValidator;
+use LDL\Validators\NumericValidator;
 
 class NumberCollection extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
@@ -16,7 +16,7 @@ class NumberCollection extends AbstractCollection implements HasAppendValueValid
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
-            ->append(new NumberValidator())
+            ->append(new NumericValidator())
             ->lock();
     }
 }

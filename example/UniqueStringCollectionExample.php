@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-use LDL\Validators\Exception\TypeMismatchException;
 use LDL\Type\Collection\Types\String\UniqueStringCollection;
 
 require __DIR__.'/../vendor/autoload.php';
@@ -20,7 +19,7 @@ try {
 
     $str->append(789);
 
-}catch(TypeMismatchException $e){
+}catch(\Exception $e){
 
     echo "EXCEPTION: {$e->getMessage()}\n";
 

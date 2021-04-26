@@ -6,7 +6,7 @@ use LDL\Type\Collection\Exception\EmptyCollectionException;
 use LDL\Type\Collection\TypedCollectionInterface;
 use LDL\Type\Collection\Types\String\StringCollection;
 
-interface FilterValueTypeInterface
+interface FilterByValueTypeInterface
 {
     /**
      * Filters a mixed collection by type value

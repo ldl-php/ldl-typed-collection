@@ -5,9 +5,10 @@ require __DIR__.'/../vendor/autoload.php';
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
-use LDL\Validators\NumberValidator;
+use LDL\Validators\NumericValidator;
 use LDL\Validators\StringValidator;
 use LDL\Validators\Chain\Exception\CombinedException;
+use LDL\Validators\Chain\OrValidatorChain;
 
 class StringNumberCollectionExample extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
@@ -17,9 +18,9 @@ class StringNumberCollectionExample extends AbstractCollection implements HasApp
     {
         parent::__construct($items);
 
-        $this->getAppendValueValidatorChain()
-            ->append(new NumberValidator(false))
-            ->append(new StringValidator(false));
+        $this->getAppendValueValidatorChain(OrValidatorChain::class)
+            ->append(new NumericValidator())
+            ->append(new StringValidator());
     }
 }
 

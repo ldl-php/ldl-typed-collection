@@ -3,15 +3,14 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Framework\Base\Contracts\PriorityInterface;
-use LDL\Type\Collection\Interfaces\Sorting\PrioritySortingInterface;
+use LDL\Framework\Base\Collection\Contracts\PrioritySortingInterface;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
-use LDL\Type\Collection\Traits\Sorting\PrioritySortingTrait;
-use LDL\Type\Exception\TypeMismatchException;
+use LDL\Framework\Base\Collection\Traits\PrioritySortingInterfaceTrait;
 use LDL\Validators\InterfaceComplianceValidator;
 
 class PriorityCollectionExample extends ObjectCollection implements PrioritySortingInterface
 {
-    use PrioritySortingTrait;
+    use PrioritySortingInterfaceTrait;
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);

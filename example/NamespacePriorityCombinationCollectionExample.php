@@ -2,17 +2,18 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+use LDL\Framework\Base\Collection\Contracts\PrioritySortingInterface;
+use LDL\Framework\Base\Collection\Traits\PrioritySortingInterfaceTrait;
 use LDL\Framework\Base\Contracts\PriorityInterface;
-use LDL\Type\Collection\Interfaces\Sorting\PrioritySortingInterface;
 use LDL\Type\Collection\Types\Object\ObjectCollection;
-use LDL\Type\Collection\Traits\Sorting\PrioritySortingTrait;
-use LDL\Type\Exception\TypeMismatchException;
 use LDL\Framework\Base\Contracts\NamespaceInterface;
-use LDL\Type\Collection\Interfaces\Namespaceable\NamespaceableCollectionInterface;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Validators\InterfaceComplianceValidator;
+use LDL\Framework\Base\Contracts\NameableInterface;
+use LDL\Framework\Base\Collection\Contracts\FilterByNameInterface;
+use LDL\Framework\Base\Collection\Traits\FilterByNameInterfaceTrait;
 
-class NSPriority1 implements PriorityInterface, NamespaceInterface
+class NSPriority1 implements PriorityInterface, NameableInterface, NamespaceInterface
 {
     public function getPriority(): int
     {
@@ -30,7 +31,7 @@ class NSPriority1 implements PriorityInterface, NamespaceInterface
     }
 }
 
-class NSPriority2 implements PriorityInterface, NamespaceInterface
+class NSPriority2 implements PriorityInterface, NameableInterface, NamespaceInterface
 {
     public function getPriority(): int
     {
@@ -48,10 +49,10 @@ class NSPriority2 implements PriorityInterface, NamespaceInterface
     }
 }
 
-class NSPriorityCollectionExample extends ObjectCollection implements NamespaceableCollectionInterface, PrioritySortingInterface
+class NSPriorityCollectionExample extends ObjectCollection implements FilterByNameInterface, PrioritySortingInterface
 {
-    use \LDL\Type\Collection\Traits\Namespaceable\NamespaceableCollectionTrait;
-    use PrioritySortingTrait;
+    use FilterByNameInterfaceTrait;
+    use PrioritySortingInterfaceTrait;
 
     public function __construct(iterable $items = null)
     {
@@ -122,7 +123,7 @@ foreach($collection->sortByPriority(PrioritySortingInterface::SORT_DESCENDING) a
 
 echo "Remove item from collection with key: ns_1\n";
 
-$collection->offsetUnset('ns_1');
+$collection->remove('ns_1');
 
 echo "Lock collection\n";
 $collection->lock();
@@ -131,7 +132,7 @@ echo "Try to remove item with key ns_2 (collection is now locked), exception sho
 
 try{
 
-    $collection->offsetUnset('ns_2');
+    $collection->remove('ns_2');
 
 }catch(LockingException $e){
 
@@ -139,13 +140,11 @@ try{
 
 }
 
-$newCollection = new NSPriorityCollectionExample;
-
 echo "\nFilter by regex: #Name 2#\n";
 
 /**
  * @var NamespaceInterface $item
  */
-foreach($collection->filterByNameRegex('#Name 2#', $newCollection) as $item){
+foreach($collection->filterByNameRegex('#Name 2#') as $item){
     echo $item->getNamespace(). ' '. $item->getName()."\n";
 }
