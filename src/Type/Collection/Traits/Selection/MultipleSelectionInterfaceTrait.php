@@ -8,16 +8,15 @@
 
 namespace LDL\Type\Collection\Traits\Selection;
 
-use LDL\Framework\Base\Collection\Traits\ResetCollectionTrait;
+use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Collection\Contracts\SelectionLockingInterface;
+use LDL\Framework\Base\Collection\Traits\CollectionInterfaceTrait;
 use LDL\Framework\Base\Exception\LockingException;
 use LDL\Type\Collection\Interfaces\Selection\MultipleSelectionInterface;
-use LDL\Type\Collection\Interfaces\Selection\SelectionLockingInterface;
 use LDL\Type\Collection\Types\String\StringCollection;
 
 trait MultipleSelectionInterfaceTrait
 {
-    use ResetCollectionTrait;
-
     /**
      * @var StringCollection
      */
@@ -36,7 +35,7 @@ trait MultipleSelectionInterfaceTrait
          * Check that all passed keys are indeed in the collection
          */
         if(true === $keyCheck){
-            array_map(function($key) {$this->offsetGet($key);}, $keys);
+            array_map(function($key) {$this->get($key);}, $keys);
         }
 
         $append = [];
@@ -71,7 +70,7 @@ trait MultipleSelectionInterfaceTrait
         /**
          * @var MultipleSelectionInterface $collection
          */
-        $collection = $this->_reset(clone($this));
+        $collection = $this->getEmptyInstance();
 
         if(null === $this->_tMultiSelect){
             return $collection;
@@ -100,9 +99,8 @@ trait MultipleSelectionInterfaceTrait
     public function removeSelection() : MultipleSelectionInterface
     {
         $this->_createSelectedValuesInstance();
-        $this->_reset($this->_tMultiSelect);
 
-        return $this;
+        return $this->_tMultiSelect->getEmptyInstance();
     }
 
     public function truncateToSelected() : MultipleSelectionInterface
@@ -143,6 +141,9 @@ trait MultipleSelectionInterfaceTrait
     //<editor-fold desc="Private methods">
     private function _createSelectedValuesInstance() : StringCollection
     {
+        $this->requireImplements([CollectionInterface::class, MultipleSelectionInterface::class]);
+        $this->requireTraits(CollectionInterfaceTrait::class);
+
         if(null !== $this->_tMultiSelect) {
             return $this->_tMultiSelect;
         }

@@ -3,9 +3,9 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\Types\Object\ObjectCollection;
-use LDL\Type\Collection\Interfaces\Nameable\NameableCollectionInterface;
 use LDL\Framework\Base\Contracts\NameableInterface;
-use LDL\Type\Collection\Traits\Nameable\NameableCollectionTrait;
+use LDL\Framework\Base\Collection\Contracts\FilterByNameInterface;
+use LDL\Framework\Base\Collection\Traits\FilterByNameInterfaceTrait;
 
 class NameableClass1 implements NameableInterface
 {
@@ -23,9 +23,9 @@ class NameableClass2 implements NameableInterface
     }
 }
 
-class NameableCollectionExample extends ObjectCollection implements NameableCollectionInterface
+class NameableCollectionExample extends ObjectCollection implements FilterByNameInterface
 {
-    use NameableCollectionTrait;
+    use FilterByNameInterfaceTrait;
 }
 
 echo "Create new Nameable collection class instance\n";
@@ -50,7 +50,6 @@ echo "Filter by names: [Name1, Name2]\n";
 echo "Found ".count($collection->filterByNames(['Name1', 'Name2']))." elements \n";
 
 echo "Auto validate\n";
-
 
 echo "Filter by name in Auto mode: Name1\n";
 echo "Found ".count($collection->filterByNameAuto('Name1'))." elements \n";

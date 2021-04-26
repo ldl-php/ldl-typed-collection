@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pthreat/ldl-framework-base.git",
-                "reference": "b7a52010a5d8c75b90d40b556e3a2b94d54b3ce9"
+                "reference": "74c88a4874f3a45730e421bca68a2516beae4f66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pthreat/ldl-framework-base/zipball/b7a52010a5d8c75b90d40b556e3a2b94d54b3ce9",
-                "reference": "b7a52010a5d8c75b90d40b556e3a2b94d54b3ce9",
+                "url": "https://api.github.com/repos/pthreat/ldl-framework-base/zipball/74c88a4874f3a45730e421bca68a2516beae4f66",
+                "reference": "74c88a4874f3a45730e421bca68a2516beae4f66",
                 "shasum": ""
             },
             "require": {
@@ -44,9 +44,9 @@
             "description": "LDL Framework base contracts and exceptions",
             "support": {
                 "issues": "https://github.com/pthreat/ldl-framework-base/issues",
-                "source": "https://github.com/pthreat/ldl-framework-base/tree/fix/1200161406794549"
+                "source": "https://github.com/pthreat/ldl-framework-base/tree/master"
             },
-            "time": "2021-04-07T00:41:23+00:00"
+            "time": "2021-05-20T14:36:11+00:00"
         },
         {
             "name": "ldl-framework/validators",
@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pthreat/ldl-validators.git",
-                "reference": "b7ff5e1093942f75193ae493cb21f73a738b419b"
+                "reference": "60fa60d15534f72121e5c74790e09b9890c12ec2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pthreat/ldl-validators/zipball/b7ff5e1093942f75193ae493cb21f73a738b419b",
-                "reference": "b7ff5e1093942f75193ae493cb21f73a738b419b",
+                "url": "https://api.github.com/repos/pthreat/ldl-validators/zipball/60fa60d15534f72121e5c74790e09b9890c12ec2",
+                "reference": "60fa60d15534f72121e5c74790e09b9890c12ec2",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
                 "issues": "https://github.com/pthreat/ldl-validators/issues",
                 "source": "https://github.com/pthreat/ldl-validators/tree/master"
             },
-            "time": "2021-04-08T15:54:30+00:00"
+            "time": "2021-05-20T12:15:46+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -261,16 +261,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.2.6",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "89412a68ea2e675b4e44f260a5666729f77f668e"
+                "reference": "d693200a73fae179d27f8f1b16b4faf3e8569eba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/89412a68ea2e675b4e44f260a5666729f77f668e",
-                "reference": "89412a68ea2e675b4e44f260a5666729f77f668e",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/d693200a73fae179d27f8f1b16b4faf3e8569eba",
+                "reference": "d693200a73fae179d27f8f1b16b4faf3e8569eba",
                 "shasum": ""
             },
             "require": {
@@ -329,7 +329,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.2.6"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.2.8"
             },
             "funding": [
                 {
@@ -345,7 +345,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-28T09:42:18+00:00"
+            "time": "2021-05-07T13:42:21+00:00"
         }
     ],
     "packages-dev": [],

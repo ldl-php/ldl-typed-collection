@@ -26,13 +26,14 @@ class StringCollection extends AbstractCollection implements HasAppendValueValid
             ->lock();
     }
 
-    public function implode(string $separator=',') : string
+    public function implode(string $separator=',', bool $considerToStringObjects=true) : string
     {
         if(null !== $this->imploded){
             return $this->imploded;
         }
 
-        return implode($separator, \iterator_to_array($this));
+        $this->imploded = implode($separator, \iterator_to_array($this));
+        return $this->imploded;
     }
 
     public function append($item, $key = null) : CollectionInterface

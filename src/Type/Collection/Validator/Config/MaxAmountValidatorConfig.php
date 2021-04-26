@@ -4,28 +4,28 @@ namespace LDL\Type\Collection\Validator\Config;
 
 use LDL\Framework\Base\Contracts\ArrayFactoryInterface;
 use LDL\Framework\Base\Exception\ArrayFactoryException;
+use LDL\Validators\Config\Traits\ValidatorConfigTrait;
 use LDL\Validators\Config\ValidatorConfigInterface;
-use LDL\Validators\Config\ValidatorConfigInterfaceTrait;
 
 class MaxAmountValidatorConfig implements ValidatorConfigInterface
 {
-    use ValidatorConfigInterfaceTrait;
+    use ValidatorConfigTrait;
 
     /**
      * @var int
      */
     private $maxAmount;
 
-    public function __construct(int $maxAmount, bool $strict=true)
+    public function __construct(int $maxAmount, bool $negated=false, bool $dumpable=true)
     {
         if($maxAmount <= 0){
             $msg = 'Amount of items for validator "%s" must be a positive integer';
             throw new \InvalidArgumentException($msg);
         }
 
-        $this->_isStrict = $strict;
-
         $this->maxAmount = $maxAmount;
+        $this->_tNegated = $negated;
+        $this->_tDumpable = $dumpable;
     }
 
     /**
@@ -57,7 +57,11 @@ class MaxAmountValidatorConfig implements ValidatorConfigInterface
         }
 
         try{
-            return new self((int) $data['maxAmount'], array_key_exists('strict', $data) ? (bool)$data['strict'] : true);
+            return new self(
+                (int) $data['maxAmount'],
+                array_key_exists('negated', $data) ? (bool)$data['negated'] : false,
+                array_key_exists('dumpable', $data) ? (bool)$data['dumpable'] : true
+            );
         }catch(\Exception $e){
             throw new ArrayFactoryException($e->getMessage());
         }
@@ -70,7 +74,8 @@ class MaxAmountValidatorConfig implements ValidatorConfigInterface
     {
         return [
             'maxAmount' => $this->maxAmount,
-            'strict' => $this->_isStrict
+            'negated' => $this->_tNegated,
+            'dumpable' => $this->_tDumpable
         ];
     }
 }

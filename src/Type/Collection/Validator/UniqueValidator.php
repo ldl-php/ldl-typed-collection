@@ -4,39 +4,57 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\Exception\CollectionValueException;
-use LDL\Type\Collection\Validator\Config\UniqueValidatorConfig;
+use LDL\Validators\Config\BasicValidatorConfig;
 use LDL\Validators\Config\ValidatorConfigInterface;
-use LDL\Validators\HasValidatorConfigInterface;
 use LDL\Validators\ValidatorInterface;
 
-class UniqueValidator implements ValidatorInterface, HasValidatorConfigInterface
+class UniqueValidator implements ValidatorInterface
 {
     /**
-     * @var UniqueValidatorConfig
+     * @var BasicValidatorConfig
      */
     private $config;
 
-    public function __construct(bool $strict = true)
+    public function __construct(bool $negated=false, bool $dumpable=true)
     {
-        $this->config = new UniqueValidatorConfig($strict);
+        $this->config = new BasicValidatorConfig($negated, $dumpable);
     }
 
     /**
-     * @param mixed $item
+     * @param mixed $value
      * @param null $key
      * @param CollectionInterface|null $collection
      * @throws CollectionValueException
      */
-    public function validate($item, $key = null, CollectionInterface $collection = null): void
+    public function validate($value, $key = null, CollectionInterface $collection = null): void
     {
-        if(false === $collection->hasValue($item)){
+        $this->config->isNegated() ? $this->assertFalse($value, $key, $collection) : $this->assertTrue($value, $key, $collection);
+    }
+
+    public function assertTrue($value, $key = null, CollectionInterface $collection = null): void
+    {
+        if(!$collection->hasValue($value)){
             return;
         }
 
         throw new CollectionValueException(
             sprintf(
                 'Item with value %s already exists in this collection!',
-                var_export($item, true)
+                var_export($value, true)
+            )
+        );
+    }
+
+    public function assertFalse($value, $key = null, CollectionInterface $collection = null): void
+    {
+        if($collection->hasValue($value)){
+            return;
+        }
+
+        throw new CollectionValueException(
+            sprintf(
+                'Item with value %s NOT exists in this collection!',
+                var_export($value, true)
             )
         );
     }
@@ -48,7 +66,7 @@ class UniqueValidator implements ValidatorInterface, HasValidatorConfigInterface
      */
     public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
     {
-        if(false === $config instanceof UniqueValidatorConfig){
+        if(false === $config instanceof BasicValidatorConfig){
             $msg = sprintf(
                 'Config expected to be %s, config of class %s was given',
                 __CLASS__,
@@ -58,15 +76,15 @@ class UniqueValidator implements ValidatorInterface, HasValidatorConfigInterface
         }
 
         /**
-         * @var UniqueValidatorConfig $config
+         * @var BasicValidatorConfig $config
          */
-        return new self($config->isStrict());
+        return new self($config->isNegated(), $config->isDumpable());
     }
 
     /**
-     * @return UniqueValidatorConfig
+     * @return BasicValidatorConfig
      */
-    public function getConfig(): UniqueValidatorConfig
+    public function getConfig(): BasicValidatorConfig
     {
         return $this->config;
     }

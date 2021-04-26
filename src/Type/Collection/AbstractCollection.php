@@ -13,7 +13,6 @@ use LDL\Framework\Base\Collection\Traits\LockRemoveInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\LockReplaceInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\RemovableInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\ReplaceableInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\TruncateInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\UnshiftInterfaceTrait;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 
@@ -31,7 +30,6 @@ abstract class AbstractCollection implements TypedCollectionInterface
     use BeforeRemoveInterfaceTrait;
     use RemovableInterfaceTrait;
     use LockRemoveInterfaceTrait;
-    use TruncateInterfaceTrait;
     use UnshiftInterfaceTrait;
 
     use ReplaceableInterfaceTrait;

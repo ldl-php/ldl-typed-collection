@@ -6,7 +6,9 @@ use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\IntegerValidator;
-use LDL\Validators\NumericRangeValidator;
+use LDL\Validators\Chain\AndValidatorChain;
+use LDL\Validators\NumericComparisonValidator;
+use LDL\Framework\Helper\ComparisonOperatorHelper;
 
 class MyIntegerCollection extends AbstractCollection implements HasAppendValueValidatorChainInterface
 {
@@ -17,14 +19,20 @@ class MyIntegerCollection extends AbstractCollection implements HasAppendValueVa
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
-            ->append(new IntegerValidator(true))
-            ->append(new NumericRangeValidator(100,599));
+            ->append(new IntegerValidator())
+            ->append(
+                new AndValidatorChain([
+                    new NumericComparisonValidator(100,ComparisonOperatorHelper::OPERATOR_GTE),
+                    new NumericComparisonValidator(599,ComparisonOperatorHelper::OPERATOR_LTE)
+                ])
+            );
     }
 }
 
 echo "Create MyIntegerCollection instance\n\n";
 
 $collection  = new MyIntegerCollection();
+dump(\LDL\Validators\Chain\Dumper\ValidatorChainExprDumper::dump($collection->getAppendValueValidatorChain()));
 
 echo "Append string item: 'hello' (exception must be thrown)\n\n";
 

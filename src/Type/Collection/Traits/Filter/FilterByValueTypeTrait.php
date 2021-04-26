@@ -3,7 +3,7 @@
 /**
  * This trait applies the FilterValueTypeInterface so you can just easily use it in your class.
  *
- * @see \LDL\Type\Collection\Interfaces\Filter\FilterValueTypeInterface
+ * @see \LDL\Type\Collection\Interfaces\Filter\FilterByValueTypeInterface
  */
 
 namespace LDL\Type\Collection\Traits\Filter;
@@ -14,6 +14,7 @@ use LDL\Type\Collection\Types\String\StringCollection;
 
 trait FilterByValueTypeTrait
 {
+    //<editor-fold desc="FilterByValueTypeInterface methods">
     public function filterByValueType(string $filter): TypedCollectionInterface
     {
         return $this->filterByValueTypes(new StringCollection([$filter]));

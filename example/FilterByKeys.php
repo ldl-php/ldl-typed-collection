@@ -7,13 +7,13 @@ use LDL\Type\Collection\Types\String\StringCollection;
 $str = new StringCollection();
 
 echo "Append item with key 'a' and value: '123'\n";
-$str['a'] = '123';
+$str->append('123', 'a');
 
 echo "Append item with key: 'b' and value: '456'\n";
-$str['b'] =  '456';
+$str->append('456', 'b');
 
-echo "Append item with key: 'c' and value: '678'\n";
-$str['c'] =  '678';
+echo "Append item with key: 'c' and value: '789'\n";
+$str->append('789', 'c');
 
 $filter = new StringCollection();
 $filter->append('a')

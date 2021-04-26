@@ -6,9 +6,9 @@ use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\RegexValidator;
-use LDL\Validators\Exception\RegexValidatorException;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendKeyValidatorChainTrait;
+use LDL\Validators\Exception\RegexValidatorException;
 
 class RegexValueValidatorExample extends AbstractCollection implements HasAppendValueValidatorChainInterface, HasAppendKeyValidatorChainInterface
 {
@@ -20,10 +20,10 @@ class RegexValueValidatorExample extends AbstractCollection implements HasAppend
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
-            ->append(new RegexValidator('#[0-9]+#', true));
+            ->append(new RegexValidator('#[0-9]+#'));
 
         $this->getAppendKeyValidatorChain()
-            ->append(new RegexValidator('#[0-9]+#', true));
+            ->append(new RegexValidator('#[0-9]+#'));
     }
 }
 
