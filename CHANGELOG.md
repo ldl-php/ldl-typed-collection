@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- fixes/1200446824922859 - Remove assertFalse from Min and Max validator
 - fixes/1199694738432549 - Unique validator shows incorrect message during validatorKey exception
 - fixes/1199886097538728 - Remove exception annotation from MultipleSelectionInterface
 

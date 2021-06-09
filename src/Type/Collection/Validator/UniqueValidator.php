@@ -6,10 +6,14 @@ use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\Exception\CollectionValueException;
 use LDL\Validators\Config\BasicValidatorConfig;
 use LDL\Validators\Config\ValidatorConfigInterface;
+use LDL\Validators\NegatedValidatorInterface;
+use LDL\Validators\Traits\ValidatorValidateTrait;
 use LDL\Validators\ValidatorInterface;
 
-class UniqueValidator implements ValidatorInterface
+class UniqueValidator implements ValidatorInterface, NegatedValidatorInterface
 {
+    use ValidatorValidateTrait;
+
     /**
      * @var BasicValidatorConfig
      */
@@ -18,17 +22,6 @@ class UniqueValidator implements ValidatorInterface
     public function __construct(bool $negated=false, bool $dumpable=true)
     {
         $this->config = new BasicValidatorConfig($negated, $dumpable);
-    }
-
-    /**
-     * @param mixed $value
-     * @param null $key
-     * @param CollectionInterface|null $collection
-     * @throws CollectionValueException
-     */
-    public function validate($value, $key = null, CollectionInterface $collection = null): void
-    {
-        $this->config->isNegated() ? $this->assertFalse($value, $key, $collection) : $this->assertTrue($value, $key, $collection);
     }
 
     public function assertTrue($value, $key = null, CollectionInterface $collection = null): void

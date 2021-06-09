@@ -16,7 +16,7 @@ class MinimumAmountValidatorConfig implements ValidatorConfigInterface
      */
     private $minAmount;
 
-    public function __construct(int $minAmount, bool $negated=false, bool $dumpable=true)
+    public function __construct(int $minAmount, bool $dumpable=true)
     {
         if($minAmount <= 0){
             $msg = 'Amount of items for validator "%s" must be a positive integer';
@@ -24,7 +24,6 @@ class MinimumAmountValidatorConfig implements ValidatorConfigInterface
         }
 
         $this->minAmount = $minAmount;
-        $this->_tNegated = $negated;
         $this->_tDumpable = $dumpable;
     }
 
@@ -59,7 +58,6 @@ class MinimumAmountValidatorConfig implements ValidatorConfigInterface
         try{
             return new self(
                 (int) $data['minAmount'],
-                array_key_exists('negated', $data) ? (bool)$data['negated'] : false,
                 array_key_exists('dumpable', $data) ? (bool)$data['dumpable'] : true
             );
         }catch(\Exception $e){
@@ -74,7 +72,6 @@ class MinimumAmountValidatorConfig implements ValidatorConfigInterface
     {
         return [
             'minAmount' => $this->minAmount,
-            'negated' => $this->_tNegated,
             'dumpable' => $this->_tDumpable
         ];
     }

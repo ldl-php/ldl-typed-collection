@@ -16,7 +16,7 @@ class MaxAmountValidatorConfig implements ValidatorConfigInterface
      */
     private $maxAmount;
 
-    public function __construct(int $maxAmount, bool $negated=false, bool $dumpable=true)
+    public function __construct(int $maxAmount, bool $dumpable=true)
     {
         if($maxAmount <= 0){
             $msg = 'Amount of items for validator "%s" must be a positive integer';
@@ -24,7 +24,6 @@ class MaxAmountValidatorConfig implements ValidatorConfigInterface
         }
 
         $this->maxAmount = $maxAmount;
-        $this->_tNegated = $negated;
         $this->_tDumpable = $dumpable;
     }
 
@@ -59,7 +58,6 @@ class MaxAmountValidatorConfig implements ValidatorConfigInterface
         try{
             return new self(
                 (int) $data['maxAmount'],
-                array_key_exists('negated', $data) ? (bool)$data['negated'] : false,
                 array_key_exists('dumpable', $data) ? (bool)$data['dumpable'] : true
             );
         }catch(\Exception $e){
@@ -74,7 +72,6 @@ class MaxAmountValidatorConfig implements ValidatorConfigInterface
     {
         return [
             'maxAmount' => $this->maxAmount,
-            'negated' => $this->_tNegated,
             'dumpable' => $this->_tDumpable
         ];
     }
