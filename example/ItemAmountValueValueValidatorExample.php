@@ -2,14 +2,15 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+use LDL\Framework\Helper\ComparisonOperatorHelper;
 use LDL\Type\Collection\AbstractCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
-use LDL\Type\Collection\Validator\MaxAmountValidator;
-use LDL\Type\Collection\Validator\MinimumAmountValidator;
+use LDL\Type\Collection\Validator\AmountValidator;
 use LDL\Type\Collection\Interfaces\Validation\HasRemoveValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\RemoveValueValidatorChainTrait;
 use LDL\Type\Collection\Validator\Exception\AmountValidatorException;
+use LDL\Validators\Chain\Dumper\ValidatorChainHumanDumper;
 
 class ItemAmountValueValueValidatorExample extends AbstractCollection implements HasAppendValueValidatorChainInterface, HasRemoveValueValidatorChainInterface
 {
@@ -20,17 +21,23 @@ class ItemAmountValueValueValidatorExample extends AbstractCollection implements
     {
         parent::__construct($items);
         $this->getAppendValueValidatorChain()
-            ->append(new MaxAmountValidator(5))
+            ->append(new AmountValidator(5, ComparisonOperatorHelper::OPERATOR_GTE))
             ->lock();
 
         $this->getRemoveValueValidatorChain()
-            ->append(new MinimumAmountValidator(3))
+            ->append(new AmountValidator(3, ComparisonOperatorHelper::OPERATOR_LTE))
             ->lock();
     }
 }
 
 echo "Create new collection instance which implements ItemAmountValidator\n";
 $obj = new ItemAmountValueValueValidatorExample();
+
+echo "See appended validators description\n";
+dump(ValidatorChainHumanDumper::dump($obj->getAppendValueValidatorChain()));
+
+echo "See removed validators description\n";
+dump(ValidatorChainHumanDumper::dump($obj->getRemoveValueValidatorChain()));
 
 try {
 
