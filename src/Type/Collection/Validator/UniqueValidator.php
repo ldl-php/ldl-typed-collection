@@ -4,24 +4,24 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Type\Collection\Exception\CollectionValueException;
-use LDL\Validators\Config\BasicValidatorConfig;
-use LDL\Validators\Config\ValidatorConfigInterface;
 use LDL\Validators\NegatedValidatorInterface;
+use LDL\Validators\Traits\NegatedValidatorTrait;
+use LDL\Validators\Traits\ValidatorDescriptionTrait;
 use LDL\Validators\Traits\ValidatorValidateTrait;
 use LDL\Validators\ValidatorInterface;
 
 class UniqueValidator implements ValidatorInterface, NegatedValidatorInterface
 {
     use ValidatorValidateTrait;
+    use NegatedValidatorTrait;
+    use ValidatorDescriptionTrait;
 
-    /**
-     * @var BasicValidatorConfig
-     */
-    private $config;
+    private const DESCRIPTION = 'Validate that the item within the collection is unique';
 
-    public function __construct(bool $negated=false, bool $dumpable=true)
+    public function __construct(bool $negated=false, string $description=null)
     {
-        $this->config = new BasicValidatorConfig($negated, $dumpable);
+        $this->_tNegated = $negated;
+        $this->_tDescription = $description ?? self::DESCRIPTION;
     }
 
     public function assertTrue($value, $key = null, CollectionInterface $collection = null): void
@@ -50,35 +50,5 @@ class UniqueValidator implements ValidatorInterface, NegatedValidatorInterface
                 var_export($value, true)
             )
         );
-    }
-
-    /**
-     * @param ValidatorConfigInterface $config
-     * @return ValidatorInterface
-     * @throws Exception\InvalidConfigException
-     */
-    public static function fromConfig(ValidatorConfigInterface $config): ValidatorInterface
-    {
-        if(false === $config instanceof BasicValidatorConfig){
-            $msg = sprintf(
-                'Config expected to be %s, config of class %s was given',
-                __CLASS__,
-                get_class($config)
-            );
-            throw new Exception\InvalidConfigException($msg);
-        }
-
-        /**
-         * @var BasicValidatorConfig $config
-         */
-        return new self($config->isNegated(), $config->isDumpable());
-    }
-
-    /**
-     * @return BasicValidatorConfig
-     */
-    public function getConfig(): BasicValidatorConfig
-    {
-        return $this->config;
     }
 }
