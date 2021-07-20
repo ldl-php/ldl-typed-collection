@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pthreat/ldl-validators.git",
-                "reference": "5e21cec42b08f5c3e7d7452ca08484c09fcb9f24"
+                "reference": "0123e3ef6fa61c6ba7fd231d7596d3fbe1f71fd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pthreat/ldl-validators/zipball/5e21cec42b08f5c3e7d7452ca08484c09fcb9f24",
-                "reference": "5e21cec42b08f5c3e7d7452ca08484c09fcb9f24",
+                "url": "https://api.github.com/repos/pthreat/ldl-validators/zipball/0123e3ef6fa61c6ba7fd231d7596d3fbe1f71fd7",
+                "reference": "0123e3ef6fa61c6ba7fd231d7596d3fbe1f71fd7",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
                 "issues": "https://github.com/pthreat/ldl-validators/issues",
                 "source": "https://github.com/pthreat/ldl-validators/tree/master"
             },
-            "time": "2021-07-16T14:02:42+00:00"
+            "time": "2021-07-20T14:53:54+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
