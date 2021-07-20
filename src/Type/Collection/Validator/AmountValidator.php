@@ -4,16 +4,23 @@ namespace LDL\Type\Collection\Validator;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
-use LDL\Type\Collection\Validator\Config\AmountValidatorConfig;
-use LDL\Validators\Config\ValidatorConfigInterface;
-use LDL\Validators\Traits\ValidatorHasConfigInterfaceTrait;
 use LDL\Validators\Traits\ValidatorValidateTrait;
+use LDL\Validators\ValidatorHasConfigInterface;
 use LDL\Validators\ValidatorInterface;
 
-class AmountValidator implements ValidatorInterface
+class AmountValidator implements ValidatorInterface, ValidatorHasConfigInterface
 {
     use ValidatorValidateTrait;
-    use ValidatorHasConfigInterfaceTrait;
+
+    /**
+     * @var int
+     */
+    private $amount;
+
+    /**
+     * @var string
+     */
+    private $operator;
 
     /**
      * @var string|null
@@ -22,8 +29,32 @@ class AmountValidator implements ValidatorInterface
 
     public function __construct(int $value, string $operator, string $description=null)
     {
-        $this->_tConfig = new AmountValidatorConfig($value, $operator);
+        if($value <= 0){
+            $msg = 'Amount of items for validator "%s" must be a positive integer';
+            throw new \InvalidArgumentException($msg);
+        }
+
+        ComparisonOperatorHelper::validate($operator);
+
+        $this->amount = $value;
+        $this->operator = $operator;
         $this->description = $description;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAmount(): int
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperator(): string
+    {
+        return $this->operator;
     }
 
     /**
@@ -34,8 +65,8 @@ class AmountValidator implements ValidatorInterface
         if(!$this->description){
             return sprintf(
                 'The amount of items in the collection can NOT be "%s" than "%s"',
-                $this->_tConfig->getOperator(),
-                $this->_tConfig->getAmount()
+                $this->operator,
+                $this->amount
             );
         }
 
@@ -52,62 +83,86 @@ class AmountValidator implements ValidatorInterface
 
         $msg = sprintf(
             'The amount of items in the collection can NOT be "%s" than "%s"',
-            $this->_tConfig->getOperator(),
-            $this->_tConfig->getAmount()
+            $this->operator,
+            $this->amount
         );
 
         throw new Exception\AmountValidatorException($msg);
     }
 
+    public function jsonSerialize(): array
+    {
+        return $this->getConfig();
+    }
+
     /**
-     * @param ValidatorConfigInterface $config
-     * @param string|null $description
+     * @param array $data
      * @return ValidatorInterface
      * @throws Exception\InvalidConfigException
      */
-    public static function fromConfig(ValidatorConfigInterface $config, string $description=null): ValidatorInterface
+    public static function fromConfig(array $data = []): ValidatorInterface
     {
-        if(false === $config instanceof AmountValidatorConfig){
-            $msg = sprintf(
-                'Config expected to be %s, config of class %s was given',
-                __CLASS__,
-                get_class($config)
-            );
+        if(!array_key_exists('amount', $data)){
+            $msg = sprintf("Missing property 'amount' in %s", __CLASS__);
             throw new Exception\InvalidConfigException($msg);
         }
 
-        /**
-         * @var AmountValidatorConfig $config
-         */
-        return new self(
-            $config->getAmount(),
-            $config->getOperator(),
-            $description
-        );
+        if(!array_key_exists('operator', $data)){
+            $msg = sprintf("Missing property 'operator' in %s", __CLASS__);
+            throw new Exception\InvalidConfigException($msg);
+        }
+
+        if(!is_string($data['operator'])){
+            throw new \InvalidArgumentException(
+                sprintf('operator must be of type string, "%s" was given',gettype($data['operator']))
+            );
+        }
+
+        try{
+            return new self(
+                (int) $data['amount'],
+                $data['operator'],
+                $data['description'] ?? null
+            );
+        }catch(\Exception $e){
+            throw new Exception\InvalidConfigException($e->getMessage());
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig(): array
+    {
+        return [
+            'amount' => $this->amount,
+            'operator' => $this->operator,
+            'description' => $this->getDescription()
+        ];
     }
 
     private function compare(CollectionInterface $collection) : bool
     {
-        $total = count($collection) + 1;
+        $total = count($collection);
 
-        switch($this->_tConfig->getOperator()){
+        switch($this->operator){
             case ComparisonOperatorHelper::OPERATOR_SEQ:
-                return $total === $this->_tConfig->getAmount();
+                return $total === $this->amount;
 
             case ComparisonOperatorHelper::OPERATOR_EQ:
-                return $total == $this->_tConfig->getAmount();
+                return $total == $this->amount;
 
             case ComparisonOperatorHelper::OPERATOR_GT:
-                return $total > $this->_tConfig->getAmount();
+                return $total + 1 > $this->amount;
 
             case ComparisonOperatorHelper::OPERATOR_GTE:
-                return $total >= $this->_tConfig->getAmount();
+                return $total + 1 >= $this->amount;
 
             case ComparisonOperatorHelper::OPERATOR_LT:
-                return $total < $this->_tConfig->getAmount();
+                return $total - 1 < $this->amount;
 
             case ComparisonOperatorHelper::OPERATOR_LTE:
-                return $total <= $this->_tConfig->getAmount();
+                return $total - 1 <= $this->amount;
 
             default:
                 throw new \RuntimeException('Given operator is invalid (WTF?)');
