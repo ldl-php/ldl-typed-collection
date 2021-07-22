@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- fix/1200641806243433 - Fix compare from AmountValidator
 - fixes/1200630491660397 - Remove validators config
 - fixes/1200577334210951 - Fix validators to comply with ldl-validators (description was moved from config to validators themselves)
 - fixes/1200446824922859 - Remove assertFalse from Min and Max validator
