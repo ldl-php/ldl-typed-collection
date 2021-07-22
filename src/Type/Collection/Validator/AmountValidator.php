@@ -159,10 +159,12 @@ class AmountValidator implements ValidatorInterface, ValidatorHasConfigInterface
                 return $total + 1 >= $this->amount;
 
             case ComparisonOperatorHelper::OPERATOR_LT:
-                return $total - 1 < $this->amount;
+                $total = $total - 1 < 0 ? 0 : $total - 1;
+                return $total < $this->amount;
 
             case ComparisonOperatorHelper::OPERATOR_LTE:
-                return $total - 1 <= $this->amount;
+                $total = $total - 1 < 0 ? 0 : $total - 1;
+                return $total <= $this->amount;
 
             default:
                 throw new \RuntimeException('Given operator is invalid (WTF?)');
