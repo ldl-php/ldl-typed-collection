@@ -16,6 +16,7 @@ class DoubleCollection extends AbstractCollection implements HasAppendValueValid
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new DoubleValidator())
             ->lock();
     }

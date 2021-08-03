@@ -22,9 +22,14 @@ class UniqueStrintegerCollection extends AbstractCollection implements HasAppend
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain(OrValidatorChain::class)
-            ->append(new StringValidator())
-            ->append(new IntegerValidator())
-            ->append(new AndValidatorChain([new UniqueValidator()]))
+            ->getChainItems()
+            ->appendMany([
+                new StringValidator(),
+                new IntegerValidator(),
+                new AndValidatorChain([
+                    new UniqueValidator()
+                ])
+            ])
             ->lock();
     }
 }

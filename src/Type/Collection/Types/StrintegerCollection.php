@@ -17,8 +17,11 @@ class StrintegerCollection extends AbstractCollection implements HasAppendValueV
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
-            ->append(new StringValidator())
-            ->append(new IntegerValidator())
+            ->getChainItems()
+            ->appendMany([
+                new StringValidator(),
+                new IntegerValidator()
+            ])
             ->lock();
     }
 }

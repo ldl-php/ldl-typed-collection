@@ -59,6 +59,7 @@ class NSPriorityCollectionExample extends ObjectCollection implements FilterByNa
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new InterfaceComplianceValidator(NamespaceInterface::class))
             ->append(new InterfaceComplianceValidator(PriorityInterface::class))
             ->lock();
@@ -84,6 +85,7 @@ echo "Try to modify the validation chain (exception must be thrown)\n";
 try{
 
     $collection->getAppendValueValidatorChain()
+        ->getChainItems()
         ->append(new InterfaceComplianceValidator(NamespaceInterface::class));
 
 }catch(LockingException $e){

@@ -59,11 +59,9 @@ $filtered->remove(0);
 
 echo "Try to filter by class again with class Test1, result must be empty\n";
 
-foreach($filtered->filterByClass(ClassNameFilterTest1::class) as $key => $item){
-    echo "$key => ".\get_class($item)."\n";
-}
+var_dump(count($filtered->filterByClass(ClassNameFilterTest1::class)));
 
-echo "Try to filter by class again with class Test3, class Test3 must *show up*\n";
+echo "Try to filter by class again with class Test3, class Test3 *must show up*\n";
 
 foreach($filtered->filterByClass(ClassNameFilterTest3::class) as $key => $item){
     echo "$key => ".\get_class($item)."\n";

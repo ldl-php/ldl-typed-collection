@@ -19,6 +19,7 @@ class StringNumberCollectionExample extends AbstractCollection implements HasApp
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain(OrValidatorChain::class)
+            ->getChainItems()
             ->append(new NumericValidator())
             ->append(new StringValidator());
     }

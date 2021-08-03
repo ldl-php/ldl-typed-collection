@@ -20,9 +20,11 @@ class RegexValueValidatorExample extends AbstractCollection implements HasAppend
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new RegexValidator('#[0-9]+#'));
 
         $this->getAppendKeyValidatorChain()
+            ->getChainItems()
             ->append(new RegexValidator('#[0-9]+#'));
     }
 }
