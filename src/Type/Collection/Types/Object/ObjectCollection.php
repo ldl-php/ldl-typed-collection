@@ -17,6 +17,7 @@ class ObjectCollection extends AbstractCollection implements ObjectCollectionInt
     public function __construct(iterable $items = null)
     {
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new ObjectValidator());
 
         parent::__construct($items);

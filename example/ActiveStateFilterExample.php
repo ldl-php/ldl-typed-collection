@@ -19,6 +19,7 @@ class ActiveStateFilterExample extends AbstractCollection implements HasAppendVa
     {
         parent::__construct($items);
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new InterfaceComplianceValidator(IsActiveInterface::class));
     }
 

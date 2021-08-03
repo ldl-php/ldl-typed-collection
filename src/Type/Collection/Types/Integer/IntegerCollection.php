@@ -16,6 +16,7 @@ class IntegerCollection extends AbstractCollection implements HasAppendValueVali
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new IntegerValidator())
             ->lock();
     }

@@ -22,6 +22,7 @@ class StringCollection extends AbstractCollection implements HasAppendValueValid
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new StringValidator())
             ->lock();
     }

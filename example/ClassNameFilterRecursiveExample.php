@@ -32,6 +32,7 @@ class Test3 extends AbstractCollection implements HasAppendValueValidatorChainIn
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new StringValidator());
     }
 }

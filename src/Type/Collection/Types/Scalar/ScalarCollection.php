@@ -16,6 +16,7 @@ class ScalarCollection extends AbstractCollection implements HasAppendValueValid
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new ScalarValidator())
             ->lock();
     }
