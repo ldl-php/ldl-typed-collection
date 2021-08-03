@@ -16,6 +16,7 @@ class NumberCollection extends AbstractCollection implements HasAppendValueValid
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new NumericValidator())
             ->lock();
     }

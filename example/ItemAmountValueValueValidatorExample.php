@@ -21,10 +21,12 @@ class ItemAmountValueValueValidatorExample extends AbstractCollection implements
     {
         parent::__construct($items);
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new AmountValidator(5, ComparisonOperatorHelper::OPERATOR_GT))
             ->lock();
 
         $this->getRemoveValueValidatorChain()
+            ->getChainItems()
             ->append(new AmountValidator(3, ComparisonOperatorHelper::OPERATOR_LT))
             ->lock();
     }

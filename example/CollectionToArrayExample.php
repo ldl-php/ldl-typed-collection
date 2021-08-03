@@ -33,6 +33,7 @@ class StdStringCollectionExample extends AbstractCollection implements HasAppend
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain(OrValidatorChain::class)
+            ->getChainItems()
             ->append(new ClassComplianceValidator(\stdClass::class))
             ->append(new StringValidator());
     }

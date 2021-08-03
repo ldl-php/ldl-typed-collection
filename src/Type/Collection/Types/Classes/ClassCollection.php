@@ -21,6 +21,7 @@ class ClassCollection extends AbstractCollection implements HasAppendValueValida
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new ClassExistenceValidator())
             ->lock();
     }

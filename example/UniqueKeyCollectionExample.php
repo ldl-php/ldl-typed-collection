@@ -18,6 +18,7 @@ class UniqueKeyCollectionExample extends AbstractCollection implements HasAppend
         parent::__construct($items);
 
         $this->getAppendKeyValidatorChain()
+            ->getChainItems()
             ->append(new UniqueValidator())
             ->lock();
     }

@@ -19,9 +19,11 @@ class UniqueValueValidatorExample extends AbstractCollection implements HasAppen
         parent::__construct($items);
 
         $this->getAppendKeyValidatorChain()
+            ->getChainItems()
             ->append(new UniqueValidator());
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new UniqueValidator());
     }
 }
@@ -30,7 +32,7 @@ echo "Create collection instance\n";
 
 $collection = new UniqueValueValidatorExample();
 
-echo "Add element test with key 213\n";
+echo "Add element with value 'test' and key '213'\n";
 
 $collection->append('test', '213');
 

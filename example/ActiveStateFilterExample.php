@@ -19,6 +19,7 @@ class ActiveStateFilterExample extends AbstractCollection implements HasAppendVa
     {
         parent::__construct($items);
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->append(new InterfaceComplianceValidator(IsActiveInterface::class));
     }
 
@@ -43,8 +44,13 @@ class ActiveStateFilterExampleTest2 implements IsActiveInterface
 echo "Create collection instance\n";
 
 $collection = new ActiveStateFilterExample();
+
+echo "Append ActiveStateFilterExampleTest1 (active: true) and ActiveStateFilterExampleTest2 (active: false)\n";
+
 $collection->append(new ActiveStateFilterExampleTest1());
 $collection->append(new ActiveStateFilterExampleTest2());
+
+echo "Filter by active state\n";
 
 foreach($collection->filterByActiveState() as $item){
     echo get_class($item)."\n";

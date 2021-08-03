@@ -17,6 +17,7 @@ class UniqueStringCollection extends AbstractCollection implements HasAppendValu
         parent::__construct($items);
 
         $this->getAppendValueValidatorChain()
+            ->getChainItems()
             ->appendMany([new StringValidator(), new UniqueValidator()])
             ->lock();
     }
