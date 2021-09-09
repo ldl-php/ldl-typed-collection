@@ -62,16 +62,16 @@ try {
 
 try {
     echo "Try to remove last appended item, Validator minimum amount of items is set to 3\n";
-    $obj->removeLast();
+    $obj->removeByKeyLast();
 
     echo "Item count is now: ".count($obj)."\n";
 
     echo "Try to remove last appended item, Validator minimum amount of items is set to 3\n";
-    $obj->removeLast();
+    $obj->removeByKeyLast();
     echo "Item count is now: ".count($obj)."\n";
 
     echo "Try to remove one more item, exception must be thrown\n";
-    $obj->removeLast();
+    $obj->removeByKeyLast();
 
 }catch(AmountValidatorException $e){
     echo "EXCEPTION: {$e->getMessage()}\n";

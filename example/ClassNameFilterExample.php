@@ -55,7 +55,7 @@ foreach($filtered as $key => $item){
 
 echo "Remove one item (0) Test 1 from the filtered collection\n";
 
-$filtered->remove(0);
+$filtered->removeByKey(0);
 
 echo "Try to filter by class again with class Test1, result must be empty\n";
 

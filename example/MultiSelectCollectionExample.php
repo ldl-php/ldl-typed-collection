@@ -46,7 +46,7 @@ echo "Lock selection\n\n";
 $collection->lockSelection();
 
 echo "Remove item with key: my_key_3\n\n";
-$collection->removeLast();
+$collection->removeByKeyLast();
 
 echo "Print selected keys, the removed key (my_key_3) must not SHOW up in the selected values\n\n";
 

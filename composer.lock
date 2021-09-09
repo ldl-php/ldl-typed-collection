@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pthreat/ldl-framework-base.git",
-                "reference": "3614c4731dab74f483527804755b06a7d0b66418"
+                "reference": "3e2ad27d8f06a1dc2aa38434c356ccf95665d7fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pthreat/ldl-framework-base/zipball/3614c4731dab74f483527804755b06a7d0b66418",
-                "reference": "3614c4731dab74f483527804755b06a7d0b66418",
+                "url": "https://api.github.com/repos/pthreat/ldl-framework-base/zipball/3e2ad27d8f06a1dc2aa38434c356ccf95665d7fc",
+                "reference": "3e2ad27d8f06a1dc2aa38434c356ccf95665d7fc",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                 "issues": "https://github.com/pthreat/ldl-framework-base/issues",
                 "source": "https://github.com/pthreat/ldl-framework-base/tree/master"
             },
-            "time": "2021-08-02T14:14:30+00:00"
+            "time": "2021-09-08T23:37:34+00:00"
         },
         {
             "name": "ldl-framework/validators",
@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pthreat/ldl-validators.git",
-                "reference": "a9c0127945acd2412571c5e8f310f60cdc427f2e"
+                "reference": "55aae54e079623363e74abc0a423fe904f647624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pthreat/ldl-validators/zipball/a9c0127945acd2412571c5e8f310f60cdc427f2e",
-                "reference": "a9c0127945acd2412571c5e8f310f60cdc427f2e",
+                "url": "https://api.github.com/repos/pthreat/ldl-validators/zipball/55aae54e079623363e74abc0a423fe904f647624",
+                "reference": "55aae54e079623363e74abc0a423fe904f647624",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
                 "issues": "https://github.com/pthreat/ldl-validators/issues",
                 "source": "https://github.com/pthreat/ldl-validators/tree/master"
             },
-            "time": "2021-08-02T16:33:35+00:00"
+            "time": "2021-09-09T00:47:08+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -261,16 +261,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.3.6",
+            "version": "v5.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "3dd8ddd1e260e58ecc61bb78da3b6584b3bfcba0"
+                "reference": "3ad5af4aed07d0a0201bbcfc42658fe6c5b2fb8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3dd8ddd1e260e58ecc61bb78da3b6584b3bfcba0",
-                "reference": "3dd8ddd1e260e58ecc61bb78da3b6584b3bfcba0",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3ad5af4aed07d0a0201bbcfc42658fe6c5b2fb8f",
+                "reference": "3ad5af4aed07d0a0201bbcfc42658fe6c5b2fb8f",
                 "shasum": ""
             },
             "require": {
@@ -329,7 +329,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.3.6"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.3.7"
             },
             "funding": [
                 {
@@ -345,7 +345,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-27T01:56:02+00:00"
+            "time": "2021-08-04T23:19:25+00:00"
         }
     ],
     "packages-dev": [],

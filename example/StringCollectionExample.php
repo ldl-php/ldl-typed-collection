@@ -53,6 +53,6 @@ echo $str->implode(',');
 
 echo "\nRemove element and call implode again\n\n";
 
-$str->removeByValue('000');
+$str->removeByKeyByValue('000');
 
 echo $str->implode(',');

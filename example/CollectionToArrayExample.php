@@ -70,7 +70,7 @@ echo "Value of 'test' must be 'Hello World' because the collection is Locked\n";
 var_dump($collection->get('stdObjectKey')->test);
 
 echo "Value of string must be 'string' because the collection is Locked\n";
-
+var_dump($collection->keys());
 var_dump($collection->get(0));
 
 echo "\nConvert StdCollection to Array\n";
