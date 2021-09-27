@@ -1,0 +1,54 @@
+Create scalar collection:
+
+Append string hello (two times):
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => true,
+  3 =>
+  MyScalar::__set_state(array(
+  )),
+)
+
+Append string good bye:
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => true,
+  3 =>
+  MyScalar::__set_state(array(
+  )),
+  4 => 'good bye',
+)
+
+Append integer 123:
+
+Implode collection by ':':
+
+'hello:hello:1:hello:good bye:123'
+
+Get unique scalar collection (prefer objects: true)
+
+array (
+  0 =>
+  MyScalar::__set_state(array(
+  )),
+  1 => true,
+  2 => 'good bye',
+  3 => 123,
+)
+
+Implode unique collection by ':':
+
+'hello:1:good bye:123'
+
+Get unique scalar collection (prefer objects: false)
+
+array (
+  0 => 'hello',
+  1 => true,
+  2 => 'good bye',
+  3 => 123,
+)

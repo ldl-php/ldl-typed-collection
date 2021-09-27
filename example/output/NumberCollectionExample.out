@@ -1,0 +1,33 @@
+Create number collection:
+
+Append double 30.5 (two times) 100, -100, -9e99 and 9e99:
+
+array (
+  0 => 30.5,
+  1 => 30.5,
+  2 => 100,
+  3 => -100,
+  4 => -9.0E+99,
+  5 => 9.0E+99,
+)
+
+Append string '123test', exception must be thrown:
+
+OK Exception: Value: "'123test'" does not comply to validation: [LDL\Validators\NumericValidator]
+
+Get unsigned collection:
+
+array (
+  0 => 30.5,
+  1 => 30.5,
+  2 => 100,
+  5 => 9.0E+99,
+)
+
+Get UNIQUE collection from unsigned collection:
+
+array (
+  0 => 30.5,
+  1 => 100,
+  2 => 9.0E+99,
+)

@@ -7,22 +7,25 @@
 
 namespace LDL\Type\Collection\Types\Classes;
 
-use LDL\Type\Collection\AbstractCollection;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\AbstractTypedCollection;
+use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
+use LDL\Type\Collection\Traits\Types\String\FilterUniqueStringCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
+use LDL\Type\Collection\Types\String\Traits\ToStringPrimitiveArray;
 use LDL\Validators\ClassExistenceValidator;
 
-class ClassCollection extends AbstractCollection implements HasAppendValueValidatorChainInterface
+final class ClassCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
     use AppendValueValidatorChainTrait;
+    use FilterUniqueStringCollectionInterfaceTrait;
+    use ToStringPrimitiveArray;
 
     public function __construct(iterable $items = null)
     {
-        parent::__construct($items);
-
         $this->getAppendValueValidatorChain()
             ->getChainItems()
-            ->append(new ClassExistenceValidator())
-            ->lock();
+            ->append(new ClassExistenceValidator());
+
+        parent::__construct($items);
     }
 }

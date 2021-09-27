@@ -1,8 +1,18 @@
 <?php declare(strict_types=1);
 
+/**
+ * Validates that the amount of items in a collection must be <COMPARISON> than a certain number
+ *
+ * Example: Validate that the amount of items in a collection must be lower/equal/greater than than 5
+ *
+ * @see \LDL\Framework\Base\Constants
+ * @see \LDL\Framework\Helper\ComparisonOperatorHelper
+ */
+
 namespace LDL\Type\Collection\Validator;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;
+use LDL\Framework\Base\Constants;
 use LDL\Framework\Helper\ComparisonOperatorHelper;
 use LDL\Validators\Traits\ValidatorValidateTrait;
 use LDL\Validators\ValidatorHasConfigInterface;
@@ -23,11 +33,21 @@ class AmountValidator implements ValidatorInterface, ValidatorHasConfigInterface
     private $operator;
 
     /**
+     * @var string
+     */
+    private $order;
+
+    /**
      * @var string|null
      */
     private $description;
 
-    public function __construct(int $value, string $operator, string $description=null)
+    public function __construct(
+        int $value,
+        string $operator,
+        string $description=null,
+        string $order = Constants::COMPARE_LTR
+    )
     {
         if($value <= 0){
             $msg = 'Amount of items for validator "%s" must be a positive integer';
@@ -38,6 +58,7 @@ class AmountValidator implements ValidatorInterface, ValidatorHasConfigInterface
 
         $this->amount = $value;
         $this->operator = $operator;
+        $this->order = $order;
         $this->description = $description;
     }
 
@@ -75,7 +96,12 @@ class AmountValidator implements ValidatorInterface, ValidatorHasConfigInterface
 
     public function assertTrue($value, $key = null, CollectionInterface $collection = null): void
     {
-        $compare = $this->compare($collection);
+        $compare = ComparisonOperatorHelper::compare(
+            count($collection),
+            $this->amount,
+            $this->operator,
+            $this->order
+        );
 
         if(!$compare){
             return;
@@ -112,6 +138,8 @@ class AmountValidator implements ValidatorInterface, ValidatorHasConfigInterface
             throw new Exception\InvalidConfigException($msg);
         }
 
+        ComparisonOperatorHelper::validate($data['operator']);
+
         if(!is_string($data['operator'])){
             throw new \InvalidArgumentException(
                 sprintf('operator must be of type string, "%s" was given',gettype($data['operator']))
@@ -141,33 +169,4 @@ class AmountValidator implements ValidatorInterface, ValidatorHasConfigInterface
         ];
     }
 
-    private function compare(CollectionInterface $collection) : bool
-    {
-        $total = count($collection);
-
-        switch($this->operator){
-            case ComparisonOperatorHelper::OPERATOR_SEQ:
-                return $total === $this->amount;
-
-            case ComparisonOperatorHelper::OPERATOR_EQ:
-                return $total == $this->amount;
-
-            case ComparisonOperatorHelper::OPERATOR_GT:
-                return $total + 1 > $this->amount;
-
-            case ComparisonOperatorHelper::OPERATOR_GTE:
-                return $total + 1 >= $this->amount;
-
-            case ComparisonOperatorHelper::OPERATOR_LT:
-                $total = $total - 1 < 0 ? 0 : $total - 1;
-                return $total < $this->amount;
-
-            case ComparisonOperatorHelper::OPERATOR_LTE:
-                $total = $total - 1 < 0 ? 0 : $total - 1;
-                return $total <= $this->amount;
-
-            default:
-                throw new \RuntimeException("Given operator: '{$this->operator}' is invalid");
-        }
-    }
 }

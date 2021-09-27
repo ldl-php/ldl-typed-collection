@@ -1,0 +1,14 @@
+Create new ClassCollection instance
+Append class Test as a regular string:
+array (
+  0 => 'Test',
+)
+Append class Test including global namespace:
+array (
+  0 => 'Test',
+  1 => 'Test',
+)
+
+Append non-existing class as string NonExistingClass, (exception must be thrown)
+
+OK: Exception: Value expected for "LDL\Validators\ClassExistenceValidator", must be a string representing an existing class, "string" was given. Perhaps an autoloader is missing? Perhaps the namespace of the class is typed incorrectly?

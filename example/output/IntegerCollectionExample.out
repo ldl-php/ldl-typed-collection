@@ -1,0 +1,37 @@
+Create integer collection:
+
+Append integer 10 (two times):
+
+array (
+  0 => 10,
+  1 => 10,
+)
+
+Append negative integer -100:
+
+array (
+  0 => 10,
+  1 => 10,
+  2 => -100,
+)
+
+Append string '123test', exception must be thrown:
+
+OK Exception: Value expected for "LDL\Validators\IntegerValidator", must be of type integer or an instance of "LDL\Framework\Base\Contracts\Type\ToIntegerInterface", "string" was given
+
+Append double 9e99 exception must be thrown:
+
+OK Exception: Value expected for "LDL\Validators\IntegerValidator", must be of type integer or an instance of "LDL\Framework\Base\Contracts\Type\ToIntegerInterface", "double" was given
+
+Get unsigned collection:
+
+array (
+  0 => 10,
+  1 => 10,
+)
+
+Get UNIQUE collection from unsigned collection:
+
+array (
+  0 => 10,
+)

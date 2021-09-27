@@ -2,16 +2,15 @@
 
 namespace LDL\Type\Collection\Traits\Validator;
 
-use LDL\Type\Collection\AbstractCollection;
+use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
-use LDL\Type\Collection\Types\String\StringCollection;
 use LDL\Validators\Chain\AndValidatorChain;
 use LDL\Validators\Chain\ValidatorChainInterface;
 
 trait AppendKeyValidatorChainTrait
 {
     /**
-     * @var StringCollection
+     * @var HasAppendValueValidatorChainInterface
      */
     private $_tAppendKeyCollection;
 
@@ -43,7 +42,7 @@ trait AppendKeyValidatorChainTrait
         /**
          * Use an anonymous class here, a proper class is not needed
          */
-        $this->_tAppendKeyCollection = new class($class, $validators) extends AbstractCollection implements HasAppendValueValidatorChainInterface
+        $this->_tAppendKeyCollection = new class($class, $validators) extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface
         {
             use AppendValueValidatorChainTrait;
 
@@ -58,7 +57,7 @@ trait AppendKeyValidatorChainTrait
 
                 $this->validatorChain = new $class;
 
-                $this->getBeforeResolveKey()->append(function($collection, $item, $key){
+                $this->getBeforeAppend()->append(function($collection, $item, $key){
                     $this->validatorChain->validate($item, $key, $collection);
                 });
             }
@@ -69,7 +68,7 @@ trait AppendKeyValidatorChainTrait
             }
         };
 
-        $this->getBeforeResolveKey()->append(function($collection, $item, $key){
+        $this->getBeforeAppend()->append(function($collection, $item, $key){
             $this->_tAppendKeyCollection->append($key);
         });
 

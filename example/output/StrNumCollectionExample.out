@@ -1,0 +1,55 @@
+Create strnum collection:
+
+Append string hello (two times):
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 12,
+  3 => 9.0E+99,
+)
+
+Append string good bye:
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 12,
+  3 => 9.0E+99,
+  4 => 'good bye',
+)
+
+Append \stdClass, exception must be thrown:
+
+OK Exception: Value: "stdClass" does not comply to validation: [(LDL\Validators\StringValidator || LDL\Validators\NumericValidator)]
+
+Implode collection by ':':
+
+'hello:hello:12:9.0E+99:good bye'
+
+Get string collection from strnum collection
+array (
+  0 => 'hello',
+  4 => 'good bye',
+)
+
+Get integer collection from strnum collection
+array (
+  2 => 12,
+)
+
+Get double collection from strnum collection
+array (
+  3 => 9.0E+99,
+)
+
+Get unique strnum collection:
+
+array (
+  2 => 12,
+  3 => 9.0E+99,
+)
+
+Implode unique collection by ':':
+
+'12:9.0E+99'

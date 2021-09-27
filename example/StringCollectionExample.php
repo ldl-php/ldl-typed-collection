@@ -4,55 +4,53 @@ require __DIR__.'/../vendor/autoload.php';
 
 use LDL\Type\Collection\Types\String\StringCollection;
 
-$str = new StringCollection();
+class Test implements \LDL\Framework\Base\Contracts\Type\ToStringInterface
+{
+    public function toString(): string
+    {
+        return 'Test';
+    }
 
-echo "Append item with value: '123'\n";
-$str->append('123');
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+}
 
-echo "Append item with value: '123'\n";
-$str->append('123');
+echo "Create string collection:\n\n";
+$collection = new StringCollection();
 
-echo "Append item with value: '456'\n";
-$str->append('456');
+echo "Append string hello (two times):\n\n";
+$collection->appendMany([
+    'hello',
+    'hello',
+    new Test()
+]);
 
-echo "Append item with value: (integer) 789, exception must be thrown\n";
+echo var_export($collection->toArray(), true)."\n\n";
+
+echo "Append string good bye:\n\n";
+$collection->append('good bye');
+
+echo var_export($collection->toArray(), true)."\n\n";
 
 try {
-
-    $str->append(789);
-
+    echo "Append integer, exception must be thrown:\n\n";
+    $collection->append(123);
 }catch(\Exception $e){
-
-    echo "EXCEPTION: {$e->getMessage()}\n";
-
+    echo "OK Exception: {$e->getMessage()}\n\n";
 }
 
-echo "Iterate through elements:\n";
+echo "Implode collection by ':':\n\n";
 
-foreach($str as $string){
-    echo "String: $string"."\n";
-}
+echo var_export($collection->implode(':'), true)."\n\n";
 
-echo "Get unique values from collection:\n";
-$uniques = $str->toUnique();
+echo "Get unique string collection:\n\n";
 
-echo "Iterate through uniques values:\n";
+$unique = $collection->filterUniqueStrings();
 
-foreach($uniques as $unique){
-    echo "String: $unique"."\n";
-}
+echo var_export($unique->toArray(), true)."\n\n";
 
-echo "Call Implode:\n\n";
+echo "Implode unique collection by ':':\n\n";
 
-echo $str->implode(',');
-
-echo "\nAdd new element \"000\" and call implode again\n\n";
-
-$str->append('000');
-echo $str->implode(',');
-
-echo "\nRemove element and call implode again\n\n";
-
-$str->removeByValue('000');
-
-echo $str->implode(',');
+echo var_export($unique->implode(':'), true)."\n\n";

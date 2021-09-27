@@ -1,0 +1,50 @@
+Create strint collection:
+
+Append string hello (two times):
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 12,
+)
+
+Append string good bye:
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 12,
+  3 => 'good bye',
+)
+
+Append \stdClass, exception must be thrown:
+
+OK Exception: Value: "stdClass" does not comply to validation: [(LDL\Validators\StringValidator || LDL\Validators\IntegerValidator)]
+
+Implode collection by ':':
+
+'hello:hello:12:good bye'
+
+Get string collection from strint collection
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 'good bye',
+)
+
+Get integer collection from strint collection
+array (
+  0 => 12,
+)
+
+Get unique strint collection:
+
+array (
+  0 => 'hello',
+  1 => 12,
+  2 => 'good bye',
+)
+
+Implode unique collection by ':':
+
+'hello:12:good bye'

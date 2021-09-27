@@ -1,0 +1,82 @@
+Create array key collection:
+
+Append string hello (two times):
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 12,
+  3 => 12,
+  4 =>
+  MyInteger::__set_state(array(
+  )),
+  5 =>
+  MyArrayKey::__set_state(array(
+  )),
+)
+
+Append string good bye:
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 12,
+  3 => 12,
+  4 =>
+  MyInteger::__set_state(array(
+  )),
+  5 =>
+  MyArrayKey::__set_state(array(
+  )),
+  'bye' => 'good bye',
+)
+
+Append \stdClass, exception must be thrown:
+
+OK Exception: Value: "stdClass" does not comply to validation: [(LDL\Validators\ArrayKeyValidator || (LDL\Validators\IntegerValidator || LDL\Validators\StringValidator))]
+
+Implode collection by ':':
+
+'hello:hello:12:12:good bye'
+
+Get unique string collection from array key collection
+array (
+  0 => 'hello',
+  1 => 'good bye',
+)
+
+Get integer collection from array key collection
+array (
+  2 => 12,
+  3 => 12,
+  4 =>
+  MyInteger::__set_state(array(
+  )),
+)
+
+Filter unique integers (prefer scalar values instead of objects)
+array (
+  0 => 12,
+)
+
+Filter unique integers (prefer objects)
+array (
+  0 =>
+  MyInteger::__set_state(array(
+  )),
+)
+
+array (
+  0 => 'hello',
+  1 => 'hello',
+  2 => 12,
+  3 => 12,
+  4 => 12,
+  5 => 'hello',
+  'bye' => 'good bye',
+)
+
+Append ambiguous class which implements integer and string interfaces, and try to convert to array
+Exception MUST be thrown
+
+OK EXCEPTION: Could not convert object of class "MyAmbiguousClass" to primitive array. Object implements two interfaces, ("LDL\Framework\Base\Contracts\Type\ToIntegerInterface" and "LDL\Framework\Base\Contracts\Type\ToStringInterface"). To resolve this ambiguity, remove one of the interfaces or implement interface "LDL\Framework\Base\Contracts\Type\ToArrayKeyInterface"

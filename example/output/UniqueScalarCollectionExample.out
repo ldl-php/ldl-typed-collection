@@ -1,0 +1,21 @@
+Create unique scalar collection:
+
+Append string hello and append number 33
+
+array (
+  0 => 'hello',
+  1 => 33,
+)
+
+Append object Test which implements ToScalarInterface and returns 33, since 33 is a duplicate value, exception must be thrown
+
+EXCEPTION: Item with value 33 already exists in this collection!
+Convert to primitive array and iterator through each value:
+
+Item: hello
+Item: 33
+
+Convert to array and iterator through each value:
+
+string
+integer

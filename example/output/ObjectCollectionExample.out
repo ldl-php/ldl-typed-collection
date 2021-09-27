@@ -1,0 +1,45 @@
+Create collection:
+
+Append objects Test, Test2 and Test3:
+
+array (
+  0 =>
+  Test::__set_state(array(
+  )),
+  1 =>
+  Test2::__set_state(array(
+  )),
+  2 =>
+  Test3::__set_state(array(
+  )),
+)
+
+Filter Object Collection by method: 'firstMethod'
+
+array (
+  0 =>
+  Test::__set_state(array(
+  )),
+  1 =>
+  Test2::__set_state(array(
+  )),
+)
+
+Filter Object Collection by methods: 'secondMethod', 'thirdMethod'
+
+array (
+  1 =>
+  Test2::__set_state(array(
+  )),
+  2 =>
+  Test3::__set_state(array(
+  )),
+)
+
+Filter strings in Collection (only test should show up since it's the only one who implements ToStringInterface)
+
+array (
+  0 =>
+  Test::__set_state(array(
+  )),
+)

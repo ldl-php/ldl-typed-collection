@@ -1,0 +1,17 @@
+Create new BoolCollection instance with the following values:
+
+array (
+  'true_val' => true,
+  'false_val' => false,
+)
+
+Convert to array:
+
+array (
+  'true_val' => true,
+  'false_val' => false,
+)
+
+Try to add an integer value, EXCEPTION must be thrown:
+
+EXCEPTION: Value expected for "LDL\Validators\BoolValidator", must be of type boolean, "integer" given

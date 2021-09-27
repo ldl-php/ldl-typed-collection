@@ -2,7 +2,7 @@
 
 namespace LDL\Type\Collection\Traits\Validator;
 
-use LDL\Type\Collection\AbstractCollection;
+use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Types\String\StringCollection;
 use LDL\Validators\Chain\AndValidatorChain;
@@ -43,7 +43,7 @@ trait RemoveKeyValidatorChainTrait
         /**
          * Use an anonymous class here, a proper class is not needed
          */
-        $this->_tRemoveKeyCollection = new class($class, $validators) extends AbstractCollection implements HasAppendValueValidatorChainInterface
+        $this->_tRemoveKeyCollection = new class($class, $validators) extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface
         {
             use AppendValueValidatorChainTrait;
 

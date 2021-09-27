@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fixes/1199694738432549 - Unique validator shows incorrect message during validatorKey exception
 - fixes/1199886097538728 - Remove exception annotation from MultipleSelectionInterface
 - fixes/1200949427124330 - Small enhancements to comply with changes done in base
+- fixes/1201067148929295 - Add toPrimitiveArray method / Refactor examples
 
 ---
 

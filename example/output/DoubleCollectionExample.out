@@ -1,0 +1,54 @@
+Create double collection:
+
+Append double 0.1 (two times):
+
+array (
+  0 => 0.1,
+  1 => 0.1,
+  2 =>
+  MyDouble::__set_state(array(
+  )),
+)
+
+Append scientific notated negative number -9e99:
+
+array (
+  0 => 0.1,
+  1 => 0.1,
+  2 =>
+  MyDouble::__set_state(array(
+  )),
+  3 => -9.0E+99,
+)
+
+Append string 'hello', exception must be thrown:
+
+OK Exception: Value expected for "LDL\Validators\DoubleValidator", must be of type double or an instance of "LDL\Framework\Base\Contracts\Type\ToDoubleInterface", "string" given
+
+Append integer exception must be thrown:
+
+OK Exception: Value expected for "LDL\Validators\DoubleValidator", must be of type double or an instance of "LDL\Framework\Base\Contracts\Type\ToDoubleInterface", "integer" given
+
+Get unsigned collection:
+
+array (
+  0 => 0.1,
+  1 => 0.1,
+  2 =>
+  MyDouble::__set_state(array(
+  )),
+)
+
+Get UNIQUE collection from unsigned collection (prefer object values):
+
+array (
+  0 =>
+  MyDouble::__set_state(array(
+  )),
+)
+
+Get UNIQUE collection from unsigned collection (prefer scalar values):
+
+array (
+  0 => 0.1,
+)

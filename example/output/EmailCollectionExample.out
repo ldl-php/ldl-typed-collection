@@ -1,0 +1,17 @@
+Create new EmailCollection instance with the following values:
+
+array (
+  0 => 'test@mail.com',
+  1 => 'test1@test.com',
+)
+
+Convert to array:
+
+array (
+  0 => 'test@mail.com',
+  1 => 'test1@test.com',
+)
+
+Try to add an invalid email (hello@.com), EXCEPTION must be thrown:
+
+EXCEPTION: Value expected for "LDL\Validators\EmailValidator", must be a valid email

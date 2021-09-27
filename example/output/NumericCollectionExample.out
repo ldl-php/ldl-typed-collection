@@ -1,0 +1,49 @@
+Create numeric collection:
+
+Append double 30.5 (two times) 100, -100, -9e99, 9e99 and MyNumber (containing 30.5):
+
+array (
+  0 => 30.5,
+  1 => 30.5,
+  2 =>
+  MyNumber::__set_state(array(
+  )),
+  3 => 100,
+  4 => -100,
+  5 => -9.0E+99,
+  6 => 9.0E+99,
+)
+
+Append string '123test', exception must be thrown:
+
+OK Exception: Value: "'123test'" does not comply to validation: [LDL\Validators\NumericValidator]
+
+Get unsigned collection:
+
+array (
+  0 => 30.5,
+  1 => 30.5,
+  2 =>
+  MyNumber::__set_state(array(
+  )),
+  3 => 100,
+  6 => 9.0E+99,
+)
+
+Get UNIQUE collection from unsigned collection (prefer objects):
+
+array (
+  0 =>
+  MyNumber::__set_state(array(
+  )),
+  1 => 100,
+  2 => 9.0E+99,
+)
+
+Get UNIQUE collection from unsigned collection (prefer primitive values):
+
+array (
+  0 => 30.5,
+  1 => 100,
+  2 => 9.0E+99,
+)
