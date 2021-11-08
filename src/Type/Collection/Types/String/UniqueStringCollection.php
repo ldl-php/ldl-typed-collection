@@ -2,12 +2,11 @@
 
 namespace LDL\Type\Collection\Types\String;
 
-use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Validator\UniqueValidator;
 use LDL\Validators\StringValidator;
 
-final class UniqueStringCollection extends AbstractStringCollection implements ToPrimitiveArrayInterface
+final class UniqueStringCollection extends AbstractStringCollection
 {
     use AppendValueValidatorChainTrait;
 

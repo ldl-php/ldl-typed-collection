@@ -10,13 +10,11 @@ namespace LDL\Type\Collection\Types\Classes;
 use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
 use LDL\Type\Collection\Traits\Types\String\FilterUniqueStringCollectionInterfaceTrait;
-use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\String\Traits\ToStringPrimitiveArray;
 use LDL\Validators\ClassExistenceValidator;
 
 final class ClassCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
     use FilterUniqueStringCollectionInterfaceTrait;
     use ToStringPrimitiveArray;
 

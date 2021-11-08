@@ -50,5 +50,6 @@ foreach($collection->toArray() as $item){
     echo gettype($item)."\n";
 }
 
+echo "Implode collection:\n\n";
 
 echo $collection->implode(':')."\n";

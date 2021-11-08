@@ -10,7 +10,7 @@ use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Numeric\Traits\ToNumericPrimitiveArrayTrait;
 use LDL\Validators\NumericValidator;
 
-final class UnsignedNumericCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class UnsignedNumericCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
     use AppendValueValidatorChainTrait;
     use FilterUniqueNumberCollectionInterfaceTrait;

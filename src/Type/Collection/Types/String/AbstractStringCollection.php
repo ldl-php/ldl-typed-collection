@@ -4,9 +4,10 @@ namespace LDL\Type\Collection\Types\String;
 
 use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Helper\TypeCollectionHelper;
+use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 
-abstract class AbstractStringCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface
+abstract class AbstractStringCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
     use Traits\ToStringPrimitiveArray;
 

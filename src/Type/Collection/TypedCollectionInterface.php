@@ -20,8 +20,31 @@ use LDL\Framework\Base\Collection\Contracts\ReplaceByCallbackInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByKeyInterface;
 use LDL\Framework\Base\Collection\Contracts\ReplaceByValueInterface;
 use LDL\Framework\Base\Contracts\LockableObjectInterface;
+use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendKeyValidatorChainInterface;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 
-interface TypedCollectionInterface extends CollectionInterface, LockableObjectInterface, BeforeAppendInterface, AppendableInterface, BeforeResolveKeyInterface, AppendInPositionInterface, LockAppendInterface, BeforeRemoveInterface, RemoveByKeyInterface, RemoveByValueInterface, RemoveByCallbackInterface, LockRemoveInterface, BeforeReplaceInterface, ReplaceByKeyInterface, ReplaceByValueInterface, ReplaceByCallbackInterface, LockReplaceInterface, KeyFilterInterface
+interface TypedCollectionInterface
+    extends CollectionInterface,
+    LockableObjectInterface,
+    BeforeAppendInterface,
+    AppendableInterface,
+    BeforeResolveKeyInterface,
+    AppendInPositionInterface,
+    LockAppendInterface,
+    BeforeRemoveInterface,
+    RemoveByKeyInterface,
+    RemoveByValueInterface,
+    RemoveByCallbackInterface,
+    LockRemoveInterface,
+    BeforeReplaceInterface,
+    ReplaceByKeyInterface,
+    ReplaceByValueInterface,
+    ReplaceByCallbackInterface,
+    LockReplaceInterface,
+    KeyFilterInterface,
+    HasAppendValueValidatorChainInterface,
+    HasAppendKeyValidatorChainInterface
 {
 
 }

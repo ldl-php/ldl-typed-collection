@@ -15,9 +15,8 @@ use LDL\Type\Collection\Validator\UniqueTypeValidator;
 use LDL\Type\Collection\Validator\UniqueValidator;
 use LDL\Validators\NumericValidator;
 
-final class UniqueNumericCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class UniqueNumericCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
     use FilterUnsignedNumberCollectionInterfaceTrait;
     use FilterIntegerCollectionInterfaceTrait;
     use FilterDoubleCollectionInterfaceTrait;

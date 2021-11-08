@@ -10,9 +10,8 @@ use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Integer\Traits\ToIntegerPrimitiveArrayTrait;
 use LDL\Validators\IntegerValidator;
 
-final class UnsignedIntegerCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class UnsignedIntegerCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
     use FilterUniqueIntegerCollectionInterfaceTrait;
     use ToIntegerPrimitiveArrayTrait;
 

@@ -10,9 +10,8 @@ use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Double\Traits\ToDoublePrimitiveArrayTrait;
 use LDL\Validators\DoubleValidator;
 
-final class DoubleCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class DoubleCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
     use FilterUnsignedDoubleCollectionInterfaceTrait;
     use ToDoublePrimitiveArrayTrait;
 

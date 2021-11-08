@@ -7,15 +7,10 @@
 
 namespace LDL\Type\Collection\Types\Arrays;
 
-use LDL\Framework\Base\Contracts\Type\ToArrayInterface;
 use LDL\Framework\Base\Contracts\Type\ToArrayKeyInterface;
-use LDL\Framework\Base\Contracts\Type\ToIntegerInterface;
-use LDL\Framework\Base\Contracts\Type\ToStringInterface;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
-use LDL\Framework\Helper\IterableHelper;
 use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Types\Double\FilterDoubleCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Integer\FilterIntegerCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Number\FilterNumberCollectionInterfaceTrait;
@@ -27,7 +22,7 @@ use LDL\Validators\ArrayKeyValidator;
 use LDL\Validators\Chain\AndValidatorChain;
 use LDL\Validators\Chain\OrValidatorChain;
 
-final class UniqueArrayKeyCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class UniqueArrayKeyCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
     use LockableObjectInterfaceTrait;
     use AppendValueValidatorChainTrait;

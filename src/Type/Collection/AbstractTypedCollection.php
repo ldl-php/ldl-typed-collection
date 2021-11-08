@@ -23,6 +23,8 @@ use LDL\Framework\Base\Collection\Traits\ReplaceByKeyInterfaceTrait;
 use LDL\Framework\Base\Collection\Traits\ReplaceByValueInterfaceTrait;
 use LDL\Framework\Base\Traits\LockableObjectInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Object\FilterObjectCollectionInterfaceTrait;
+use LDL\Type\Collection\Traits\Validator\AppendKeyValidatorChainTrait;
+use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 
 abstract class AbstractTypedCollection implements TypedCollectionInterface
 {
@@ -52,6 +54,8 @@ abstract class AbstractTypedCollection implements TypedCollectionInterface
     use KeyFilterInterfaceTrait;
 
     use FilterObjectCollectionInterfaceTrait;
+    use AppendValueValidatorChainTrait;
+    use AppendKeyValidatorChainTrait;
 
     public function __construct(iterable $items=null)
     {

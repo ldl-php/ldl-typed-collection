@@ -3,13 +3,11 @@
 namespace LDL\Type\Collection\Types\Email;
 
 use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
-use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\String\AbstractStringCollection;
 use LDL\Validators\EmailValidator;
 
 final class EmailCollection extends AbstractStringCollection implements ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
 
     public function __construct(iterable $items = null)
     {

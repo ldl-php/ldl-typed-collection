@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /**
- * Namespace Arrays is plural to maintain compatibility between PHP versions that do not
+ * Namespace "Arrays" is plural to maintain compatibility between PHP versions that do not
  * support keywords in namespaces. An array key collection contains types which are valid for array keys
  * namely integers and strings.
  */
@@ -21,7 +21,7 @@ use LDL\Validators\Chain\OrValidatorChain;
 use LDL\Validators\IntegerValidator;
 use LDL\Validators\StringValidator;
 
-final class ArrayKeyCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class ArrayKeyCollection extends AbstractTypedCollection
 {
     use AppendValueValidatorChainTrait;
     use FilterIntegerCollectionInterfaceTrait;

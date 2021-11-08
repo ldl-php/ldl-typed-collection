@@ -12,9 +12,8 @@ use LDL\Type\Collection\Types\Integer\Traits\ToIntegerPrimitiveArrayTrait;
 use LDL\Type\Collection\Validator\UniqueTypeValidator;
 use LDL\Validators\IntegerValidator;
 
-final class UniqueIntegerCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class UniqueIntegerCollection extends AbstractTypedCollection implements  ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
     use FilterUnsignedIntegerCollectionInterfaceTrait;
     use ToIntegerPrimitiveArrayTrait;
 

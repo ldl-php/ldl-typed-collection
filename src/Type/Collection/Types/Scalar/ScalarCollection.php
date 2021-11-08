@@ -13,13 +13,10 @@ use LDL\Type\Collection\Traits\Types\Double\FilterDoubleCollectionInterfaceTrait
 use LDL\Type\Collection\Traits\Types\Integer\FilterIntegerCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Scalar\FilterUniqueScalarCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\String\FilterStringCollectionInterfaceTrait;
-use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\ScalarValidator;
 
-final class ScalarCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class ScalarCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
-
     use FilterIntegerCollectionInterfaceTrait;
     use FilterDoubleCollectionInterfaceTrait;
     use FilterBoolCollectionInterfaceTrait;

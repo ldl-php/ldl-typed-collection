@@ -6,11 +6,10 @@ use LDL\Framework\Base\Contracts\Type\ToBooleanInterface;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Validators\BoolValidator;
 
-final class BoolCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class BoolCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
     use AppendValueValidatorChainTrait;
 

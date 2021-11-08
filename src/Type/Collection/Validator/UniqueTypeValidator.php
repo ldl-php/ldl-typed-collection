@@ -1,15 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * To use this validator correctly when using a collection of objects make sure to apply ComparisonInterface
- * to each of the objects which is added to the collection.
- *
- * This will provide an easier and uncomplicated way to compare objects through a scalar value
- * rather than applying object comparison rules (https://www.php.net/manual/en/language.oop5.object-comparison.php)
- *
- * @see \LDL\Framework\Base\Collection\Contracts\ComparisonInterface
- */
-
 namespace LDL\Type\Collection\Validator;
 
 use LDL\Framework\Base\Collection\Contracts\CollectionInterface;

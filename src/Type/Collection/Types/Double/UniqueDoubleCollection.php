@@ -11,9 +11,8 @@ use LDL\Type\Collection\Types\Double\Traits\ToDoublePrimitiveArrayTrait;
 use LDL\Type\Collection\Validator\UniqueValidator;
 use LDL\Validators\DoubleValidator;
 
-final class UniqueDoubleCollection extends AbstractTypedCollection implements HasAppendValueValidatorChainInterface, ToPrimitiveArrayInterface
+final class UniqueDoubleCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
 {
-    use AppendValueValidatorChainTrait;
     use FilterUnsignedDoubleCollectionInterfaceTrait;
     use ToDoublePrimitiveArrayTrait;
 

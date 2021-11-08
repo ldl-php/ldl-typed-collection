@@ -15,7 +15,10 @@ Convert to primitive array and iterator through each value:
 Item: hello
 Item: 33
 
-Convert to array and iterator through each value:
+Convert to array and iterate through each value:
 
 string
 integer
+Implode collection:
+
+hello:33
