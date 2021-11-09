@@ -24,7 +24,12 @@ echo "Append string hello (two times):\n\n";
 $collection->appendMany([
     'hello',
     'hello',
-    new Test()
+    new Test(),
+    '',
+    "\r",
+    "\n",
+    "\r\n",
+    " "
 ]);
 
 echo var_export($collection->toArray(), true)."\n\n";
@@ -54,3 +59,7 @@ echo var_export($unique->toArray(), true)."\n\n";
 echo "Implode unique collection by ':':\n\n";
 
 echo var_export($unique->implode(':'), true)."\n\n";
+
+echo "Filter empty lines:\n";
+
+echo $collection->filterEmptyLines()."\n";

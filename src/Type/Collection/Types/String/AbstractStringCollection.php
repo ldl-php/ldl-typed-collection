@@ -33,6 +33,21 @@ abstract class AbstractStringCollection extends AbstractTypedCollection implemen
         });
     }
 
+    public function filterEmptyLines() : self
+    {
+        $return = new static();
+
+        foreach($this as $string){
+            $string = trim((string)$string,"\r\n ");
+            if('' === $string){
+                continue;
+            }
+            $return->append($string);
+        }
+
+        return $return;
+    }
+
     public function implode(string $separator=',', bool $considerToStringObjects=true) : string
     {
         if(null !== $this->imploded){
