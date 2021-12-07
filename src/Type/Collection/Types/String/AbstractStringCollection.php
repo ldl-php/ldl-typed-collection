@@ -16,6 +16,11 @@ abstract class AbstractStringCollection extends AbstractTypedCollection implemen
      */
     private $imploded;
 
+    /**
+     * @var string
+     */
+    private $implodeSeparator=',';
+
     public function __construct(iterable $items = null)
     {
         parent::__construct($items);
@@ -50,10 +55,11 @@ abstract class AbstractStringCollection extends AbstractTypedCollection implemen
 
     public function implode(string $separator=',', bool $considerToStringObjects=true) : string
     {
-        if(null !== $this->imploded){
+        if(null !== $this->imploded && $separator === $this->implodeSeparator){
             return $this->imploded;
         }
 
+        $this->implodeSeparator = $separator;
         $this->imploded = implode($separator, TypeCollectionHelper::toArray($this));
         return $this->imploded;
     }
