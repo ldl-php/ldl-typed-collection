@@ -31,7 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - fixes/1200949427124330 - Small enhancements to comply with changes done in base
 - fixes/1201067148929295 - Add toPrimitiveArray method / Refactor examples
 - fixes/1201339970604552 - Add HasValueValidatorInterface and HasKeyValidatorInterface to TypedCollectionInterface
-
+- fixes/1201480582483915 - In StringCollection if separator is not the original separator, do not return cached string
 ---
 
 ## [v0.0.1] - 2020-07-19
