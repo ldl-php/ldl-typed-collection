@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1199692948932206 - Add ClassStringCollection (Collection of classes as a string with existence validation)
 - feature/1200171590526502 - Refactor typed collection to use ldl-validators library
 - feature/1201345350282666 - Add filterEmptyStrings to AbstractStringCollection
+- feature/1201487027413417 - Add factory interfaces for types i.e fromStringCollection, fromIntegerCollection, etc. which extends base FactoryInterface
 
 ### Changed
 
