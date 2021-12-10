@@ -2,13 +2,14 @@
 
 namespace LDL\Type\Collection\Types\Object;
 
-use LDL\Framework\Base\Collection\Traits\FilterByClassInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\FilterByInterfaceTrait;
-use LDL\Framework\Base\Collection\Traits\FilterByMethodInterfaceTrait;
+use LDL\Validators\ObjectValidator;
 use LDL\Type\Collection\AbstractTypedCollection;
+use LDL\Framework\Base\Collection\Traits\FilterByInterfaceTrait;
+use LDL\Type\Collection\Interfaces\Type\ObjectCollectionInterface;
+use LDL\Framework\Base\Collection\Traits\FilterByClassInterfaceTrait;
+use LDL\Framework\Base\Collection\Traits\FilterByMethodInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Object\FilterObjectCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\String\FilterStringCollectionInterfaceTrait;
-use LDL\Validators\ObjectValidator;
 
 final class ObjectCollection extends AbstractTypedCollection implements ObjectCollectionInterface
 {

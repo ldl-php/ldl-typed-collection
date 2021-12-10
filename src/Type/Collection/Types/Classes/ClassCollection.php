@@ -8,12 +8,12 @@
 namespace LDL\Type\Collection\Types\Classes;
 
 use LDL\Type\Collection\AbstractTypedCollection;
-use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
+use LDL\Type\Collection\Interfaces\Type\ClassCollectionInterface;
 use LDL\Type\Collection\Traits\Types\String\FilterUniqueStringCollectionInterfaceTrait;
 use LDL\Type\Collection\Types\String\Traits\ToStringPrimitiveArray;
 use LDL\Validators\ClassExistenceValidator;
 
-final class ClassCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
+final class ClassCollection extends AbstractTypedCollection implements ClassCollectionInterface
 {
     use FilterUniqueStringCollectionInterfaceTrait;
     use ToStringPrimitiveArray;

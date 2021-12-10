@@ -2,19 +2,19 @@
 
 namespace LDL\Type\Collection\Types\Scalar;
 
-use LDL\Framework\Base\Contracts\Type\ToScalarInterface;
+use LDL\Validators\ScalarValidator;
 use LDL\Framework\Helper\IterableHelper;
 use LDL\Type\Collection\AbstractTypedCollection;
-use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Validator\UniqueTypeValidator;
+use LDL\Framework\Base\Contracts\Type\ToScalarInterface;
+use LDL\Type\Collection\Interfaces\Type\ScalarCollectionInterface;
 use LDL\Type\Collection\Traits\Types\Bool\FilterBoolCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Double\FilterDoubleCollectionInterfaceTrait;
-use LDL\Type\Collection\Traits\Types\Integer\FilterIntegerCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\String\FilterStringCollectionInterfaceTrait;
-use LDL\Type\Collection\Validator\UniqueTypeValidator;
-use LDL\Validators\ScalarValidator;
+use LDL\Type\Collection\Traits\Types\Integer\FilterIntegerCollectionInterfaceTrait;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 
-final class UniqueScalarCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
+final class UniqueScalarCollection extends AbstractTypedCollection implements ScalarCollectionInterface
 {
     use FilterIntegerCollectionInterfaceTrait;
     use FilterDoubleCollectionInterfaceTrait;
