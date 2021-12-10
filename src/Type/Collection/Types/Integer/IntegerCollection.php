@@ -3,7 +3,7 @@
 namespace LDL\Type\Collection\Types\Integer;
 
 use LDL\Type\Collection\AbstractTypedCollection;
-use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
+use LDL\Type\Collection\Interfaces\Type\IntegerCollectionInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Types\Integer\FilterUniqueIntegerCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Integer\FilterUnsignedIntegerCollectionInterfaceTrait;
@@ -11,7 +11,7 @@ use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Integer\Traits\ToIntegerPrimitiveArrayTrait;
 use LDL\Validators\IntegerValidator;
 
-final class IntegerCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
+final class IntegerCollection extends AbstractTypedCollection implements IntegerCollectionInterface
 {
     use FilterUniqueIntegerCollectionInterfaceTrait;
     use FilterUnsignedIntegerCollectionInterfaceTrait;

@@ -9,6 +9,7 @@
 namespace LDL\Type\Collection\Types\Arrays;
 
 use LDL\Type\Collection\AbstractTypedCollection;
+use LDL\Type\Collection\Interfaces\Type\ArrayKeyCollectionInterface;
 use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Types\Integer\FilterIntegerCollectionInterfaceTrait;
@@ -21,7 +22,7 @@ use LDL\Validators\Chain\OrValidatorChain;
 use LDL\Validators\IntegerValidator;
 use LDL\Validators\StringValidator;
 
-final class ArrayKeyCollection extends AbstractTypedCollection
+final class ArrayKeyCollection extends AbstractTypedCollection implements ArrayKeyCollectionInterface
 {
     use AppendValueValidatorChainTrait;
     use FilterIntegerCollectionInterfaceTrait;

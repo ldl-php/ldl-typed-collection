@@ -2,11 +2,11 @@
 
 namespace LDL\Type\Collection\Types\Email;
 
-use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
-use LDL\Type\Collection\Types\String\AbstractStringCollection;
 use LDL\Validators\EmailValidator;
+use LDL\Type\Collection\Types\String\AbstractStringCollection;
+use LDL\Type\Collection\Interfaces\Type\EmailCollectionInterface;
 
-final class EmailCollection extends AbstractStringCollection implements ToPrimitiveArrayInterface
+final class EmailCollection extends AbstractStringCollection implements EmailCollectionInterface
 {
 
     public function __construct(iterable $items = null)

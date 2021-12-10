@@ -2,15 +2,15 @@
 
 namespace LDL\Type\Collection\Types\Numeric;
 
+use LDL\Validators\NumericValidator;
 use LDL\Type\Collection\AbstractTypedCollection;
-use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
-use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
-use LDL\Type\Collection\Traits\Types\Number\FilterUniqueNumberCollectionInterfaceTrait;
+use LDL\Type\Collection\Interfaces\Type\NumericCollectionInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Numeric\Traits\ToNumericPrimitiveArrayTrait;
-use LDL\Validators\NumericValidator;
+use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
+use LDL\Type\Collection\Traits\Types\Number\FilterUniqueNumberCollectionInterfaceTrait;
 
-final class UnsignedNumericCollection extends AbstractTypedCollection implements ToPrimitiveArrayInterface
+final class UnsignedNumericCollection extends AbstractTypedCollection implements NumericCollectionInterface
 {
     use AppendValueValidatorChainTrait;
     use FilterUniqueNumberCollectionInterfaceTrait;
