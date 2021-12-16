@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - feature/1201345350282666 - Add filterEmptyStrings to AbstractStringCollection
 - feature/1201487027413417 - Add factory interfaces for types i.e fromStringCollection, fromIntegerCollection, etc. which extends base FactoryInterface
 - feature/1201499524089022 - Add type Interfaces for each type and derived collection types
+- feature/1201510390437228 - Add common numeric functions in NumericTypeCollectionInterfaceTrait and NumericTypeCollectionInterface
 
 ### Changed
 

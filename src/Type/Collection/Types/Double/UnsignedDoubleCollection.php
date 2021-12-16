@@ -7,11 +7,13 @@ use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Interfaces\Type\DoubleCollectionInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Double\Traits\ToDoublePrimitiveArrayTrait;
+use LDL\Type\Collection\Types\Double\Traits\DoubleCollectionInterfaceTrait;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Types\Double\FilterUniqueDoubleCollectionInterfaceTrait;
 
 final class UnsignedDoubleCollection extends AbstractTypedCollection implements DoubleCollectionInterface
 {
+    use DoubleCollectionInterfaceTrait;
     use FilterUniqueDoubleCollectionInterfaceTrait;
     use ToDoublePrimitiveArrayTrait;
 
