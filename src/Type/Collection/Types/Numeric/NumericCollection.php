@@ -7,6 +7,7 @@ use LDL\Validators\Chain\OrValidatorChain;
 use LDL\Type\Collection\AbstractTypedCollection;
 use LDL\Type\Collection\Interfaces\Type\NumericCollectionInterface;
 use LDL\Type\Collection\Types\Numeric\Traits\ToNumericPrimitiveArrayTrait;
+use LDL\Type\Collection\Types\Numeric\Traits\NumericCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Double\FilterDoubleCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Integer\FilterIntegerCollectionInterfaceTrait;
 use LDL\Type\Collection\Traits\Types\Number\FilterUniqueNumberCollectionInterfaceTrait;
@@ -14,6 +15,7 @@ use LDL\Type\Collection\Traits\Types\Number\FilterUnsignedNumberCollectionInterf
 
 final class NumericCollection extends AbstractTypedCollection implements NumericCollectionInterface
 {
+    use NumericCollectionInterfaceTrait;
     use FilterDoubleCollectionInterfaceTrait;
     use FilterIntegerCollectionInterfaceTrait;
     use FilterUniqueNumberCollectionInterfaceTrait;
@@ -29,5 +31,4 @@ final class NumericCollection extends AbstractTypedCollection implements Numeric
 
         parent::__construct($items);
     }
-
 }

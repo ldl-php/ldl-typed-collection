@@ -1,0 +1,98 @@
+Create integer collection:
+
+Append integers and object having interface ToIntegerInterface:
+
+array (
+  0 => 10,
+  1 => 21,
+  2 => 15,
+  3 => 50,
+  4 =>
+  IntegerClass::__set_state(array(
+  )),
+)
+
+Get sum of an IntegerCollection:
+
+110
+
+Create double collection:
+
+Append doubles and object having interface ToDoubleInterface:
+
+array (
+  0 => 5.98,
+  1 => 0.26,
+  2 =>
+  DoubleClass::__set_state(array(
+  )),
+)
+
+Get sum of a DoubleCollection:
+
+32.53
+
+Create numeric collection:
+
+Append numeric values and object having interface toNumeric:
+
+array (
+  0 => 5.98,
+  1 => 50,
+  2 => 67,
+  3 => 10,
+  4 =>
+  NumericClassHavingInteger::__set_state(array(
+  )),
+  5 =>
+  NumericClassHavingDouble::__set_state(array(
+  )),
+)
+
+Get sum of a NumericCollection:
+
+179.01
+
+Get an average on of an IntegerCollection:
+
+22
+
+Get lowest value of an IntegerCollection:
+
+10
+
+Get highest value of an IntegerCollection:
+
+50
+
+Get IntegerCollection with even values:
+
+array (
+  0 => 10,
+  3 => 50,
+)
+
+Get NumericCollection with odd values:
+
+array (
+  0 => 5.98,
+  2 => 67,
+)
+
+Create an empty DoubleCollection:
+
+Calling sum on empty collection will return null:
+
+NULL
+
+Calling average on empty collection will return null:
+
+NULL
+
+Calling highest on empty collection will return null:
+
+NULL
+
+Calling lowest on empty collection will return null:
+
+NULL

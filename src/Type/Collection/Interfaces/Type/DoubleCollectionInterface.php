@@ -4,7 +4,7 @@ namespace LDL\Type\Collection\Interfaces\Type;
 
 use LDL\Type\Collection\Interfaces\Type\ToPrimitiveArrayInterface;
 
-interface DoubleCollectionInterface extends ToPrimitiveArrayInterface
+interface DoubleCollectionInterface extends ToPrimitiveArrayInterface, NumericTypeCollectionInterface
 {
     
 }

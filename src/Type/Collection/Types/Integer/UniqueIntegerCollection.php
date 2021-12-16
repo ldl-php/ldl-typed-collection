@@ -9,11 +9,13 @@ use LDL\Framework\Base\Contracts\Type\ToIntegerInterface;
 use LDL\Type\Collection\Interfaces\Type\IntegerCollectionInterface;
 use LDL\Type\Collection\Traits\Validator\AppendValueValidatorChainTrait;
 use LDL\Type\Collection\Types\Integer\Traits\ToIntegerPrimitiveArrayTrait;
+use LDL\Type\Collection\Types\Integer\Traits\IntegerCollectionInterfaceTrait;
 use LDL\Type\Collection\Interfaces\Validation\HasAppendValueValidatorChainInterface;
 use LDL\Type\Collection\Traits\Types\Integer\FilterUnsignedIntegerCollectionInterfaceTrait;
 
 final class UniqueIntegerCollection extends AbstractTypedCollection implements IntegerCollectionInterface
 {
+    use IntegerCollectionInterfaceTrait;
     use FilterUnsignedIntegerCollectionInterfaceTrait;
     use ToIntegerPrimitiveArrayTrait;
 
